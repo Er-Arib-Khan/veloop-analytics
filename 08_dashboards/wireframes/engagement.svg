@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .header-bg { fill: #0F172A; }
+      .title { font-family: "Segoe UI", Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #FFFFFF; }
+      .subtitle { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; fill: #94A3B8; }
+      .panel-bg { fill: #FFFFFF; stroke: #E2E8F0; stroke-width: 1.5; rx: 6px; }
+      .card-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #64748B; }
+      .card-val { font-family: "Segoe UI", Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #0F172A; }
+      .card-sub { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #10B981; }
+      .card-sub-neg { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #EF4444; }
+      .chart-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #1E293B; }
+      .chart-desc { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #64748B; }
+      .filter-label { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; font-weight: 600; fill: #475569; }
+      .filter-val { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #0F172A; }
+      .footer-txt { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #64748B; }
+      .notice-txt { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #DC2626; }
+      .alert-box { fill: #FEF2F2; stroke: #EF4444; stroke-width: 1.5; stroke-dasharray: 4,4; rx: 6px; }
+      .alert-txt { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #B91C1C; }
+    </style>
+  </defs>
+  <rect width="1200" height="800" class="bg" />
+  <rect width="1200" height="60" class="header-bg" />
+  <text x="30" y="32" class="title">VELOP Rewards — Engagement & Retention Dashboard</text>
+  <text x="30" y="50" class="subtitle">SIMULATED DATA — CREATED FOR ANALYTICAL TESTING</text>
+  <rect x="30" y="72" width="1140" height="38" class="panel-bg" />
+  <text x="45" y="96" class="filter-label">GLOBAL FILTERS:</text>
+  <rect x="150" y="79" width="150" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1" />
+  <text x="158" y="95" class="filter-val">Date Range: <tspan font-weight="bold">Trailing 30 Days</tspan></text>
+  <rect x="315" y="79" width="150" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1" />
+  <text x="323" y="95" class="filter-val">Platform: <tspan font-weight="bold">Android / iOS</tspan></text>
+  <rect x="480" y="79" width="150" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1" />
+  <text x="488" y="95" class="filter-val">Entry Point: <tspan font-weight="bold">All Surfaces</tspan></text>
+  <rect x="645" y="79" width="100" height="24" rx="4" fill="#2563EB" />
+  <text x="670" y="95" font-family="Segoe UI" font-size="10" font-weight="bold" fill="#FFFFFF">Apply Filters</text>
+  <rect x="30.0" y="122" width="270.0" height="75" class="panel-bg" />
+  <text x="45.0" y="144" class="card-title">AVG SESSION DURATION</text>
+  <text x="45.0" y="172" class="card-val">51.81s</text>
+  <text x="45.0" y="188" class="card-sub">Median: 42.0s across 7,913 sess</text>
+  <rect x="320.0" y="122" width="270.0" height="75" class="panel-bg" />
+  <text x="335.0" y="144" class="card-title">7-DAY STREAK RETENTION</text>
+  <text x="335.0" y="172" class="card-val">42.10%</text>
+  <text x="335.0" y="188" class="card-sub">421 users reached milestone</text>
+  <rect x="610.0" y="122" width="270.0" height="75" class="panel-bg" />
+  <text x="625.0" y="144" class="card-title">STICKINESS (DAU/MAU)</text>
+  <text x="625.0" y="172" class="card-val">20.4%</text>
+  <text x="625.0" y="188" class="card-sub">Daily return habit benchmark</text>
+  <rect x="900.0" y="122" width="270.0" height="75" class="panel-bg" />
+  <text x="915.0" y="144" class="card-title">SESSION BOUNCE RATE</text>
+  <text x="915.0" y="172" class="card-val">8.4%</text>
+  <text x="915.0" y="188" class="card-sub-neg">Sessions < 10s or 1 event</text>
+  <rect x="30" y="213" width="680" height="527" class="panel-bg" />
+  <text x="50" y="241" class="chart-title">Feature Penetration & Adoption (15 Features)</text>
+  <text x="50" y="259" class="chart-desc">User adoption rate across all platform surfaces</text>
+  <rect x="50" y="273" width="640" height="447" fill="#F8FAFC" stroke="#E2E8F0" rx="4" />
+  <text x="370.0" y="486.5" font-family="Segoe UI" font-size="13" font-weight="600" fill="#94A3B8" text-anchor="middle">[Horizontal Bar Placeholder: Feature Penetration & Adoption (15 Features)]</text>
+  <rect x="730" y="213" width="440" height="255.5" class="panel-bg" />
+  <text x="750" y="237" class="chart-title">Diurnal Hourly Session Volume (24h)</text>
+  <text x="750" y="253" class="chart-desc">Distribution of app launches by hour of day</text>
+  <rect x="750" y="263" width="400" height="190.5" fill="#F8FAFC" stroke="#E2E8F0" rx="4" />
+  <text x="950.0" y="350.75" font-family="Segoe UI" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="middle">[Column Chart Placeholder]</text>
+  <rect x="730" y="484.5" width="440" height="255.5" class="panel-bg" />
+  <text x="750" y="508.5" class="chart-title">Consecutive Active Streak Distribution</text>
+  <text x="750" y="524.5" class="chart-desc">Histogram of user active streak days</text>
+  <rect x="750" y="534.5" width="400" height="190.5" fill="#F8FAFC" stroke="#E2E8F0" rx="4" />
+  <text x="950.0" y="622.25" font-family="Segoe UI" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="middle">[Area Chart Placeholder]</text>
+  <text x="30" y="782" class="footer-txt">Data Source: 02_Sessions, 04_Daily_Activity, 06_Milestones, 07_Feature_Usage</text>
+  <text x="1170" y="782" class="notice-txt" text-anchor="end">SIMULATED DATA — CREATED FOR ANALYTICAL TESTING</text>
+</svg>

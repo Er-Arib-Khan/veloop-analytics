@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .header-bg { fill: #0F172A; }
+      .title { font-family: "Segoe UI", Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #FFFFFF; }
+      .subtitle { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; fill: #94A3B8; }
+      .panel-bg { fill: #FFFFFF; stroke: #E2E8F0; stroke-width: 1.5; rx: 6px; }
+      .card-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #64748B; }
+      .card-val { font-family: "Segoe UI", Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #0F172A; }
+      .card-sub { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #10B981; }
+      .card-sub-neg { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #EF4444; }
+      .chart-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #1E293B; }
+      .chart-desc { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #64748B; }
+      .filter-label { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; font-weight: 600; fill: #475569; }
+      .filter-val { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #0F172A; }
+      .footer-txt { font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; fill: #64748B; }
+      .notice-txt { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #DC2626; }
+      .alert-box { fill: #FEF2F2; stroke: #EF4444; stroke-width: 1.5; stroke-dasharray: 4,4; rx: 6px; }
+      .alert-txt { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #B91C1C; }
+    </style>
+  </defs>
+  <rect width="1200" height="800" class="bg" />
+  <rect width="1200" height="60" class="header-bg" />
+  <text x="30" y="32" class="title">VELOP Rewards — Rewards & Micro-Task Performance Dashboard</text>
+  <text x="30" y="50" class="subtitle">SIMULATED DATA — CREATED FOR ANALYTICAL TESTING</text>
+  <rect x="30" y="72" width="1140" height="38" class="panel-bg" />
+  <text x="45" y="96" class="filter-label">GLOBAL FILTERS:</text>
+  <rect x="150" y="79" width="150" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1" />
+  <text x="158" y="95" class="filter-val">Date Range: <tspan font-weight="bold">Trailing 30 Days</tspan></text>
+  <rect x="315" y="79" width="150" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1" />
+  <text x="323" y="95" class="filter-val">Task Category: <tspan font-weight="bold">All Categories</tspan></text>
+  <rect x="480" y="79" width="150" height="24" rx="4" fill="#F1F5F9" stroke="#CBD5E1" />
+  <text x="488" y="95" class="filter-val">Device: <tspan font-weight="bold">All Devices</tspan></text>
+  <rect x="645" y="79" width="100" height="24" rx="4" fill="#2563EB" />
+  <text x="670" y="95" font-family="Segoe UI" font-size="10" font-weight="bold" fill="#FFFFFF">Apply Filters</text>
+  <rect x="30" y="120" width="1140" height="34" class="alert-box" />
+  <text x="50" y="142" class="alert-txt">⚠️ DATA MISSING — see Gap GAP-001 / GAP-007: Reward clawback and reversal telemetry missing from dataset.</text>
+  <rect x="30.0" y="164" width="270.0" height="75" class="panel-bg" />
+  <text x="45.0" y="186" class="card-title">TASK COMPLETIONS</text>
+  <text x="45.0" y="214" class="card-val">5,627</text>
+  <text x="45.0" y="230" class="card-sub">57.15% completion rate</text>
+  <rect x="320.0" y="164" width="270.0" height="75" class="panel-bg" />
+  <text x="335.0" y="186" class="card-title">TASK FAILURES</text>
+  <text x="335.0" y="214" class="card-val">1,520</text>
+  <text x="335.0" y="230" class="card-sub-neg">15.44% technical failure rate</text>
+  <rect x="610.0" y="164" width="270.0" height="75" class="panel-bg" />
+  <text x="625.0" y="186" class="card-title">TASK ABANDONMENT</text>
+  <text x="625.0" y="214" class="card-val">2,051</text>
+  <text x="625.0" y="230" class="card-sub-neg">20.83% premature drop-off</text>
+  <rect x="900.0" y="164" width="270.0" height="75" class="panel-bg" />
+  <text x="915.0" y="186" class="card-title">REWARD REVERSAL RATE</text>
+  <text x="915.0" y="214" class="card-val">BLOCKED</text>
+  <text x="915.0" y="230" class="card-sub-neg">Data missing (Gap GAP-001/GAP-007)</text>
+  <rect x="30" y="255" width="680" height="485" class="panel-bg" />
+  <text x="50" y="283" class="chart-title">Task Performance by Category (Completed / Failed / Abandoned)</text>
+  <text x="50" y="301" class="chart-desc">Categorical breakdown of task execution outcomes</text>
+  <rect x="50" y="315" width="640" height="405" fill="#F8FAFC" stroke="#E2E8F0" rx="4" />
+  <text x="370.0" y="507.5" font-family="Segoe UI" font-size="13" font-weight="600" fill="#94A3B8" text-anchor="middle">[Grouped Bar Placeholder: Task Performance by Category (Completed / Failed / Abandoned)]</text>
+  <rect x="730" y="255" width="440" height="234.5" class="panel-bg" />
+  <text x="750" y="279" class="chart-title">Diagnostic Failure Root Cause Analysis</text>
+  <text x="750" y="295" class="chart-desc">Distribution of errors: Network Disconnect, Ad Skip, Timeout</text>
+  <rect x="750" y="305" width="400" height="169.5" fill="#F8FAFC" stroke="#E2E8F0" rx="4" />
+  <text x="950.0" y="382.25" font-family="Segoe UI" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="middle">[Donut Chart Placeholder]</text>
+  <rect x="730" y="505.5" width="440" height="234.5" class="panel-bg" />
+  <text x="750" y="529.5" class="chart-title">Daily Reward Claim Velocity</text>
+  <text x="750" y="545.5" class="chart-desc">Daily check-in claim frequency across observation period</text>
+  <rect x="750" y="555.5" width="400" height="169.5" fill="#F8FAFC" stroke="#E2E8F0" rx="4" />
+  <text x="950.0" y="632.75" font-family="Segoe UI" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="middle">[Line Chart Placeholder]</text>
+  <text x="30" y="782" class="footer-txt">Data Source: 05_Task_Activity, 04_Daily_Activity</text>
+  <text x="1170" y="782" class="notice-txt" text-anchor="end">SIMULATED DATA — CREATED FOR ANALYTICAL TESTING</text>
+</svg>

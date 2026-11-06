@@ -1,0 +1,297 @@
+// =====================================================================
+// VELOOP Rewards — Logical Entity Relationship Diagram (DBML)
+// =====================================================================
+// SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.
+// Definitions marked /* proposed */ are design recommendations, not existing implementations.
+// DBML specification compatible with dbdiagram.io and DBML CLI.
+// =====================================================================
+
+Project veloop_rewards {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # VELOOP Rewards Logical Data Model
+    Simulated pre-launch analytics data architecture spanning:
+    - Core User Identity & Authentication Visits
+    - Feature Events & Daily Aggregates
+    - Gamified Milestones & Micro-Task Activity
+    - Double-Entry Wallet Ledgers & Fiat Withdrawals (Proposed)
+    - Directional Viral Referral Attribution (Proposed)
+    - Task & Rewards Catalogs (Proposed)
+  '''
+}
+
+// ----------------------------------------------------
+// 1. Core Identity & User Dimension
+// ----------------------------------------------------
+Table Users {
+  user_id varchar(16) [pk, note: "Confirmed: Unique user identifier (VLUSR000001 - VLUSR001000)"]
+  full_name varchar(100) [note: "Confirmed: User display name"]
+  email varchar(150) [note: "Confirmed: Primary email address"]
+  age integer [note: "Confirmed: User age in years (18+)"]
+  gender varchar(20) [note: "Confirmed: Self-reported gender (Male, Female, Other)"]
+  state varchar(50) [note: "Confirmed: Indian state or UT"]
+  city varchar(100) [note: "Confirmed: Residence city"]
+  registration_datetime timestamp [note: "Confirmed: Account registration timestamp"]
+  acquisition_source varchar(50) [note: "Confirmed: Marketing acquisition channel"]
+  referral_source_detail varchar(50) [note: "Confirmed: Granular referral attribution sub-channel"]
+  primary_device varchar(30) [note: "Confirmed: Primary device OS (Android, iOS, Windows, macOS)"]
+  platform varchar(30) [note: "Confirmed: App build framework (Android Native, iOS Native, Web)"]
+  account_status varchar(30) [note: "Confirmed: Operational state (Active, Inactive, Suspended, Pending Verification)"]
+  email_verification_status varchar(30) [note: "Confirmed: Trust tier (Verified, Pending)"]
+  onboarding_status varchar(30) [note: "Confirmed: Tutorial status (Completed, Started, Not Started)"]
+  last_login_datetime timestamp [note: "Confirmed: Latest authenticated session timestamp"]
+  lifetime_sessions integer [note: "Confirmed: Cumulative session visit count"]
+  active_days integer [note: "Confirmed: Distinct active days"]
+  xp_balance integer [note: "Confirmed: Spendable reward points snapshot"]
+  referral_code varchar(20) [note: "Confirmed: Unique outbound viral share code"]
+  days_since_registration float [note: "To Be Verified: Derived account age in days (anomalies flagged)"]
+  is_active_7d varchar(5) [note: "Confirmed: Rolling 7-day activity flag (Yes, No)"]
+  is_active_30d varchar(5) [note: "Confirmed: Rolling 30-day activity flag (Yes, No)"]
+  consent_status varchar(20) [note: "Confirmed: DPDP / Privacy consent status (Accepted, Pending)"]
+  marketing_opt_in varchar(5) [note: "Confirmed: Marketing notification consent (Yes, No)"]
+  account_created_via varchar(50) [note: "Confirmed: Registration provider (Web Registration, Google Sign-In, Phone OTP)"]
+  country varchar(50) [note: "Confirmed: Country of residence (India)"]
+
+  Note: "Core user dimension table representing the master account registry."
+}
+
+// ----------------------------------------------------
+// 2. Authentication Sessions Container
+// ----------------------------------------------------
+Table Sessions {
+  session_id varchar(16) [pk, note: "Confirmed: Unique session visit identifier (SESS0000001 - SESS0007913)"]
+  user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
+  session_start timestamp [note: "Confirmed: Session start timestamp"]
+  session_end timestamp [note: "Confirmed: Session termination timestamp"]
+  session_duration_seconds integer [note: "Confirmed: Elapsed visit duration in seconds"]
+  device varchar(30) [note: "Confirmed: Hardware OS during visit"]
+  platform varchar(30) [note: "Confirmed: Client build framework during visit"]
+  entry_point varchar(50) [note: "Confirmed: Surface where user entered app"]
+  exit_feature varchar(50) [note: "Confirmed: Last feature surface visited before exit"]
+  events_in_session integer [note: "Confirmed: Total event interaction count in visit"]
+  features_used_count integer [note: "Confirmed: Count of distinct features touched"]
+  session_status varchar(30) [note: "Confirmed: Technical session disposition (Completed, Timed Out, Terminated)"]
+
+  Note: "Authentication and engagement session container tracking visit boundaries."
+}
+
+// ----------------------------------------------------
+// 3. Atomic Telemetry Clickstream Events
+// ----------------------------------------------------
+Table Feature_Events {
+  event_id varchar(16) [pk, note: "Confirmed: Unique atomic event record identifier (EVT00000001 - EVT00035704)"]
+  user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
+  session_id varchar(16) [not null, note: "Confirmed: Foreign key to Sessions"]
+  event_datetime timestamp [note: "Confirmed: Event occurrence timestamp"]
+  feature_name varchar(50) [note: "Confirmed: Feature surface hosting interaction (15 features)"]
+  event_name varchar(50) [note: "Confirmed: Specific behavioral event action (35 event types)"]
+  event_status varchar(30) [note: "Confirmed: Execution outcome (Started, Success, Abandoned, Failed)"]
+  device varchar(30) [note: "Confirmed: Client operating system"]
+  platform varchar(30) [note: "Confirmed: Client build framework"]
+  acquisition_source varchar(50) [note: "Confirmed: Acquisition channel stamped on event"]
+  sequence_number integer [note: "To Be Verified: Event sequence index within session"]
+  reward_related_flag varchar(5) [note: "Confirmed: Flag indicating earning feature context (Yes, No)"]
+  xp_related_flag varchar(5) [note: "Confirmed: Flag indicating direct XP balance impact (Yes, No)"]
+
+  Note: "Atomic clickstream telemetry stream capturing fine-grained in-app actions."
+}
+
+// ----------------------------------------------------
+// 4. Longitudinal Daily User Rollups
+// ----------------------------------------------------
+Table Daily_Activity {
+  user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
+  activity_date date [not null, note: "Confirmed: Calendar date partition (YYYY-MM-DD)"]
+  session_count integer [note: "Confirmed: Sessions logged on date"]
+  session_duration_minutes float [note: "Confirmed: Active dwell time in minutes on date"]
+  event_count integer [note: "Confirmed: Event actions logged on date"]
+  feature_count integer [note: "Confirmed: Distinct features touched on date"]
+  task_count integer [note: "Confirmed: Task attempts initiated on date"]
+  completed_task_count integer [note: "Confirmed: Tasks successfully completed on date"]
+  reward_activity_count integer [note: "Confirmed: Reward collection actions on date"]
+  xp_activity_count integer [note: "Confirmed: Events affecting XP balance on date"]
+  streak_activity varchar(5) [note: "Confirmed: Flag indicating streak continuity maintained (Yes, No)"]
+  daily_reward_claimed varchar(5) [note: "Confirmed: Daily check-in claim flag (Yes, No)"]
+  mission_activity varchar(5) [note: "Confirmed: Mission interaction flag (Yes, No)"]
+  spin_activity varchar(5) [note: "Confirmed: Spin wheel interaction flag (Yes, No)"]
+  referral_activity varchar(5) [note: "Confirmed: Outbound referral activity flag (Yes, No)"]
+  wallet_activity varchar(5) [note: "Confirmed: Wallet inspection flag (Yes, No)"]
+  active_flag varchar(5) [note: "Confirmed: Official qualification flag for DAU (Yes, No)"]
+
+  indexes {
+    (user_id, activity_date) [pk]
+  }
+
+  Note: "Aggregated daily activity mart grain partitioned by user and calendar date."
+}
+
+// ----------------------------------------------------
+// 5. Micro-Task Execution Fact
+// ----------------------------------------------------
+Table Task_Activity {
+  activity_id varchar(16) [pk, note: "Confirmed: Unique task execution attempt identifier (ACT0000001 - ACT0009846)"]
+  user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
+  task_id varchar(16) [not null, note: "Confirmed: Foreign key to Task_Master (TASK0001 - TASK0080)"]
+  task_category varchar(50) [note: "Confirmed: Functional task category"]
+  task_viewed_at timestamp [note: "Confirmed: Task impression timestamp"]
+  task_started_at timestamp [note: "Confirmed: Task execution start timestamp"]
+  task_completed_at timestamp [note: "Confirmed: Task execution completion timestamp"]
+  task_status varchar(30) [note: "Confirmed: Execution outcome (Completed, Failed, Abandoned)"]
+  failure_reason varchar(100) [note: "Confirmed: Diagnostic error cause for non-completion"]
+  reward_status varchar(30) [note: "To Be Verified: Reward credit disposition (Credited, Pending, None)"]
+  device varchar(30) [note: "Confirmed: Client operating system"]
+  session_id varchar(16) [not null, note: "Confirmed: Foreign key to Sessions"]
+
+  Note: "Transactional execution log for all discrete micro-earning activities."
+}
+
+// ----------------------------------------------------
+// 6. Gamification Milestones Fact
+// ----------------------------------------------------
+Table Milestones {
+  milestone_id integer [pk, increment, note: "Synthetic surrogate primary key for milestone event"]
+  user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
+  milestone_type varchar(50) [note: "Confirmed: Milestone category (seventh_active_day, 10_tasks_completed, etc.)"]
+  milestone_datetime timestamp [note: "Confirmed: Timestamp when milestone was unlocked"]
+  milestone_value integer [note: "To Be Verified: Numeric bonus reward awarded for milestone"]
+  source_event varchar(50) [note: "To Be Verified: Trigger event that completed milestone"]
+  session_id varchar(16) [not null, note: "Confirmed: Foreign key to Sessions"]
+
+  Note: "Gamified achievement milestone unlocks and retention rewards."
+}
+
+// ----------------------------------------------------
+// 7. Feature Usage Analytics Mart
+// ----------------------------------------------------
+Table Feature_Usage {
+  feature_name varchar(50) [pk, note: "Confirmed: Master feature surface name (15 features)"]
+  unique_users integer [note: "Confirmed: Distinct users engaging with feature"]
+  total_events integer [note: "Confirmed: Total interaction count logged across feature"]
+  sessions_with_feature integer [note: "Confirmed: Distinct sessions containing feature interaction"]
+  users_with_success_event integer [note: "Confirmed: Distinct users logging successful completion"]
+  events_per_user float [note: "Confirmed: Mean interactions per active user"]
+  sessions_per_user float [note: "Confirmed: Mean distinct sessions per active user"]
+
+  Note: "Pre-aggregated feature adoption and interaction density analytical summary."
+}
+
+// ----------------------------------------------------
+// 8. Task Catalog Master Dimension (Proposed)
+// ----------------------------------------------------
+Table Task_Master {
+  task_id varchar(16) [pk, note: "/* proposed */ Unique task definition identifier (TASK0001 - TASK0080)"]
+  task_name varchar(150) [not null, note: "/* proposed */ Human-readable task title"]
+  task_category varchar(50) [not null, note: "Confirmed: Functional category matching product taxonomy"]
+  reward_xp integer [not null, note: "/* proposed */ Standard XP reward payout"]
+  reward_unit varchar(20) [default: 'XP', note: "/* proposed */ Currency denomination unit"]
+  estimated_duration_seconds integer [note: "/* proposed */ Expected task completion duration"]
+  partner_id varchar(50) [note: "/* proposed */ Third-party ad/offerwall vendor ID"]
+  partner_campaign_id varchar(100) [note: "/* proposed */ External advertiser campaign reference"]
+  is_active boolean [default: true, note: "/* proposed */ Catalog availability flag"]
+
+  Note: "/* proposed */ Master dimension catalog defining metadata for the 80 task IDs."
+}
+
+// ----------------------------------------------------
+// 9. Rewards & Redemption Catalog (Proposed)
+// ----------------------------------------------------
+Table Rewards {
+  reward_sku varchar(50) [pk, note: "/* proposed */ Unique reward catalog SKU (e.g. RWD_AMZN_050)"]
+  reward_name varchar(150) [not null, note: "/* proposed */ Display title of redemption item"]
+  reward_category varchar(50) [not null, note: "/* proposed */ Item category (Voucher, Cash, Merchandise)"]
+  cost_xp integer [not null, note: "/* proposed */ XP point price required to redeem"]
+  fiat_value_inr float [not null, note: "/* proposed */ Nominal cash value in Indian Rupees"]
+  stock_quantity integer [default: 0, note: "/* proposed */ Available inventory count"]
+  partner_merchant varchar(100) [not null, note: "/* proposed */ Fulfilling merchant brand"]
+
+  Note: "/* proposed */ Master catalog of redeemable vouchers, cash equivalents, and partner rewards."
+}
+
+// ----------------------------------------------------
+// 10. Double-Entry Wallet Ledger (Proposed)
+// ----------------------------------------------------
+Table Wallet_Transactions {
+  transaction_id varchar(64) [pk, note: "/* proposed */ Immutable double-entry ledger entry primary key (TXN_UUIDv4)"]
+  user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
+  transaction_datetime timestamp [not null, note: "/* proposed */ Exact server timestamp of ledger commit"]
+  transaction_type varchar(30) [not null, note: "/* proposed */ Entry type: CREDIT, DEBIT, HOLD, RELEASE, REVERSAL, CORRECTION"]
+  amount float [not null, note: "/* proposed */ Quantitative transaction magnitude"]
+  unit varchar(20) [default: 'XP', note: "/* proposed */ Currency denomination: XP, INR"]
+  status varchar(30) [not null, note: "/* proposed */ Settlement status: POSTED, PENDING_CLEARANCE, REVERSED, FAILED"]
+  source_feature varchar(50) [not null, note: "/* proposed */ Upstream product feature driving transaction"]
+  reference_id varchar(64) [not null, note: "/* proposed */ Origin foreign key: task_id, activity_id, withdrawal_id"]
+  reversal_link varchar(64) [note: "/* proposed */ Pointer to original transaction_id if reversing"]
+  balance_after float [not null, note: "/* proposed */ Running snapshot balance post-transaction"]
+
+  Note: "/* proposed */ Immutable double-entry ledger governing all XP credits, debits, holds, and reversals."
+}
+
+// ----------------------------------------------------
+// 11. Fiat Cash Disbursements (Proposed)
+// ----------------------------------------------------
+Table Withdrawals {
+  withdrawal_id varchar(64) [pk, note: "/* proposed */ Unique payout disbursement identifier (WDL_UUIDv4)"]
+  user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
+  requested_datetime timestamp [not null, note: "/* proposed */ Cash-out submission timestamp"]
+  amount_inr float [not null, note: "/* proposed */ Fiat disbursement cash value in INR (>= 50.0)"]
+  xp_deducted integer [not null, note: "/* proposed */ XP debited from available balance (>= 500)"]
+  payout_method varchar(30) [not null, note: "/* proposed */ Target rail: UPI_VPA, IMPS_BANK, VOUCHER"]
+  payout_status varchar(30) [not null, note: "/* proposed */ Lifecycle status: Requested, Processing, Completed, Rejected, Reversed"]
+  gateway_name varchar(50) [note: "/* proposed */ Payment aggregator: CASHFREE, RAZORPAYX, PAYU"]
+  gateway_reference varchar(100) [note: "/* proposed */ External banking UTR or gateway payment ID"]
+  failure_category varchar(50) [note: "/* proposed */ Standardized error code if rejected"]
+  failure_reason varchar(255) [note: "/* proposed */ Diagnostic failure description"]
+  risk_score float [not null, note: "/* proposed */ Anti-fraud anomaly score (0.00 - 1.00)"]
+  payout_account_hash varchar(64) [not null, note: "/* proposed */ Anonymized SHA-256 hash of beneficiary VPA/Account"]
+  processed_at timestamp [note: "/* proposed */ Timestamp dispatched to gateway"]
+  completed_at timestamp [note: "/* proposed */ Final bank settlement timestamp"]
+
+  Note: "/* proposed */ Asynchronous cash disbursement transactions across fiat banking rails."
+}
+
+// ----------------------------------------------------
+// 12. Viral Referral Graph (Proposed)
+// ----------------------------------------------------
+Table Referrals {
+  referral_id varchar(64) [pk, note: "/* proposed */ Directional referral relationship identifier (REF_UUIDv4)"]
+  referrer_user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users (inviting party)"]
+  referred_user_id varchar(16) [note: "Confirmed: Foreign key to Users (invited party; null before signup)"]
+  referral_code varchar(20) [not null, note: "Confirmed: Outbound share code utilized"]
+  share_channel varchar(50) [not null, note: "Confirmed: Sharing platform: WhatsApp, Telegram, Direct_Link, Social_Media"]
+  sub_channel varchar(100) [note: "/* proposed */ Granular campaign placement sub-tag"]
+  created_at timestamp [not null, note: "/* proposed */ Invitation link generation timestamp"]
+  registered_at timestamp [note: "/* proposed */ Referee account registration timestamp"]
+  activated_at timestamp [note: "/* proposed */ Referee onboarding completion timestamp"]
+  converted_at timestamp [note: "/* proposed */ Qualified commercial conversion timestamp (>= 100 XP earned)"]
+  referral_status varchar(30) [not null, note: "/* proposed */ Status: Created, Registered, Activated, Converted, Disqualified"]
+  referrer_bounty_xp integer [note: "/* proposed */ Bonus XP credited to referrer upon conversion"]
+  referred_bonus_xp integer [note: "/* proposed */ Welcome bonus XP credited to referee upon conversion"]
+  disqualification_reason varchar(50) [note: "/* proposed */ Sybil defense error reason if rejected"]
+
+  Note: "/* proposed */ Directional viral relationship model enforcing Registration != Conversion qualification."
+}
+
+// =====================================================================
+// Entity Relationships & Referential Integrity
+// =====================================================================
+
+// User Foreign Keys (1:N Relationships)
+Ref: Sessions.user_id > Users.user_id [delete: cascade]
+Ref: Feature_Events.user_id > Users.user_id [delete: cascade]
+Ref: Daily_Activity.user_id > Users.user_id [delete: cascade]
+Ref: Task_Activity.user_id > Users.user_id [delete: cascade]
+Ref: Milestones.user_id > Users.user_id [delete: cascade]
+Ref: Wallet_Transactions.user_id > Users.user_id [delete: restrict]
+Ref: Withdrawals.user_id > Users.user_id [delete: restrict]
+
+// Session Foreign Keys (1:N Relationships)
+Ref: Feature_Events.session_id > Sessions.session_id [delete: cascade]
+Ref: Task_Activity.session_id > Sessions.session_id [delete: cascade]
+Ref: Milestones.session_id > Sessions.session_id [delete: cascade]
+
+// Task Catalog & Execution Link (1:N Relationship)
+Ref: Task_Activity.task_id > Task_Master.task_id [delete: restrict]
+
+// Referral Network Foreign Keys (Users 1:N Referrals)
+Ref: Referrals.referrer_user_id > Users.user_id [delete: cascade]
+Ref: Referrals.referred_user_id > Users.user_id [delete: set null]
