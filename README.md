@@ -36,7 +36,15 @@ Each phase of the analytics foundation is organized into structured deliverable 
 | [**`10_privacy_governance/`**](file:///home/rib/project/veloop-analytics/10_privacy_governance) | Consent mechanisms, PII prevention rules, data retention policies, and compliance architecture. |
 | [**`11_backlog/`**](file:///home/rib/project/veloop-analytics/11_backlog) | Phased analytics implementation backlog (`implementation_backlog.xlsx`) with sprint priorities and story points. |
 | [**`12_final/`**](file:///home/rib/project/veloop-analytics/12_final) | Executive summary and final consolidated analytics foundation deliverable report. |
+| [**`13_analysis/`**](file:///home/rib/project/veloop-analytics/13_analysis) | Real dataset analysis, 49-KPI computation engine, findings report, and business recommendations. |
+| [**`docs/`**](file:///home/rib/project/veloop-analytics/docs) | GitHub Pages interactive analytics dashboard with real Chart.js visualizations. |
 | [**`scripts/`**](file:///home/rib/project/veloop-analytics/scripts) | Python automation utilities (`01_profile_data.py`, `02_test_relationships.py`, `03_kpi_feasibility.py`, etc.) for reproducible audits and openpyxl builds. |
+
+---
+
+## 12. Live Repository & Interactive Dashboard
+
+- Live interactive dashboard: https://er-arib-khan.github.io/veloop-analytics/
 
 ---
 
