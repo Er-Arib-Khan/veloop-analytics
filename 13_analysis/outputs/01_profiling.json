@@ -1,0 +1,1310 @@
+{
+  "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+  "generated_at": "2026-11-13T15:11:47.301078",
+  "total_sheets": 15,
+  "sheets": [
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "01_Users_1000",
+      "row_count": 1000,
+      "column_count": 16,
+      "columns": [
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "full_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 606
+        },
+        {
+          "column_name": "email",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "age",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 22
+        },
+        {
+          "column_name": "gender",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 3
+        },
+        {
+          "column_name": "state",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 18
+        },
+        {
+          "column_name": "city",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 50
+        },
+        {
+          "column_name": "registration_datetime",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "acquisition_source",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7
+        },
+        {
+          "column_name": "referral_source_detail",
+          "dtype": "str",
+          "null_count": 846,
+          "null_pct": 84.6,
+          "unique_count": 1
+        },
+        {
+          "column_name": "primary_device",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "platform",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        },
+        {
+          "column_name": "account_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "verification_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "onboarding_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 3
+        },
+        {
+          "column_name": "referral_code",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 998
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "02_Sessions",
+      "row_count": 7913,
+      "column_count": 12,
+      "columns": [
+        {
+          "column_name": "session_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7913
+        },
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 984
+        },
+        {
+          "column_name": "session_start",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7874
+        },
+        {
+          "column_name": "session_end",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7905
+        },
+        {
+          "column_name": "session_duration_seconds",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 207
+        },
+        {
+          "column_name": "device",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "platform",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        },
+        {
+          "column_name": "entry_point",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 6
+        },
+        {
+          "column_name": "exit_feature",
+          "dtype": "str",
+          "null_count": 466,
+          "null_pct": 5.89,
+          "unique_count": 15
+        },
+        {
+          "column_name": "events_in_session",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 33
+        },
+        {
+          "column_name": "features_used_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 6
+        },
+        {
+          "column_name": "session_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "03_Feature_Events",
+      "row_count": 35704,
+      "column_count": 13,
+      "columns": [
+        {
+          "column_name": "event_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 35704
+        },
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 984
+        },
+        {
+          "column_name": "session_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7611
+        },
+        {
+          "column_name": "event_datetime",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 32194
+        },
+        {
+          "column_name": "feature_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        },
+        {
+          "column_name": "event_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 35
+        },
+        {
+          "column_name": "event_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "device",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "platform",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        },
+        {
+          "column_name": "acquisition_source",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7
+        },
+        {
+          "column_name": "sequence_number",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 33
+        },
+        {
+          "column_name": "reward_related_flag",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "xp_related_flag",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "04_Daily_Activity",
+      "row_count": 6667,
+      "column_count": 17,
+      "columns": [
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 984
+        },
+        {
+          "column_name": "activity_date",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 164
+        },
+        {
+          "column_name": "session_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 10
+        },
+        {
+          "column_name": "session_duration_minutes",
+          "dtype": "float64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 249
+        },
+        {
+          "column_name": "event_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 62
+        },
+        {
+          "column_name": "feature_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        },
+        {
+          "column_name": "task_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 34
+        },
+        {
+          "column_name": "completed_task_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 24
+        },
+        {
+          "column_name": "reward_activity_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 43
+        },
+        {
+          "column_name": "xp_activity_count",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 29
+        },
+        {
+          "column_name": "streak_activity",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "daily_reward_claimed",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "mission_activity",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "spin_activity",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "referral_activity",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "wallet_activity",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "active_flag",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "05_Task_Activity",
+      "row_count": 9846,
+      "column_count": 12,
+      "columns": [
+        {
+          "column_name": "activity_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 9846
+        },
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 984
+        },
+        {
+          "column_name": "task_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 80
+        },
+        {
+          "column_name": "task_category",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 8
+        },
+        {
+          "column_name": "task_viewed_at",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 9091
+        },
+        {
+          "column_name": "task_started_at",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 9768
+        },
+        {
+          "column_name": "task_completed_at",
+          "dtype": "datetime64[us]",
+          "null_count": 4219,
+          "null_pct": 42.85,
+          "unique_count": 5616
+        },
+        {
+          "column_name": "task_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "failure_reason",
+          "dtype": "str",
+          "null_count": 6275,
+          "null_pct": 63.73,
+          "unique_count": 5
+        },
+        {
+          "column_name": "reward_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 3
+        },
+        {
+          "column_name": "device",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "session_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4612
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "06_Milestones",
+      "row_count": 4799,
+      "column_count": 6,
+      "columns": [
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "milestone_type",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 12
+        },
+        {
+          "column_name": "milestone_datetime",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4452
+        },
+        {
+          "column_name": "milestone_value",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 100
+        },
+        {
+          "column_name": "source_event",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 36
+        },
+        {
+          "column_name": "session_id",
+          "dtype": "str",
+          "null_count": 40,
+          "null_pct": 0.83,
+          "unique_count": 3248
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "07_Feature_Usage",
+      "row_count": 15,
+      "column_count": 7,
+      "columns": [
+        {
+          "column_name": "feature_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        },
+        {
+          "column_name": "unique_users",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        },
+        {
+          "column_name": "total_events",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        },
+        {
+          "column_name": "sessions_with_feature",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        },
+        {
+          "column_name": "users_with_success_event",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 12
+        },
+        {
+          "column_name": "events_per_user",
+          "dtype": "float64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 13
+        },
+        {
+          "column_name": "sessions_per_user",
+          "dtype": "float64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "08_Data_Dictionary",
+      "row_count": 26,
+      "column_count": 7,
+      "columns": [
+        {
+          "column_name": "dataset",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 6
+        },
+        {
+          "column_name": "field_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 26
+        },
+        {
+          "column_name": "data_type",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 5
+        },
+        {
+          "column_name": "definition",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 26
+        },
+        {
+          "column_name": "requirement",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "validation",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 8
+        },
+        {
+          "column_name": "analytical_use",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 18
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "09_README_Status",
+      "row_count": 15,
+      "column_count": 2,
+      "columns": [
+        {
+          "column_name": "Item",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        },
+        {
+          "column_name": "Value",
+          "dtype": "object",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 15
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_simulated_user_behavior_1000.xlsx",
+      "sheet_name": "10_Event_Data_Quality_Audit",
+      "row_count": 35714,
+      "column_count": 13,
+      "columns": [
+        {
+          "column_name": "event_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 35704
+        },
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 984
+        },
+        {
+          "column_name": "session_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7611
+        },
+        {
+          "column_name": "event_datetime",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 32194
+        },
+        {
+          "column_name": "feature_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 20
+        },
+        {
+          "column_name": "event_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 35
+        },
+        {
+          "column_name": "event_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 5
+        },
+        {
+          "column_name": "device",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "platform",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        },
+        {
+          "column_name": "acquisition_source",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7
+        },
+        {
+          "column_name": "sequence_number",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 33
+        },
+        {
+          "column_name": "reward_related_flag",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "xp_related_flag",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_rewards_data_01.xlsx",
+      "sheet_name": "Users_1000_Clean",
+      "row_count": 1000,
+      "column_count": 27,
+      "columns": [
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "full_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 404
+        },
+        {
+          "column_name": "email",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "age",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 21
+        },
+        {
+          "column_name": "gender",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 3
+        },
+        {
+          "column_name": "state",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 17
+        },
+        {
+          "column_name": "city",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 29
+        },
+        {
+          "column_name": "registration_datetime",
+          "dtype": "datetime64[us]",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 999
+        },
+        {
+          "column_name": "acquisition_source",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7
+        },
+        {
+          "column_name": "referral_source_detail",
+          "dtype": "str",
+          "null_count": 881,
+          "null_pct": 88.1,
+          "unique_count": 1
+        },
+        {
+          "column_name": "primary_device",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "platform",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        },
+        {
+          "column_name": "account_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "email_verification_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "onboarding_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 3
+        },
+        {
+          "column_name": "last_login_datetime",
+          "dtype": "datetime64[us]",
+          "null_count": 72,
+          "null_pct": 7.2,
+          "unique_count": 899
+        },
+        {
+          "column_name": "lifetime_sessions",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 58
+        },
+        {
+          "column_name": "active_days",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 33
+        },
+        {
+          "column_name": "xp_balance",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 450
+        },
+        {
+          "column_name": "referral_code",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "days_since_registration",
+          "dtype": "float64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 754
+        },
+        {
+          "column_name": "is_active_7d",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "is_active_30d",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "consent_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "marketing_opt_in",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "account_created_via",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "country",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_rewards_data_01.xlsx",
+      "sheet_name": "Users_Messy_Audit",
+      "row_count": 1008,
+      "column_count": 28,
+      "columns": [
+        {
+          "column_name": "user_id",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "full_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 404
+        },
+        {
+          "column_name": "email",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "age",
+          "dtype": "float64",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 21
+        },
+        {
+          "column_name": "gender",
+          "dtype": "str",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 3
+        },
+        {
+          "column_name": "state",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 17
+        },
+        {
+          "column_name": "city",
+          "dtype": "str",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 29
+        },
+        {
+          "column_name": "registration_datetime",
+          "dtype": "object",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 998
+        },
+        {
+          "column_name": "acquisition_source",
+          "dtype": "str",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 7
+        },
+        {
+          "column_name": "referral_source_detail",
+          "dtype": "str",
+          "null_count": 885,
+          "null_pct": 87.8,
+          "unique_count": 1
+        },
+        {
+          "column_name": "primary_device",
+          "dtype": "str",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 4
+        },
+        {
+          "column_name": "platform",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        },
+        {
+          "column_name": "account_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "email_verification_status",
+          "dtype": "str",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 2
+        },
+        {
+          "column_name": "onboarding_status",
+          "dtype": "str",
+          "null_count": 1,
+          "null_pct": 0.1,
+          "unique_count": 3
+        },
+        {
+          "column_name": "last_login_datetime",
+          "dtype": "datetime64[us]",
+          "null_count": 73,
+          "null_pct": 7.24,
+          "unique_count": 898
+        },
+        {
+          "column_name": "lifetime_sessions",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 58
+        },
+        {
+          "column_name": "active_days",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 33
+        },
+        {
+          "column_name": "xp_balance",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 450
+        },
+        {
+          "column_name": "referral_code",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1000
+        },
+        {
+          "column_name": "days_since_registration",
+          "dtype": "float64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 754
+        },
+        {
+          "column_name": "is_active_7d",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "is_active_30d",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "consent_status",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "marketing_opt_in",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "account_created_via",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 2
+        },
+        {
+          "column_name": "country",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        },
+        {
+          "column_name": "data_environment",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 1
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_rewards_data_01.xlsx",
+      "sheet_name": "Data_Dictionary",
+      "row_count": 25,
+      "column_count": 5,
+      "columns": [
+        {
+          "column_name": "field_name",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 25
+        },
+        {
+          "column_name": "data_type",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 5
+        },
+        {
+          "column_name": "definition",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 25
+        },
+        {
+          "column_name": "requirement",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 4
+        },
+        {
+          "column_name": "validation",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 19
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_rewards_data_01.xlsx",
+      "sheet_name": "Synthetic_Summary",
+      "row_count": 8,
+      "column_count": 2,
+      "columns": [
+        {
+          "column_name": "Metric",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 8
+        },
+        {
+          "column_name": "Value",
+          "dtype": "int64",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 8
+        }
+      ]
+    },
+    {
+      "workbook": "veloop_rewards_data_01.xlsx",
+      "sheet_name": "README_Data_Status",
+      "row_count": 7,
+      "column_count": 2,
+      "columns": [
+        {
+          "column_name": "Item",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7
+        },
+        {
+          "column_name": "Value",
+          "dtype": "str",
+          "null_count": 0,
+          "null_pct": 0.0,
+          "unique_count": 7
+        }
+      ]
+    }
+  ]
+}

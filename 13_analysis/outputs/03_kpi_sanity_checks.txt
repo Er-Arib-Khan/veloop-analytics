@@ -1,0 +1,483 @@
+ SIMULATED DATA — CREATED FOR ANALYTICAL TESTING
+================================================================================
+VELOOP ANALYTICS — KPI VERIFIABILITY SANITY CHECKS (SOURCE DATA PROOFS)
+Generated: 2026-11-13T15:11:47.542495
+Total 'OK' KPIs Verified: 41
+================================================================================
+
+[K01] Total registered users
+  Computed Value : 1000 users
+  Source Sheet(s): 01_Users_1000
+  Logic / Formula: Distinct count of user_id values in the primary user registry table.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000001
+    - full_name: Aditya Patel
+    - email: aditya.patel1@proton.me
+    - registration_datetime: 2026-07-17 15:13:01
+    - account_status: Suspended
+--------------------------------------------------------------------------------
+
+[K02] Registrations by day (last 30 days)
+  Computed Value : 184 total registrations across 30 days (timeseries)
+  Source Sheet(s): 01_Users_1000
+  Logic / Formula: Grouped registration_datetime by date for dates >= 2026-08-17. Example user registered on 2026-09-15 shown below.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000244
+    - full_name: Shreya Joshi
+    - registration_datetime: 2026-09-15 08:10:41
+    - acquisition_source: Social Media
+--------------------------------------------------------------------------------
+
+[K03] New users in last 7 days
+  Computed Value : 47 users
+  Source Sheet(s): 01_Users_1000
+  Logic / Formula: Users whose registration timestamp falls within the final 7 calendar days of observation.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000005
+    - full_name: Shreya Khan
+    - registration_datetime: 2026-09-14 18:52:30
+    - acquisition_source: Organic Search
+    - platform: Web
+--------------------------------------------------------------------------------
+
+[K04] Users active in last 7 days (WAU)
+  Computed Value : 486 users
+  Source Sheet(s): 03_Feature_Events
+  Logic / Formula: Unique users with at least one event in 03_Feature_Events between 2026-09-09 and 2026-09-15.
+  Concrete Example Source Row Used in Computation:
+    - event_id: EVT00000022
+    - user_id: VLUSR000002
+    - event_datetime: 2026-09-10 22:56:01
+    - feature_name: Mining Rewards
+    - event_name: mining_activity
+    - event_status: Success
+--------------------------------------------------------------------------------
+
+[K05] Users active in last 30 days (MAU)
+  Computed Value : 812 users
+  Source Sheet(s): 03_Feature_Events
+  Logic / Formula: Unique users with at least one event in 03_Feature_Events between 2026-08-17 and 2026-09-15.
+  Concrete Example Source Row Used in Computation:
+    - event_id: EVT00000018
+    - user_id: VLUSR000002
+    - event_datetime: 2026-09-04 01:28:14
+    - feature_name: Watch Ads
+    - event_name: ad_completed
+    - event_status: Success
+--------------------------------------------------------------------------------
+
+[K06] DAU for the last 30 calendar days
+  Computed Value : Timeseries of 30 days (Mean: 103.5 users/day, Min: 67, Max: 164)
+  Source Sheet(s): 04_Daily_Activity
+  Logic / Formula: Daily active user counts grouped by activity_date where active_flag='Yes'.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000008
+    - activity_date: 2026-09-15 00:00:00
+    - session_count: 1
+    - event_count: 2
+    - active_flag: Yes
+--------------------------------------------------------------------------------
+
+[K07] DAU/MAU ratio
+  Computed Value : 0.1275 (12.75%)
+  Source Sheet(s): 04_Daily_Activity, 03_Feature_Events
+  Logic / Formula: Calculated directly from Mean 30d DAU (103.50) / 30d MAU (812).
+  Concrete Example Source Row Used in Computation:
+    - mean_30d_dau: 103.5
+    - 30d_mau: 812
+    - dau_mau_ratio: 0.1275
+--------------------------------------------------------------------------------
+
+[K08] Users who have ever logged in
+  Computed Value : 92.8% (928 / 1000 users)
+  Source Sheet(s): Users_1000_Clean
+  Logic / Formula: Users in Users_1000_Clean with a non-null last_login_datetime.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000001
+    - full_name: Sanjay Singh
+    - last_login_datetime: 2026-06-10 10:14:00
+    - lifetime_sessions: 8
+    - active_days: 8
+--------------------------------------------------------------------------------
+
+[K09] Users who have NEVER logged in
+  Computed Value : 72 users (7.2%)
+  Source Sheet(s): Users_1000_Clean
+  Logic / Formula: Users in Users_1000_Clean with last_login_datetime IS NULL.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000010
+    - full_name: Sanjay Roy
+    - account_status: Pending Verification
+    - last_login_datetime: NaT
+    - onboarding_status: Not Started
+--------------------------------------------------------------------------------
+
+[K10] Returning users (active on ≥2 distinct days)
+  Computed Value : 826 users (82.6%)
+  Source Sheet(s): 04_Daily_Activity
+  Logic / Formula: Users who logged activity on at least 2 distinct calendar days.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000002
+    - activity_date: 2026-08-25 00:00:00
+    - session_count: 1
+    - event_count: 4
+    - active_flag: Yes
+--------------------------------------------------------------------------------
+
+[K11] Inactive users (registered but no event in last 14 days)
+  Computed Value : 346 users (34.6%)
+  Source Sheet(s): 01_Users_1000, 03_Feature_Events
+  Logic / Formula: Users in 01_Users_1000 with zero events recorded in 03_Feature_Events during the last 14 days.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000437
+    - full_name: Nikhil Singh
+    - registration_datetime: 2026-05-08 20:34:24
+    - account_status: Active
+--------------------------------------------------------------------------------
+
+[K12] Total sessions
+  Computed Value : 7913 sessions
+  Source Sheet(s): 02_Sessions
+  Logic / Formula: Row count of 02_Sessions workbook sheet.
+  Concrete Example Source Row Used in Computation:
+    - session_id: SESS0000001
+    - user_id: VLUSR000001
+    - session_start: 2026-08-11 10:30:01
+    - session_end: 2026-08-11 10:30:46
+    - session_duration_seconds: 45
+    - platform: Web
+--------------------------------------------------------------------------------
+
+[K13] Average sessions per user
+  Computed Value : 7.913 sessions/user
+  Source Sheet(s): 02_Sessions, 01_Users_1000
+  Logic / Formula: Calculated as 7,913 sessions divided by 1,000 registered users.
+  Concrete Example Source Row Used in Computation:
+    - total_sessions: 7913
+    - total_users: 1000
+    - avg_sessions_per_user: 7.913
+--------------------------------------------------------------------------------
+
+[K14] Average session duration (seconds)
+  Computed Value : 51.81 seconds
+  Source Sheet(s): 02_Sessions
+  Logic / Formula: Arithmetic mean of session_duration_seconds column.
+  Concrete Example Source Row Used in Computation:
+    - session_id: SESS0000001
+    - user_id: VLUSR000001
+    - session_start: 2026-08-11 10:30:01
+    - session_end: 2026-08-11 10:30:46
+    - session_duration_seconds: 45
+    - entry_point: Help/Support
+    - exit_feature: CAPTCHA
+--------------------------------------------------------------------------------
+
+[K15] Feature adoption rate per feature
+  Computed Value : Adoption rates across 15 features (e.g. Watch Ads: 83.6%, Daily Reward: 83.5%, Badges: 67.4%)
+  Source Sheet(s): 07_Feature_Usage
+  Logic / Formula: Verified against 07_Feature_Usage unique_users divided by 1000.
+  Concrete Example Source Row Used in Computation:
+    - feature_name: Badges
+    - unique_users: 674
+    - total_events: 1832
+    - events_per_user: 2.72
+--------------------------------------------------------------------------------
+
+[K16] Feature usage frequency per user
+  Computed Value : Average events per feature user across 15 features (Overall: 35.7 events/registered user)
+  Source Sheet(s): 07_Feature_Usage
+  Logic / Formula: Feature usage frequencies matching 07_Feature_Usage events_per_user.
+  Concrete Example Source Row Used in Computation:
+    - feature_name: Badges
+    - unique_users: 674
+    - total_events: 1832
+    - sessions_with_feature: 1538
+    - users_with_success_event: 506
+    - events_per_user: 2.72
+    - sessions_per_user: 2.28
+--------------------------------------------------------------------------------
+
+[K17] Top 5 features by unique users
+  Computed Value : Top 5: Watch Ads: 836, Daily Reward: 835, Streak Rewards: 832, CAPTCHA: 824, Referral: 811
+  Source Sheet(s): 03_Feature_Events
+  Logic / Formula: Top feature by unique users is Watch Ads (836 unique users).
+  Concrete Example Source Row Used in Computation:
+    - event_id: EVT00000005
+    - user_id: VLUSR000001
+    - feature_name: Watch Ads
+    - event_name: ad_started
+    - event_datetime: 2026-08-11 10:30:25
+--------------------------------------------------------------------------------
+
+[K18] Top 5 features by total events
+  Computed Value : Top 5: Watch Ads: 3126, Missions: 2780, Streak Rewards: 2734, CAPTCHA: 2733, Tap & Earn: 2654
+  Source Sheet(s): 03_Feature_Events
+  Logic / Formula: Top feature by total events is Watch Ads (3,126 events).
+  Concrete Example Source Row Used in Computation:
+    - event_id: EVT00000005
+    - user_id: VLUSR000001
+    - feature_name: Watch Ads
+    - event_name: ad_started
+    - event_status: Started
+--------------------------------------------------------------------------------
+
+[K19] Repeat usage rate
+  Computed Value : Repeat usage across 15 features (Platform-wide: 98.4%)
+  Source Sheet(s): 03_Feature_Events
+  Logic / Formula: Repeat rate per feature; Missions has highest feature repeat rate (79.9%).
+  Concrete Example Source Row Used in Computation:
+    - top_repeat_feature: Missions
+    - repeat_pct: 79.9
+    - platform_repeat_pct: 98.4
+--------------------------------------------------------------------------------
+
+[K20] Total tasks started
+  Computed Value : 9846 tasks
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Total task activity records with non-null start timestamps.
+  Concrete Example Source Row Used in Computation:
+    - activity_id: ACT0000001
+    - user_id: VLUSR000980
+    - task_id: TASK0071
+    - task_category: Game
+    - task_started_at: 2026-08-05 19:38:50
+    - task_status: Failed
+--------------------------------------------------------------------------------
+
+[K21] Total tasks completed
+  Computed Value : 5627 tasks
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Total task activity records where task_status equals 'Completed'.
+  Concrete Example Source Row Used in Computation:
+    - activity_id: ACT0000003
+    - user_id: VLUSR000138
+    - task_id: TASK0039
+    - task_category: Advertisement
+    - task_started_at: 2026-08-30 19:05:08
+    - task_completed_at: 2026-08-30 19:11:46
+    - task_status: Completed
+    - reward_status: Credited
+--------------------------------------------------------------------------------
+
+[K22] Task completion rate
+  Computed Value : 0.5715 (57.15%)
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Calculated directly as 5,627 completed / 9,846 started.
+  Concrete Example Source Row Used in Computation:
+    - completed_tasks: 5627
+    - started_tasks: 9846
+    - completion_rate: 0.5715
+--------------------------------------------------------------------------------
+
+[K23] Task failure rate
+  Computed Value : 0.1544 (15.44%)
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Calculated as 1,520 failed tasks / 9,846 started tasks.
+  Concrete Example Source Row Used in Computation:
+    - activity_id: ACT0000001
+    - user_id: VLUSR000980
+    - task_id: TASK0071
+    - task_category: Game
+    - task_status: Failed
+    - failure_reason: Task unavailable
+--------------------------------------------------------------------------------
+
+[K24] Average task completion time (seconds)
+  Computed Value : 304.5 seconds
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Calculated across all 5,627 completed tasks.
+  Concrete Example Source Row Used in Computation:
+    - activity_id: ACT0000003
+    - task_started_at: 2026-08-30 19:05:08
+    - task_completed_at: 2026-08-30 19:11:46
+    - duration_seconds: 398.0
+--------------------------------------------------------------------------------
+
+[K25] Task attempts per task_type
+  Computed Value : 8 categories total 9,846 attempts (Top: Advertisement 2203)
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Distribution of task attempts grouped by task_category.
+  Concrete Example Source Row Used in Computation:
+    - activity_id: ACT0000001
+    - user_id: VLUSR000980
+    - task_category: Game
+    - task_status: Failed
+--------------------------------------------------------------------------------
+
+[K26] Users who completed ≥1 task
+  Computed Value : 981 users (98.1%)
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Unique users with at least one completed task.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000138
+    - activity_id: ACT0000003
+    - task_category: Advertisement
+    - task_status: Completed
+--------------------------------------------------------------------------------
+
+[K27] Users who completed ≥5 tasks
+  Computed Value : 689 users (68.9%)
+  Source Sheet(s): 05_Task_Activity
+  Logic / Formula: Users who completed 5 or more tasks.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000002
+    - completed_task_count: 5
+--------------------------------------------------------------------------------
+
+[K28] Total reward amount credited
+  Computed Value : 242830 units (from 06_Milestones) / 231889 XP (from Users_1000_Clean)
+  Source Sheet(s): 06_Milestones
+  Logic / Formula: Sum of milestone_value in 06_Milestones.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000001
+    - milestone_type: first_task_completion
+    - milestone_datetime: 2026-08-11 10:30:25
+    - milestone_value: 86
+    - source_event: ad_started
+--------------------------------------------------------------------------------
+
+[K31] Reward distribution by feature
+  Computed Value : Reward distribution across 16 features (Top: Watch Ads 22521 units)
+  Source Sheet(s): 06_Milestones, 03_Feature_Events
+  Logic / Formula: Milestone rewards grouped by feature via source_event mapping.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000001
+    - milestone_type: first_task_completion
+    - milestone_value: 86
+    - source_event: ad_started
+    - mapped_feature: Watch Ads
+--------------------------------------------------------------------------------
+
+[K33] Users who have earned at least one reward
+  Computed Value : 1000 users (100.0%)
+  Source Sheet(s): 06_Milestones
+  Logic / Formula: All 1,000 users have earned at least one milestone reward.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000001
+    - milestone_type: first_task_completion
+    - milestone_value: 86
+--------------------------------------------------------------------------------
+
+[K34] D1 retention
+  Computed Value : 17.91% (178 / 994 eligible users)
+  Source Sheet(s): 01_Users_1000, 04_Daily_Activity
+  Logic / Formula: Calculated by matching registration date + 1 day with active_flag='Yes' in 04_Daily_Activity.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000006
+    - reg_date: 2026-08-14
+    - act_date: 2026-08-15
+    - day_diff: 1
+    - session_count: 1
+--------------------------------------------------------------------------------
+
+[K35] D7 retention
+  Computed Value : 13.33% (127 / 953 eligible users)
+  Source Sheet(s): 01_Users_1000, 04_Daily_Activity
+  Logic / Formula: Calculated by matching registration date + 7 days with active_flag='Yes' in 04_Daily_Activity.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000012
+    - reg_date: 2026-08-24
+    - act_date: 2026-08-31
+    - day_diff: 7
+    - session_count: 1
+--------------------------------------------------------------------------------
+
+[K36] D30 retention
+  Computed Value : 8.46% (69 / 816 eligible users)
+  Source Sheet(s): 01_Users_1000, 04_Daily_Activity
+  Logic / Formula: Calculated by matching registration date + 30 days with active_flag='Yes' in 04_Daily_Activity.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000024
+    - reg_date: 2026-07-18
+    - act_date: 2026-08-17
+    - day_diff: 30
+    - session_count: 1
+--------------------------------------------------------------------------------
+
+[K37] Retention curve (D1..D30 timeseries)
+  Computed Value : Complete D1 to D30 retention timeseries (plot-ready)
+  Source Sheet(s): 01_Users_1000, 04_Daily_Activity
+  Logic / Formula: First 3 points: D1=17.91%, D2=17.02%, D3=15.17% down to D30=8.46%.
+  Concrete Example Source Row Used in Computation:
+    - D1: {'day': 1, 'eligible_users': 994, 'retained_users': 178, 'retention_rate_pct': 17.91}
+    - D7: {'day': 7, 'eligible_users': 953, 'retained_users': 127, 'retention_rate_pct': 13.33}
+    - D30: {'day': 30, 'eligible_users': 816, 'retained_users': 69, 'retention_rate_pct': 8.46}
+--------------------------------------------------------------------------------
+
+[K38] Duplicate user_ids
+  Computed Value : 16 rows (8 distinct user_ids)
+  Source Sheet(s): Users_Messy_Audit
+  Logic / Formula: Detected via df_messy['user_id'].duplicated(keep=False). Example duplicate pair shown below.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000095
+    - full_name: Neha Gupta
+    - email: neha.gupta95@proton.me
+    - registration_datetime: 2026-06-28 07:46:00
+    - primary_device: Android
+--------------------------------------------------------------------------------
+
+[K39] Rows with missing user_id
+  Computed Value : 0 rows
+  Source Sheet(s): Users_Messy_Audit, 10_Event_Data_Quality_Audit
+  Logic / Formula: Confirmed 0 null user_id rows in both messy audit sheets.
+  Concrete Example Source Row Used in Computation:
+    - null_user_ids_in_Users_Messy_Audit: 0
+    - null_user_ids_in_10_Event_Data_Quality_Audit: 0
+--------------------------------------------------------------------------------
+
+[K40] Rows with malformed or null timestamps
+  Computed Value : 2 rows
+  Source Sheet(s): Users_Messy_Audit
+  Logic / Formula: Rows identified by parsing registration_datetime with pd.to_datetime.
+  Concrete Example Source Row Used in Computation:
+    - row_index: 22
+    - user_id: VLUSR000023
+    - anomalous_value: nan
+    - issue_type: NULL timestamp
+--------------------------------------------------------------------------------
+
+[K41] Invalid status values
+  Computed Value : 4 rows
+  Source Sheet(s): 10_Event_Data_Quality_Audit
+  Logic / Formula: Rows where event_status is not in canonical enum {'Started', 'Success', 'Abandoned', 'Failed'}.
+  Concrete Example Source Row Used in Computation:
+    - event_id: EVT00000006
+    - user_id: VLUSR000001
+    - feature_name: Watch Ads
+    - event_name: ad_completed
+    - event_status: success 
+--------------------------------------------------------------------------------
+
+[K42] Orphan records (user_id not in users)
+  Computed Value : 0 records
+  Source Sheet(s): 10_Event_Data_Quality_Audit, Users_1000_Clean
+  Logic / Formula: Referential integrity check across all child activity tables against Users_1000_Clean.
+  Concrete Example Source Row Used in Computation:
+    - orphan_events: 0
+    - orphan_sessions: 0
+    - orphan_tasks: 0
+--------------------------------------------------------------------------------
+
+[K43] Negative amounts
+  Computed Value : 4 rows
+  Source Sheet(s): Users_Messy_Audit
+  Logic / Formula: Detected via df_messy['days_since_registration'] < 0.
+  Concrete Example Source Row Used in Computation:
+    - user_id: VLUSR000128
+    - full_name: Kavya Sharma
+    - registration_datetime: 2026-09-15 11:07:00
+    - days_since_registration: -0.5
+--------------------------------------------------------------------------------
+
+[K44] Trailing-whitespace categorical values
+  Computed Value : 4 rows
+  Source Sheet(s): 10_Event_Data_Quality_Audit
+  Logic / Formula: Detected via df['event_status'].str.endswith(' ').
+  Concrete Example Source Row Used in Computation:
+    - event_id: EVT00000006
+    - user_id: VLUSR000001
+    - feature_name: Watch Ads
+    - event_name: ad_completed
+    - event_status: success 
+--------------------------------------------------------------------------------
+

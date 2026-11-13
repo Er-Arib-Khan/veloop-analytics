@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: veloop-analytics
+    env: static
+    staticPublishPath: ./docs
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -1,0 +1,1083 @@
+{
+  "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+  "generated_at": "2026-11-13T15:11:47.540131",
+  "total_kpis": 49,
+  "ok_count": 41,
+  "blocked_count": 8,
+  "kpis": [
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K01",
+      "name": "Total registered users",
+      "value": 1000,
+      "unit": "users",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 01_Users_1000 (confirmed 1,000 unique simulated user IDs; matches Users_1000_Clean)",
+      "source_sheets": [
+        "01_Users_1000",
+        "Users_1000_Clean"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K02",
+      "name": "Registrations by day (last 30 days)",
+      "value": {
+        "2026-08-17": 3,
+        "2026-08-18": 2,
+        "2026-08-19": 12,
+        "2026-08-20": 3,
+        "2026-08-21": 2,
+        "2026-08-22": 3,
+        "2026-08-23": 4,
+        "2026-08-24": 8,
+        "2026-08-25": 6,
+        "2026-08-26": 5,
+        "2026-08-27": 7,
+        "2026-08-28": 9,
+        "2026-08-29": 8,
+        "2026-08-30": 5,
+        "2026-08-31": 1,
+        "2026-09-01": 10,
+        "2026-09-02": 8,
+        "2026-09-03": 2,
+        "2026-09-04": 6,
+        "2026-09-05": 6,
+        "2026-09-06": 7,
+        "2026-09-07": 12,
+        "2026-09-08": 8,
+        "2026-09-09": 6,
+        "2026-09-10": 4,
+        "2026-09-11": 11,
+        "2026-09-12": 6,
+        "2026-09-13": 11,
+        "2026-09-14": 3,
+        "2026-09-15": 6
+      },
+      "unit": "timeseries (daily registration count)",
+      "computation_note": "COUNT(user_id) GROUP BY CAST(registration_datetime AS DATE) for last 30 calendar days (2026-08-17 to 2026-09-15). Total new registrations in 30d: 184",
+      "source_sheets": [
+        "01_Users_1000"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K03",
+      "name": "New users in last 7 days",
+      "value": 47,
+      "unit": "users",
+      "computation_note": "COUNT(user_id) FROM 01_Users_1000 WHERE CAST(registration_datetime AS DATE) BETWEEN 2026-09-09 AND 2026-09-15",
+      "source_sheets": [
+        "01_Users_1000"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K04",
+      "name": "Users active in last 7 days (WAU)",
+      "value": 486,
+      "unit": "users",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 03_Feature_Events WHERE CAST(event_datetime AS DATE) BETWEEN 2026-09-09 AND 2026-09-15 (defined: >=1 event in last 7d; confirmed identical 486 users in 04_Daily_Activity with active_flag='Yes')",
+      "source_sheets": [
+        "03_Feature_Events",
+        "04_Daily_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K05",
+      "name": "Users active in last 30 days (MAU)",
+      "value": 812,
+      "unit": "users",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 03_Feature_Events WHERE CAST(event_datetime AS DATE) BETWEEN 2026-08-17 AND 2026-09-15 (defined: >=1 event in last 30d; confirmed identical 812 users in 04_Daily_Activity with active_flag='Yes')",
+      "source_sheets": [
+        "03_Feature_Events",
+        "04_Daily_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K06",
+      "name": "DAU for the last 30 calendar days",
+      "value": {
+        "2026-08-17": 72,
+        "2026-08-18": 71,
+        "2026-08-19": 83,
+        "2026-08-20": 67,
+        "2026-08-21": 70,
+        "2026-08-22": 75,
+        "2026-08-23": 85,
+        "2026-08-24": 74,
+        "2026-08-25": 94,
+        "2026-08-26": 82,
+        "2026-08-27": 98,
+        "2026-08-28": 84,
+        "2026-08-29": 100,
+        "2026-08-30": 91,
+        "2026-08-31": 95,
+        "2026-09-01": 98,
+        "2026-09-02": 100,
+        "2026-09-03": 105,
+        "2026-09-04": 123,
+        "2026-09-05": 104,
+        "2026-09-06": 113,
+        "2026-09-07": 138,
+        "2026-09-08": 130,
+        "2026-09-09": 129,
+        "2026-09-10": 134,
+        "2026-09-11": 130,
+        "2026-09-12": 157,
+        "2026-09-13": 164,
+        "2026-09-14": 156,
+        "2026-09-15": 83
+      },
+      "unit": "timeseries (daily active users)",
+      "computation_note": "SELECT CAST(activity_date AS DATE) AS date, COUNT(DISTINCT user_id) AS dau FROM 04_Daily_Activity WHERE active_flag = 'Yes' AND activity_date >= '2026-08-17' GROUP BY date ORDER BY date",
+      "source_sheets": [
+        "04_Daily_Activity",
+        "03_Feature_Events"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K07",
+      "name": "DAU/MAU ratio",
+      "value": 0.1275,
+      "unit": "ratio",
+      "computation_note": "Average DAU over last 30 calendar days (103.50) \u00f7 MAU over last 30 days (812) = 0.1275 (12.75% stickiness)",
+      "source_sheets": [
+        "04_Daily_Activity",
+        "03_Feature_Events"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K08",
+      "name": "Users who have ever logged in",
+      "value": 92.8,
+      "unit": "% of registered",
+      "computation_note": "COUNT(CASE WHEN last_login_datetime IS NOT NULL THEN 1 END) * 100.0 / COUNT(*) FROM Users_1000_Clean = 928 / 1000 = 92.8%. (Note: 984 users / 98.4% have session records logged in 02_Sessions)",
+      "source_sheets": [
+        "Users_1000_Clean",
+        "02_Sessions"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K09",
+      "name": "Users who have NEVER logged in",
+      "value": 72,
+      "unit": "users",
+      "computation_note": "COUNT(CASE WHEN last_login_datetime IS NULL THEN 1 END) FROM Users_1000_Clean = 72 users (7.2% dormant from day 0, all flagged Pending Verification). Alternatively, 16 users (1.6%) have 0 sessions in 02_Sessions.",
+      "source_sheets": [
+        "Users_1000_Clean",
+        "02_Sessions"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K10",
+      "name": "Returning users (active on \u22652 distinct days)",
+      "value": 826,
+      "unit": "users",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 04_Daily_Activity WHERE active_flag = 'Yes' GROUP BY user_id HAVING COUNT(DISTINCT activity_date) >= 2 = 826 users (82.6%). In Users_1000_Clean, active_days >= 2 is 819 users (81.9%).",
+      "source_sheets": [
+        "04_Daily_Activity",
+        "Users_1000_Clean"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K11",
+      "name": "Inactive users (registered but no event in last 14 days)",
+      "value": 346,
+      "unit": "users",
+      "computation_note": "Total registered users (1000) minus users with >=1 event in last 14 days (2026-09-02 to 2026-09-15: 654 users) = 346 inactive users (34.6%)",
+      "source_sheets": [
+        "01_Users_1000",
+        "03_Feature_Events"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K12",
+      "name": "Total sessions",
+      "value": 7913,
+      "unit": "sessions",
+      "computation_note": "COUNT(session_id) FROM 02_Sessions = 7,913 total recorded sessions across all users",
+      "source_sheets": [
+        "02_Sessions"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K13",
+      "name": "Average sessions per user",
+      "value": 7.913,
+      "unit": "sessions/user",
+      "computation_note": "Total sessions (7913) \u00f7 Total registered users (1000) = 7.913 sessions/registered user (or 8.042 per session-active user across 984 users)",
+      "source_sheets": [
+        "02_Sessions",
+        "01_Users_1000"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K14",
+      "name": "Average session duration (seconds)",
+      "value": 51.81,
+      "unit": "seconds",
+      "computation_note": "AVG(session_duration_seconds) FROM 02_Sessions = 51.81 seconds (Median: 42.0s; all 7,913 rows have valid non-null session_start and session_end timestamps)",
+      "source_sheets": [
+        "02_Sessions"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K15",
+      "name": "Feature adoption rate per feature",
+      "value": {
+        "Watch Ads": 83.6,
+        "Daily Reward": 83.5,
+        "Streak Rewards": 83.2,
+        "CAPTCHA": 82.4,
+        "Referral": 81.1,
+        "Wallet": 81.0,
+        "Tap & Earn": 80.0,
+        "Mining Rewards": 79.9,
+        "Level System": 77.3,
+        "Missions": 77.1,
+        "Spin the Wheel": 76.3,
+        "Exchange Center": 72.0,
+        "Leaderboard": 68.6,
+        "Follow & Earn": 68.5,
+        "Badges": 67.4
+      },
+      "unit": "% of registered users",
+      "computation_note": "COUNT(DISTINCT user_id) / 1,000.0 * 100.0 per feature from 03_Feature_Events (matches 07_Feature_Usage unique_users / 1000)",
+      "source_sheets": [
+        "03_Feature_Events",
+        "07_Feature_Usage",
+        "01_Users_1000"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K16",
+      "name": "Feature usage frequency per user",
+      "value": {
+        "Badges": 2.72,
+        "CAPTCHA": 3.32,
+        "Daily Reward": 2.99,
+        "Exchange Center": 2.35,
+        "Follow & Earn": 2.42,
+        "Leaderboard": 2.68,
+        "Level System": 3.14,
+        "Mining Rewards": 3.27,
+        "Missions": 3.61,
+        "Referral": 3.11,
+        "Spin the Wheel": 3.18,
+        "Streak Rewards": 3.29,
+        "Tap & Earn": 3.32,
+        "Wallet": 2.68,
+        "Watch Ads": 3.74
+      },
+      "unit": "events/user per feature",
+      "computation_note": "COUNT(event_id) / COUNT(DISTINCT user_id) per feature from 03_Feature_Events (matches events_per_user in 07_Feature_Usage). Overall average events per registered user across all features: 35.7",
+      "source_sheets": [
+        "03_Feature_Events",
+        "07_Feature_Usage"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K17",
+      "name": "Top 5 features by unique users",
+      "value": [
+        {
+          "feature_name": "Watch Ads",
+          "unique_users": 836
+        },
+        {
+          "feature_name": "Daily Reward",
+          "unique_users": 835
+        },
+        {
+          "feature_name": "Streak Rewards",
+          "unique_users": 832
+        },
+        {
+          "feature_name": "CAPTCHA",
+          "unique_users": 824
+        },
+        {
+          "feature_name": "Referral",
+          "unique_users": 811
+        }
+      ],
+      "unit": "ranking (unique users)",
+      "computation_note": "SELECT feature_name, COUNT(DISTINCT user_id) AS unique_users FROM 03_Feature_Events GROUP BY feature_name ORDER BY unique_users DESC LIMIT 5",
+      "source_sheets": [
+        "03_Feature_Events",
+        "07_Feature_Usage"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K18",
+      "name": "Top 5 features by total events",
+      "value": [
+        {
+          "feature_name": "Watch Ads",
+          "total_events": 3126
+        },
+        {
+          "feature_name": "Missions",
+          "total_events": 2780
+        },
+        {
+          "feature_name": "Streak Rewards",
+          "total_events": 2734
+        },
+        {
+          "feature_name": "CAPTCHA",
+          "total_events": 2733
+        },
+        {
+          "feature_name": "Tap & Earn",
+          "total_events": 2654
+        }
+      ],
+      "unit": "ranking (total events)",
+      "computation_note": "SELECT feature_name, COUNT(event_id) AS total_events FROM 03_Feature_Events GROUP BY feature_name ORDER BY total_events DESC LIMIT 5",
+      "source_sheets": [
+        "03_Feature_Events",
+        "07_Feature_Usage"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K19",
+      "name": "Repeat usage rate",
+      "value": {
+        "Badges": 63.06,
+        "CAPTCHA": 73.18,
+        "Daily Reward": 73.89,
+        "Exchange Center": 60.0,
+        "Follow & Earn": 64.09,
+        "Leaderboard": 63.56,
+        "Level System": 73.48,
+        "Mining Rewards": 72.34,
+        "Missions": 79.9,
+        "Referral": 71.64,
+        "Spin the Wheel": 72.74,
+        "Streak Rewards": 76.08,
+        "Tap & Earn": 73.5,
+        "Wallet": 70.0,
+        "Watch Ads": 76.56
+      },
+      "unit": "% repeat users per feature",
+      "computation_note": "For each feature: COUNT(users with >=2 events) * 100.0 / COUNT(users with >=1 event). Platform-wide repeat event rate across all features: 98.4% (974 / 1,000 registered users executed >=2 events).",
+      "source_sheets": [
+        "03_Feature_Events"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K20",
+      "name": "Total tasks started",
+      "value": 9846,
+      "unit": "tasks",
+      "computation_note": "COUNT(*) FROM 05_Task_Activity WHERE task_started_at IS NOT NULL = 9,846 tasks started (100% of recorded rows in 05_Task_Activity)",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K21",
+      "name": "Total tasks completed",
+      "value": 5627,
+      "unit": "tasks",
+      "computation_note": "COUNT(*) FROM 05_Task_Activity WHERE task_status = 'Completed' = 5,627 completed tasks",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K22",
+      "name": "Task completion rate",
+      "value": 0.5715,
+      "unit": "rate",
+      "computation_note": "COUNT(Completed) \u00f7 COUNT(Started) FROM 05_Task_Activity = 5627 \u00f7 9846 = 0.5715 (57.15%)",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K23",
+      "name": "Task failure rate",
+      "value": 0.1544,
+      "unit": "rate",
+      "computation_note": "COUNT(Failed) \u00f7 COUNT(Started) FROM 05_Task_Activity = 1520 \u00f7 9846 = 0.1544 (15.44% explicit failure rate). Note: Abandoned tasks = 2051 (20.83%); total non-completion rate = 36.27%.",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K24",
+      "name": "Average task completion time (seconds)",
+      "value": 304.5,
+      "unit": "seconds",
+      "computation_note": "AVG(task_completed_at - task_started_at) in seconds for completed tasks = 304.5 seconds (~5.08 minutes; median 304.0s)",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K25",
+      "name": "Task attempts per task_type",
+      "value": {
+        "Advertisement": 2203,
+        "App Task": 1327,
+        "Survey": 1259,
+        "CAPTCHA": 1143,
+        "Social Activity": 1020,
+        "Game": 1008,
+        "Mission": 985,
+        "Promotional Task": 901
+      },
+      "unit": "distribution (attempts by category)",
+      "computation_note": "SELECT task_category, COUNT(*) AS attempts FROM 05_Task_Activity GROUP BY task_category ORDER BY attempts DESC",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K26",
+      "name": "Users who completed \u22651 task",
+      "value": 981,
+      "unit": "users",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 05_Task_Activity WHERE task_status = 'Completed' = 981 users (98.1% of registered users)",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K27",
+      "name": "Users who completed \u22655 tasks",
+      "value": 689,
+      "unit": "users",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 05_Task_Activity WHERE task_status = 'Completed' GROUP BY user_id HAVING COUNT(*) >= 5 = 689 users (68.9% power users)",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K28",
+      "name": "Total reward amount credited",
+      "value": 242830,
+      "unit": "reward units / XP",
+      "computation_note": "SUM(milestone_value) FROM 06_Milestones = 242830 units across 4,799 milestone rewards (the only sheet bearing explicit transaction reward amounts). Note: In Users_1000_Clean, SUM(xp_balance) = 231889 XP.",
+      "source_sheets": [
+        "06_Milestones",
+        "Users_1000_Clean"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K29",
+      "name": "Average reward per completed task",
+      "value": null,
+      "unit": "reward units/task",
+      "computation_note": "BLOCKED: 05_Task_Activity contains reward_status ('Credited': 5,627) but lacks a numeric reward_amount column. Task_Master dimension table and Wallet_Ledger are missing from supplied datasets.",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "BLOCKED",
+      "blocker": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
+      "reason": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing"
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K30",
+      "name": "Reward distribution by task_type",
+      "value": null,
+      "unit": "distribution (reward amount by task_type)",
+      "computation_note": "BLOCKED: Cannot compute reward amount distribution by task_type because 05_Task_Activity lacks a reward_amount column, and Task_Master / Wallet_Ledger tables are missing.",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "BLOCKED",
+      "blocker": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
+      "reason": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing"
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K31",
+      "name": "Reward distribution by feature",
+      "value": {
+        "Watch Ads": 22521,
+        "Streak Rewards": 19012,
+        "Missions": 18115,
+        "Tap & Earn": 18099,
+        "CAPTCHA": 17746,
+        "Referral": 17657,
+        "Spin the Wheel": 17565,
+        "Daily Reward": 16396,
+        "Level System": 16086,
+        "Mining Rewards": 15421,
+        "Leaderboard": 14738,
+        "Wallet": 14652,
+        "Exchange Center": 11366,
+        "Badges": 10909,
+        "Follow & Earn": 10515,
+        "Onboarding": 2032
+      },
+      "unit": "distribution (reward units / XP by feature)",
+      "computation_note": "SUM(milestone_value) FROM 06_Milestones mapped to canonical feature_name via source_event from 03_Feature_Events. Total = 242,830 units.",
+      "source_sheets": [
+        "06_Milestones",
+        "03_Feature_Events"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K32",
+      "name": "Reward reversals (count and %)",
+      "value": null,
+      "unit": "count and percentage",
+      "computation_note": "BLOCKED: No reversal records exist in the supplied dataset. In 05_Task_Activity, reward_status enum is only ['Credited', 'Not Credited', 'Pending']. Dedicated Wallet_Ledger and transaction reversal/chargeback tables are missing.",
+      "source_sheets": [
+        "05_Task_Activity"
+      ],
+      "status": "BLOCKED",
+      "blocker": "Wallet_Ledger is missing and reward_status lacks a Reversal status",
+      "reason": "Wallet_Ledger is missing and reward_status lacks a Reversal status"
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K33",
+      "name": "Users who have earned at least one reward",
+      "value": 1000,
+      "unit": "users",
+      "computation_note": "COUNT(DISTINCT user_id) WHERE rewards earned > 0 = 1000 users (100.0%). Confirmed: 1,000 users have milestone rewards in 06_Milestones; 981 users have credited tasks in 05_Task_Activity; all 1,000 have xp_balance > 0 in Users_1000_Clean.",
+      "source_sheets": [
+        "06_Milestones",
+        "05_Task_Activity",
+        "Users_1000_Clean"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K34",
+      "name": "D1 retention",
+      "value": 17.91,
+      "unit": "% eligible users active on D1",
+      "computation_note": "COUNT(users active on registration_date + 1 day) \u00f7 COUNT(users registered >= 1 day before dataset end) * 100.0 = 178 \u00f7 994 = 17.91% (or 17.80% of all 1,000 registered users)",
+      "source_sheets": [
+        "01_Users_1000",
+        "04_Daily_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K35",
+      "name": "D7 retention",
+      "value": 13.33,
+      "unit": "% eligible users active on D7",
+      "computation_note": "COUNT(users active on registration_date + 7 days) \u00f7 COUNT(users registered >= 7 days before dataset end) * 100.0 = 127 \u00f7 953 = 13.33% (or 12.70% of all 1,000 registered users)",
+      "source_sheets": [
+        "01_Users_1000",
+        "04_Daily_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K36",
+      "name": "D30 retention",
+      "value": 8.46,
+      "unit": "% eligible users active on D30",
+      "computation_note": "COUNT(users active on registration_date + 30 days) \u00f7 COUNT(users registered >= 30 days before dataset end) * 100.0 = 69 \u00f7 816 = 8.46% (or 6.90% of all 1,000 registered users)",
+      "source_sheets": [
+        "01_Users_1000",
+        "04_Daily_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K37",
+      "name": "Retention curve (D1..D30 timeseries)",
+      "value": [
+        {
+          "day": 1,
+          "eligible_users": 994,
+          "retained_users": 178,
+          "retention_rate_pct": 17.91
+        },
+        {
+          "day": 2,
+          "eligible_users": 991,
+          "retained_users": 169,
+          "retention_rate_pct": 17.05
+        },
+        {
+          "day": 3,
+          "eligible_users": 980,
+          "retained_users": 150,
+          "retention_rate_pct": 15.31
+        },
+        {
+          "day": 4,
+          "eligible_users": 974,
+          "retained_users": 136,
+          "retention_rate_pct": 13.96
+        },
+        {
+          "day": 5,
+          "eligible_users": 963,
+          "retained_users": 136,
+          "retention_rate_pct": 14.12
+        },
+        {
+          "day": 6,
+          "eligible_users": 959,
+          "retained_users": 127,
+          "retention_rate_pct": 13.24
+        },
+        {
+          "day": 7,
+          "eligible_users": 953,
+          "retained_users": 127,
+          "retention_rate_pct": 13.33
+        },
+        {
+          "day": 8,
+          "eligible_users": 945,
+          "retained_users": 107,
+          "retention_rate_pct": 11.32
+        },
+        {
+          "day": 9,
+          "eligible_users": 933,
+          "retained_users": 118,
+          "retention_rate_pct": 12.65
+        },
+        {
+          "day": 10,
+          "eligible_users": 926,
+          "retained_users": 103,
+          "retention_rate_pct": 11.12
+        },
+        {
+          "day": 11,
+          "eligible_users": 920,
+          "retained_users": 117,
+          "retention_rate_pct": 12.72
+        },
+        {
+          "day": 12,
+          "eligible_users": 914,
+          "retained_users": 100,
+          "retention_rate_pct": 10.94
+        },
+        {
+          "day": 13,
+          "eligible_users": 912,
+          "retained_users": 110,
+          "retention_rate_pct": 12.06
+        },
+        {
+          "day": 14,
+          "eligible_users": 904,
+          "retained_users": 109,
+          "retention_rate_pct": 12.06
+        },
+        {
+          "day": 15,
+          "eligible_users": 894,
+          "retained_users": 87,
+          "retention_rate_pct": 9.73
+        },
+        {
+          "day": 16,
+          "eligible_users": 893,
+          "retained_users": 94,
+          "retention_rate_pct": 10.53
+        },
+        {
+          "day": 17,
+          "eligible_users": 888,
+          "retained_users": 87,
+          "retention_rate_pct": 9.8
+        },
+        {
+          "day": 18,
+          "eligible_users": 880,
+          "retained_users": 74,
+          "retention_rate_pct": 8.41
+        },
+        {
+          "day": 19,
+          "eligible_users": 871,
+          "retained_users": 90,
+          "retention_rate_pct": 10.33
+        },
+        {
+          "day": 20,
+          "eligible_users": 864,
+          "retained_users": 85,
+          "retention_rate_pct": 9.84
+        },
+        {
+          "day": 21,
+          "eligible_users": 859,
+          "retained_users": 93,
+          "retention_rate_pct": 10.83
+        },
+        {
+          "day": 22,
+          "eligible_users": 853,
+          "retained_users": 80,
+          "retention_rate_pct": 9.38
+        },
+        {
+          "day": 23,
+          "eligible_users": 845,
+          "retained_users": 83,
+          "retention_rate_pct": 9.82
+        },
+        {
+          "day": 24,
+          "eligible_users": 841,
+          "retained_users": 69,
+          "retention_rate_pct": 8.2
+        },
+        {
+          "day": 25,
+          "eligible_users": 838,
+          "retained_users": 80,
+          "retention_rate_pct": 9.55
+        },
+        {
+          "day": 26,
+          "eligible_users": 836,
+          "retained_users": 78,
+          "retention_rate_pct": 9.33
+        },
+        {
+          "day": 27,
+          "eligible_users": 833,
+          "retained_users": 76,
+          "retention_rate_pct": 9.12
+        },
+        {
+          "day": 28,
+          "eligible_users": 821,
+          "retained_users": 83,
+          "retention_rate_pct": 10.11
+        },
+        {
+          "day": 29,
+          "eligible_users": 819,
+          "retained_users": 61,
+          "retention_rate_pct": 7.45
+        },
+        {
+          "day": 30,
+          "eligible_users": 816,
+          "retained_users": 69,
+          "retention_rate_pct": 8.46
+        }
+      ],
+      "unit": "timeseries (plot-ready retention curve D1..D30)",
+      "computation_note": "Cohort retention evaluated for each day offset N from D1 to D30: COUNT(retained users on day N) \u00f7 COUNT(eligible users registered >= N days before cutoff)",
+      "source_sheets": [
+        "01_Users_1000",
+        "04_Daily_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K38",
+      "name": "Duplicate user_ids",
+      "value": 16,
+      "unit": "rows",
+      "computation_note": "COUNT(*) FROM Users_Messy_Audit WHERE user_id IN (SELECT user_id FROM Users_Messy_Audit GROUP BY user_id HAVING COUNT(*) > 1) = 16 rows affected (8 distinct duplicated user IDs)",
+      "source_sheets": [
+        "Users_Messy_Audit"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K39",
+      "name": "Rows with missing user_id",
+      "value": 0,
+      "unit": "rows",
+      "computation_note": "COUNT(*) WHERE user_id IS NULL across messy sheets: Users_Messy_Audit has 0 null user_ids, 10_Event_Data_Quality_Audit has 0 null user_ids",
+      "source_sheets": [
+        "Users_Messy_Audit",
+        "10_Event_Data_Quality_Audit"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K40",
+      "name": "Rows with malformed or null timestamps",
+      "value": 2,
+      "unit": "rows",
+      "computation_note": "In Users_Messy_Audit: 1 row with null registration_datetime (user VLUSR000451) and 1 row with unparseable date '2026-14-05 10:15:00' with invalid month 14 (user VLUSR000788). Total = 2 rows.",
+      "source_sheets": [
+        "Users_Messy_Audit"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K41",
+      "name": "Invalid status values",
+      "value": 4,
+      "unit": "rows",
+      "computation_note": "In 10_Event_Data_Quality_Audit, event_status column contains 4 rows with value 'success ' (lowercase 's' with trailing whitespace), which falls outside the observed canonical enum ['Abandoned', 'Failed', 'Started', 'Success'].",
+      "source_sheets": [
+        "10_Event_Data_Quality_Audit"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K42",
+      "name": "Orphan records (user_id not in users)",
+      "value": 0,
+      "unit": "records",
+      "computation_note": "COUNT(*) WHERE user_id NOT IN (SELECT user_id FROM Users_1000_Clean). All 35,714 rows in 10_Event_Data_Quality_Audit, 7,913 in 02_Sessions, and 9,846 in 05_Task_Activity reference valid registered user IDs.",
+      "source_sheets": [
+        "10_Event_Data_Quality_Audit",
+        "Users_1000_Clean",
+        "02_Sessions",
+        "05_Task_Activity"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K43",
+      "name": "Negative amounts",
+      "value": 4,
+      "unit": "rows",
+      "computation_note": "In Users_Messy_Audit: 4 rows have negative values in days_since_registration (-0.803, -0.655, -0.412, -0.198 days due to snapshot baseline calculation offset). xp_balance, session durations, and milestone values contain 0 negative records.",
+      "source_sheets": [
+        "Users_Messy_Audit",
+        "Users_1000_Clean"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K44",
+      "name": "Trailing-whitespace categorical values",
+      "value": 4,
+      "unit": "rows",
+      "computation_note": "COUNT(*) FROM 10_Event_Data_Quality_Audit WHERE event_status LIKE '% ' = 4 rows (the string 'success ' has an unstripped trailing space character).",
+      "source_sheets": [
+        "10_Event_Data_Quality_Audit"
+      ],
+      "status": "OK",
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K45",
+      "name": "Wallet credits total",
+      "value": null,
+      "unit": "currency / XP",
+      "computation_note": "BLOCKED: Wallet_Ledger / Wallet_Transactions table is completely missing from supplied datasets. No transaction credit ledger or running currency balance exists.",
+      "source_sheets": [
+        "Wallet_Ledger"
+      ],
+      "status": "BLOCKED",
+      "blocker": "Wallet_Ledger table is missing from supplied workbooks",
+      "reason": "Wallet_Ledger table is missing from supplied workbooks"
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K46",
+      "name": "Withdrawal completion rate",
+      "value": null,
+      "unit": "%",
+      "computation_note": "BLOCKED: Withdrawals / Payouts table is completely missing from supplied datasets. Cash, UPI, and voucher disbursement requests are not tracked.",
+      "source_sheets": [
+        "Withdrawals"
+      ],
+      "status": "BLOCKED",
+      "blocker": "Withdrawals table is missing from supplied workbooks",
+      "reason": "Withdrawals table is missing from supplied workbooks"
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K47",
+      "name": "Withdrawal processing time (median)",
+      "value": null,
+      "unit": "seconds / hours",
+      "computation_note": "BLOCKED: Withdrawals / Payouts table is completely missing from supplied datasets. Payout gateway lifecycle timestamps are unavailable.",
+      "source_sheets": [
+        "Withdrawals"
+      ],
+      "status": "BLOCKED",
+      "blocker": "Withdrawals table is missing from supplied workbooks",
+      "reason": "Withdrawals table is missing from supplied workbooks"
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K48",
+      "name": "Referral conversion rate",
+      "value": null,
+      "unit": "%",
+      "computation_note": "BLOCKED: Referral_Invites and Referral_Conversions tracking tables are missing from supplied datasets. Outbound invitation links and share attempts are not tracked to compute invite-to-conversion funnel.",
+      "source_sheets": [
+        "Referral_Invites",
+        "Referral_Conversions"
+      ],
+      "status": "BLOCKED",
+      "blocker": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks",
+      "reason": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks"
+    },
+    {
+      "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
+      "kpi_id": "K49",
+      "name": "Referral activations",
+      "value": null,
+      "unit": "activations",
+      "computation_note": "BLOCKED: Referral_Activations / Referral_Invites tracking table is missing. Inbound referee acquisition source attribution exists (119 users in Users_1000_Clean), but downstream referee milestone activation tracking table is missing.",
+      "source_sheets": [
+        "Referral_Activations"
+      ],
+      "status": "BLOCKED",
+      "blocker": "Referral_Activations table is missing from supplied workbooks",
+      "reason": "Referral_Activations table is missing from supplied workbooks"
+    }
+  ]
+}
