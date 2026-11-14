@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: veloop-analytics
+    name: veloop-analytics-dashboard
     env: static
     staticPublishPath: ./docs
     routes:
