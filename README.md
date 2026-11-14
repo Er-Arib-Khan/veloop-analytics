@@ -47,7 +47,7 @@ Each phase of the analytics foundation is organized into structured deliverable 
 - **Live interactive dashboard:** https://er-arib-khan.github.io/veloop-analytics/
 - **Render Deployment**:
 
-  [![Deploy to Render](https://veloop-analytics-dashboard.onrender.com/)
+  [![Deploy to Render]https://veloop-analytics-dashboard.onrender.com/
 
 ---
 
