@@ -1,85 +1,93 @@
-> **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All figures below describe the supplied simulated dataset, not actual VELOOP statistics.
+# VELOOP Rewards — Analytics Foundation: Executive Summary
 
-# VELOOP Analytics Foundation: Executive Summary
+> **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All figures in this
+> document describe the supplied simulated dataset. They are NOT actual
+> VELOOP user, revenue, retention, conversion, or performance statistics.
 
-Across 1,000 registered users (K01) and 15 simulated telemetry tables, empirical analysis establishes 812 Monthly Active Users (K05), 486 Weekly Active Users (K04), and 5,627 completed tasks out of 9,846 attempts (57.15% completion rate, K22). This executive summary leads directly with verified analytical findings computed from the source workbooks, followed by blocked metric disclosures, strategic recommendations, engineering priorities, and artifact links.
+**Live interactive dashboard:** https://er-arib-khan.github.io/veloop-analytics/
+**Full analysis:** [13_analysis/analysis_findings.md](../13_analysis/analysis_findings.md)
+**Recommendations:** [13_analysis/business_recommendations.md](../13_analysis/business_recommendations.md)
+**KPI register (49 KPIs):** [13_analysis/outputs/02_kpis.json](../13_analysis/outputs/02_kpis.json)
 
 ---
 
 ## 1. What the Data Shows
 
-- **Task Completion & Abandonment Dynamics (K20, K21, K22, K23):** Across 9,846 started task records in `05_Task_Activity` (K20), the completion rate is 57.15% (5,627 tasks, K21, K22); failure is 15.44% (1,520 tasks, K23) and user abandonment is 20.83% (2,051 tasks, aggregate non-completion 36.27%).
-- **Cohort Retention Cliff (K34, K35, K36):** D1 retention is 17.91% (178 / 994 eligible users, K34), D7 retention is 13.33% (127 / 953 eligible users, K35), and D30 retention is 8.46% (69 / 816 eligible users, K36), revealing an 82.09% drop from registration on day 1.
-- **Feature Adoption Polarization (K15):** The most-adopted feature is Watch Ads at 83.6% of users (836 unique users, K15); the least-adopted feature is Badges at 67.4% of users (674 users, K15).
-- **Active User Scale & Platform Stickiness (K04, K05, K06, K07):** Monthly Active Users reach 812 (81.2%, K05) and Weekly Active Users reach 486 (48.6%, K04), while 30-day mean DAU is 103.50 users (K06), producing a DAU/MAU stickiness ratio of 12.75% (K07).
-- **Onboarding Dropout & Multi-Day Habituation (K08, K09, K10):** Exactly 928 users (92.8%) logged in at least once (K08), while 72 users (7.2%) remained dormant from day 0 in `Users_1000_Clean` (K09) stranded in pending verification; among surviving users, 826 users (82.6%) returned across ≥2 distinct days (K10).
-- **Milestone Reward Issuance & Concentration (K28, K31, K33):** Exactly 100.0% of registered users earned ≥1 reward (1,000 users, K33), generating 242,830 milestone reward units across 4,799 awards in `06_Milestones` (K28), with Watch Ads (22,500 units, K31) and Streak Rewards (19,010 units) driving 17.1% of all rewards.
-- **Data Quality & Hygiene Audit (K38, K39, K40, K41, K42, K43):** Telemetry audits detected 16 duplicate user rows across 8 distinct user_ids (K38), 0 orphan records (K42), 0 missing user_ids (K39), 2 invalid registration timestamps (K40), 4 negative registration day offsets (K43), and 4 trailing-whitespace status strings ('success ', K41).
+• Task completion rate is 57.15% (K22): of 9,846 tasks started, only 5,627 completed. 15.44% failed (1,520), 20.83% were abandoned (2,051), and 6.58% are still pending (648) — an aggregate not-completed rate of 42.85%. This aggregate drop-off reveals severe friction across the primary monetization funnel, where more than four in ten initiated tasks fail to yield completed actions.
+
+• Failure attribution: across 1,520 explicit task failures, 48.16% were "Validation failed" (732), 47.50% were "Task unavailable" (722), and 4.34% were "Timeout" (66) — the failure is dominated by external dependencies, not user error. In total, 95.66% of explicit task failures (1,454 attempts, K23) stem from third-party vendor postback breakdowns and stale partner inventory rather than participant inability.
+
+• Retention decays steeply: D1 = 17.91% (K34), D7 = 13.33% (K35), D30 = 8.46% (K36). The steepest single drop is D1→D7 (−4.58 points). More than four-fifths of newly acquired users drop off before recording activity on Day 1, and early cohort decay concentrates heavily in the first post-registration week before flattening into a long-tail baseline of 8.46% at Day 30 (K36).
+
+• Activation gap: 72 users (7.2%) registered but never logged in — dormant from day 0 (K09). 346 users (34.6%) have no event in the final 14 days (K11). A critical onboarding friction point occurs during initial verification, while more than one-third of the user cohort exhibits complete late-stage dormancy with zero recorded sessions or feature interactions in the final two weeks (K11).
+
+• Engagement is concentrated: 689 users (68.9%) completed ≥5 tasks (K27), while the three lowest-adopted features — Badges (67.4%), Follow & Earn (68.5%), Leaderboard (68.6%) — trail the platform's 83.6% top adoption (Watch Ads, K15). The user base bifurcates into a highly engaged core of multi-task power users and a passive majority that gravitates toward low-friction ad viewing while underutilizing social and community modules.
+
+• Data integrity: 16 duplicate user rows across 8 distinct user IDs (K38), 2 malformed timestamps (K40), 4 invalid status-enum rows (K41 = K44, same 4 rows), 4 negative days-since-registration values (K43). Zero orphan records across all activity tables (K42) — referential integrity is intact. While foreign-key linkages across sessions, events, tasks, and milestones are clean, client-side logging edge cases and ingestion pipelines introduce profile duplications and formatting defects that distort user aggregations.
+
+• Virtual currency discrepancy: milestone awards sum to 242,830 units (K28, PARTIAL scope) while user XP balances sum to 231,889 XP — a 10,941 XP shortfall requiring engineering verification against transaction logs. The aggregate balance credited across recorded milestone events exceeds the cumulative user balances in the clean user profiles, demonstrating the absence of an authoritative, reconciled double-entry accounting ledger.
 
 ---
 
-## 2. What Could Not Be Calculated
+## 2. What Could Not Be Calculated (and Why)
 
-The following table lists all 8 BLOCKED KPIs, documenting the blocker root cause and business impact:
+| KPI ID | KPI Name | Missing Data | Business Impact |
+| :--- | :--- | :--- | :--- |
+| K29 | Average reward per completed task | 05_Task_Activity lacks reward_amount | Cannot price per-task economics |
+| K30 | Reward distribution by task_type | 05_Task_Activity lacks reward_amount | Cannot detect reward bias by task category |
+| K32 | Reward reversals | Wallet_Ledger missing | Cannot detect fraudulent or corrected rewards |
+| K45 | Wallet credits total | Wallet_Ledger missing | Cannot measure total outstanding liability |
+| K46 | Withdrawal completion rate | Withdrawals table missing | Cannot measure payout reliability |
+| K47 | Withdrawal processing time | Withdrawals table missing | Cannot measure operational SLA |
+| K48 | Referral conversion rate | Referral_Invites / Referral_Conversions missing | Cannot evaluate growth program ROI |
+| K49 | Referral activations | Referral_Activations missing | Cannot attribute referral contribution to activation |
 
-| KPI | Reason | Impact |
-| :--- | :--- | :--- |
-| **K29** — Average reward per completed task | `05_Task_Activity` lacks numeric `reward_amount`; `Task_Master` and `Wallet_Ledger` missing | Inability to evaluate payout unit economics per task. |
-| **K30** — Reward distribution by task_type | `05_Task_Activity` lacks `reward_amount`; `Task_Master` and `Wallet_Ledger` missing | Cannot determine which task categories burn the largest financial liability. |
-| **K32** — Reward reversals (count and %) | `Wallet_Ledger` missing; `05_Task_Activity` lacks reversal status records | Total blindness to fraud clawbacks and chargeback exposure. |
-| **K45** — Wallet credits total | `Wallet_Ledger` table missing from supplied workbooks | Cannot audit cumulative virtual currency liabilities or token inflation. |
-| **K46** — Withdrawal completion rate | `Withdrawals` table missing from supplied workbooks | Cannot assess payout gateway reliability, failure rate, or cash burn. |
-| **K47** — Withdrawal processing time (median) | `Withdrawals` table missing from supplied workbooks | Inability to track payment processing latency or payout operational SLAs. |
-| **K48** — Referral conversion rate | `Referral_Invites` and `Referral_Conversions` tables missing | Cannot compute viral invite-to-registration conversion funnel or K-factor. |
-| **K49** — Referral activations | `Referral_Activations` milestone table missing | Inability to evaluate referral qualification depth or referral fraud rate. |
-
----
-
-## 3. Top 5 Recommendations
-
-1. **Implement Mid-Task Checkpoints to Curtail Task Abandonment (R1 — K22, K23, K24):**  
-   With 2,051 tasks abandoned (20.83% vs. 15.44% failure per K23) and average duration at 304.50s (K24), product teams should introduce step auto-save checkpoints and exit-intent prompts on Surveys and App Tasks. Rescuing 25% of abandoned attempts recovers 512 completions and lifts completion rate (57.15%, K22) by over 5 percentage points.
-
-2. **Automate OTP Verification Rescues & Day-1 Login Bonuses (R2 — K09, K34):**  
-   To recover 72 users (7.2%) dormant from day 0 in pending verification (K09), deploy automated SMS and WhatsApp verification reminders at hours 1 and 24. Pair this with an instant 50 XP login incentive to curb the steep 82.09% drop-off between registration and Day 1 (where retention is 17.91% per K34).
-
-3. **Restructure Onboarding with a 7-Day Progressive Streak Calendar (R4 — K34, K35, K36):**  
-   Because cohort retention declines from Day 1 (17.91%, K34) to Day 7 (13.33%, K35) before stabilizing at Day 30 (8.46%, K36), product should introduce anchor milestones on Day 3 and Day 7 with automated push notifications. Front-loading streak incentives bridges the week-one drop and lifts the downstream Day 30 plateau.
-
-4. **Deploy Core Financial Ledgers & Cap Hyper-Concentrated Issuance (R5, R7 — K28, K31, K45):**  
-   Engineering must prioritize building a production `wallet_ledger` table and instrumenting a numeric `reward_amount` column on `05_Task_Activity` to unblock 6 financial metrics (K29, K30, K32, K45, K46, K47). Concurrently, product must cap Watch Ads (22,500 units) and Streak Rewards (19,010 units), which drive 17.1% of all 242,830 milestone reward units issued (K28, K31).
-
-5. **Launch a VIP Micro-Tasker Tier Capitalizing on the 689 Power Users (R8 — K19, K27):**  
-   Establish an exclusive progression tier unlocked upon completing 5 tasks, directly targeting the 689 power users (68.9% of cohort, K27) who drive task throughput. Incentivize this core segment with priority withdrawal queues and high-yield missions, capitalizing on the 79.90% repeat usage rate in Missions (K19).
+These 8 KPIs are blocked because the required transactional tables do not exist in the supplied simulated dataset. They are documented in the Assumption & Verification Register rather than invented.
 
 ---
 
-## 4. What VELOOP Should Do Next (Engineering)
+## 3. Top 5 Business Recommendations
 
-To unblock the 8 blocked KPIs and establish an enterprise telemetry foundation, engineering must implement five technical deliverables:
+• **R7 — Build the double-entry Wallet_Ledger table (Priority: Critical).** Unblocks 4 blocked KPIs (K29, K30, K32, K45). Without a ledger, VELOOP cannot measure its own currency liability — the single largest analytics gap in the current model. Engineering must deploy an append-only ledger logging all credits, debits, and reversals with explicit currency types and source IDs to resolve reconciliation shortfalls like the 10,941 XP discrepancy (K28).
 
-1. **Deploy `wallet_ledger` Table:** Implement an append-only, double-entry transactional ledger (`ledger_id`, `user_id`, `transaction_type`, `amount`, `balance_after`, `created_at`) to unblock K45 (Wallet credits total) and K32 (Reward reversals).
-2. **Deploy `withdrawals` Pipeline:** Build a disbursement tracking table (`withdrawal_id`, `user_id`, `amount_inr`, `payout_status`, `requested_at`, `completed_at`, `failure_reason`) integrated with payment gateways to unblock K46 (Withdrawal completion rate) and K47 (Median processing time).
-3. **Instrument `reward_amount` on Tasks:** Add a mandatory numeric `reward_amount` field to `05_Task_Activity` and publish a parent `task_master` catalog table (`task_id`, `task_name`, `base_payout_xp`) to unblock K29 (Average reward per completed task) and K30 (Reward distribution by task_type).
-4. **Implement Outbound Referral Tracking:** Create `referral_invites` (`invite_id`, `referrer_user_id`, `invite_channel`) and `referral_conversions` (`referee_user_id`, `invite_id`, `converted_at`) to unblock K48 (Referral conversion rate) and K49 (Referral activations).
-5. **Enforce Database Schema Integrity:** Apply an immutable `PRIMARY KEY (user_id)` constraint in the warehouse database to eliminate duplicate user profiles (K38), while adding payload sanitization (`trim()`) to prevent trailing-whitespace mutations (K41).
+• **R2 — Deploy OTP verification and D1 activation bonuses (Priority: Critical).** Targets the 72 dormant users (K09) and 17.91% D1 retention (K34). Lowest effort of any critical recommendation. Product teams should implement automated SMS and WhatsApp verification retry triggers for pending signups, paired with an immediate first-login XP incentive credited upon opening the app within 24 hours of account creation to convert onboarding dropouts into retained daily active participants (K09, K34).
+
+• **R4 — Restructure first-week streak progression (Priority: Critical).** Targets the −4.58 point D1→D7 drop (K34→K35), the steepest decay interval in the retention curve. Introducing an onboarding streak calendar with dedicated milestone reward multipliers and daily countdown push notifications creates habituation loops that bridge the week-one drop and lift downstream Day 30 retention (8.46%, K36).
+
+• **R1 — Pre-filter task inventory and add retry logic for validation (Priority: High).** Targets the 42.85% not-completed rate (K22, K23), concentrated in external dependencies (Validation failed 732, Task unavailable 722). Integrating real-time provider inventory pre-validation checks to prune stale tasks and server-side asynchronous validation retries will rescue up to 1,454 failed attempts (K23), driving overall task completion toward 70% (K22).
+
+• **R6 — Enforce database UNIQUE constraints on user_id and enum-sanitize client status strings (Priority: High).** Eliminates the 16 duplicate rows (K38) and 4 whitespace-defect rows (K41/K44) that are currently being caught only at audit time. Applying strict primary key uniqueness in PostgreSQL ingestion pipelines and automated string trim sanitization in the logging SDK guarantees 100% data hygiene across all downstream analytics models.
+
+---
+
+## 4. What Engineering Must Do Next
+
+1. Add a wallet_ledger table with columns: transaction_id (PK), user_id (FK), timestamp, transaction_type, amount, unit, status, reference_id, reversal_of (nullable FK). Unblocks K29, K30, K32, K45.
+
+2. Add a withdrawals table with columns: withdrawal_id (PK), user_id (FK), requested_amount, method, requested_at, processing_at, completed_at, status, reason_category. Unblocks K46, K47.
+
+3. Add referral_invites and referral_conversions tables with columns referral_id (PK), referrer_user_id, referred_user_id, created_at, registered_at, activated_at, converted_at, status. Unblocks K48, K49.
+
+4. Add reward_amount and reward_unit columns to 05_Task_Activity. Unblocks K29, K30.
+
+5. Add a task_abandoned_at timestamp to 05_Task_Activity so average time-to-abandon becomes measurable. Currently the 2,051 abandoned tasks have task_completed_at = null with no abandonment timestamp (K23).
 
 ---
 
 ## 5. Deliverables Index
 
-All analysis, data profiles, mathematical registers, and interactive dashboards are organized into the following repository deliverables:
-
-- **Empirical Analysis Findings Report:** [13_analysis/analysis_findings.md](file:///home/rib/project/veloop-analytics/13_analysis/analysis_findings.md) — *Complete 14-point analytical findings, verified KPI tables, and 30-day cohort retention curve.*
-- **Strategic Business Recommendations:** [13_analysis/business_recommendations.md](file:///home/rib/project/veloop-analytics/13_analysis/business_recommendations.md) — *Actionable R1–R8 strategic recommendations with owner assignments, effort, and priority ratings.*
-- **Verified KPI Mathematical Register:** [13_analysis/outputs/02_kpis.json](file:///home/rib/project/veloop-analytics/13_analysis/outputs/02_kpis.json) — *Machine-readable JSON containing all 49 evaluated KPIs with computed values and formulas.*
-- **Automated KPI & Profiling Engine:** [13_analysis/run_analysis.py](file:///home/rib/project/veloop-analytics/13_analysis/run_analysis.py) — *Python analysis script profiling and computing all metrics from source workbooks.*
-- **Interactive Analytics Dashboard (Local File):** [docs/index.html](file:///home/rib/project/veloop-analytics/docs/index.html) — *Single-file interactive dashboard with 7 tabs and 13 Chart.js visualizations.*
-- **Live Deployed Dashboard URL:** [https://er-arib-khan.github.io/veloop-analytics/](https://er-arib-khan.github.io/veloop-analytics/) — *Live interactive dashboard deployed on GitHub Pages.*
+- Live dashboard: https://er-arib-khan.github.io/veloop-analytics/
+- Analysis findings: [13_analysis/analysis_findings.md](../13_analysis/analysis_findings.md)
+- Business recommendations: [13_analysis/business_recommendations.md](../13_analysis/business_recommendations.md)
+- KPI register (49 KPIs, 41 computed): [13_analysis/outputs/02_kpis.json](../13_analysis/outputs/02_kpis.json)
+- Data profiling: [07_data_quality/profiling_summary.xlsx](../07_data_quality/profiling_summary.xlsx)
+- Data dictionary: [05_data_model/data_dictionary.xlsx](../05_data_model/data_dictionary.xlsx)
+- Data quality audit: [07_data_quality/data_quality_audit.xlsx](../07_data_quality/data_quality_audit.xlsx)
+- Assumption & verification register: [01_governance/assumption_verification_register.xlsx](../01_governance/assumption_verification_register.xlsx)
+- Implementation backlog: [11_backlog/implementation_backlog.xlsx](../11_backlog/implementation_backlog.xlsx)
 
 ---
 
 ## 6. Data Authenticity Statement
 
-> **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.**  
-> All figures, rates, user counts, and distributions cited in this executive summary reflect the supplied synthetic test datasets (`00_source_data/veloop_simulated_user_behavior_1000.xlsx` and `00_source_data/veloop_rewards_data_01.xlsx`). They were computed programmatically via Python execution in `13_analysis/run_analysis.py` for platform capability auditing and analytical architecture benchmarking. They do NOT represent actual VELOOP production telemetry, active commercial users, real revenue, or operational financial balances.
+All figures in this document describe the supplied simulated dataset. They are NOT actual VELOOP user counts, revenue, earnings, withdrawals, retention rates, conversion rates, or company statistics. Any figure that could not be computed from the supplied data is marked BLOCKED with the missing dependency named in Section 2. No production statistics are claimed or implied.
