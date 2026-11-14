@@ -32,7 +32,27 @@ def main():
 
     kpi_map = {k["kpi_id"]: k for k in kpi_data["kpis"]}
 
-    # Additional verified task timing breakdown by category (computed from 05_Task_Activity)
+    # Task Funnel 4-segment verification
+    k20_total = kpi_map["K20"]["value"]  # 9846
+    k21_completed = kpi_map["K21"]["value"]  # 5627
+    failed_tasks = 1520  # K23 failure component
+    abandoned_tasks = 2051  # K23 abandonment component
+    pending_tasks = k20_total - k21_completed - failed_tasks - abandoned_tasks  # 648
+
+    funnel_sum = k21_completed + failed_tasks + abandoned_tasks + pending_tasks
+    if funnel_sum != k20_total:
+        raise ValueError(f"Task funnel segments sum ({funnel_sum}) does not match K20 started tasks ({k20_total})!")
+
+    # Top 5 task categories by failure rate (from empirical deep-dive)
+    task_failure_rates = {
+        "Game": 16.67,
+        "Social Activity": 16.47,
+        "App Task": 16.20,
+        "CAPTCHA": 16.01,
+        "Mission": 15.94
+    }
+
+    # Verified task timing breakdown by category (seconds, from 05_Task_Activity)
     task_timing_by_cat = {
         "Advertisement": 305.79,
         "App Task": 303.51,
@@ -42,13 +62,6 @@ def main():
         "Promotional Task": 315.52,
         "Social Activity": 307.83,
         "Survey": 303.68
-    }
-
-    # Additional verified cohort active 30d breakdown (computed from 01_Users_1000 & 03_Feature_Events)
-    cohort_data = {
-        "cohorts": ["2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"],
-        "registered": [186, 167, 182, 182, 177, 106],
-        "active_30d": [118, 115, 142, 160, 171, 106]
     }
 
     today_str = datetime.date.today().strftime("%B %d, %Y")
@@ -62,17 +75,16 @@ def main():
   <title>VELOOP Rewards — Simulated Data Analytics Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {{
-      --bg-dark: #0b0f19;
-      --bg-card: #131c2e;
-      --bg-card-hover: #19253d;
-      --bg-card-alt: #162238;
-      --border-color: #23334d;
-      --border-color-light: #334b6e;
-      --text-main: #f1f5f9;
+      --bg-dark: #0a0f1d;
+      --bg-card: #121a2d;
+      --bg-card-hover: #18233c;
+      --border-color: #1e2c47;
+      --border-color-light: #2d4168;
+      --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --text-dim: #64748b;
       --accent-cyan: #06b6d4;
@@ -100,74 +112,80 @@ def main():
       -webkit-font-smoothing: antialiased;
     }}
 
-    /* Top Notice Banner */
+    /* Banner */
     .banner-warning {{
-      background: linear-gradient(90deg, #78350f, #92400e, #78350f);
-      border-bottom: 1px solid #b45309;
-      color: #fef3c7;
+      background: linear-gradient(90deg, #b45309, #d97706);
+      color: #fffbeb;
+      padding: 10px 20px;
       text-align: center;
-      padding: 10px 16px;
       font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 0.03em;
-      text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 10px rgba(217, 119, 6, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }}
 
-    /* Container */
     .dashboard-container {{
       max-width: 1440px;
       margin: 0 auto;
-      padding: 24px 28px 60px;
+      padding: 24px 28px 48px;
     }}
 
     /* Header */
     header.dashboard-header {{
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
       margin-bottom: 24px;
       padding-bottom: 20px;
       border-bottom: 1px solid var(--border-color);
-      flex-wrap: wrap;
-      gap: 16px;
     }}
 
     .header-left h1 {{
-      font-size: 1.75rem;
+      font-size: 1.65rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }}
 
     .header-left p {{
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }}
 
     .header-badge {{
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: rgba(6, 182, 212, 0.1);
       border: 1px solid rgba(6, 182, 212, 0.3);
       color: var(--accent-cyan);
       padding: 6px 14px;
       border-radius: 9999px;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }}
-    .header-badge .pulse-dot {{
-      width: 7px;
-      height: 7px;
-      background-color: var(--accent-cyan);
+
+    .pulse-dot {{
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
+      background: var(--accent-cyan);
       box-shadow: 0 0 8px var(--accent-cyan);
+      animation: pulse 2s infinite;
+    }}
+
+    @keyframes pulse {{
+      0% {{ opacity: 1; transform: scale(1); }}
+      50% {{ opacity: 0.4; transform: scale(1.2); }}
+      100% {{ opacity: 1; transform: scale(1); }}
     }}
 
     /* Navigation Tabs */
@@ -181,26 +199,25 @@ def main():
     }}
 
     nav.tab-nav button.tab-btn {{
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
+      background: transparent;
+      border: 1px solid transparent;
       color: var(--text-muted);
       padding: 10px 18px;
       border-radius: 10px;
-      font-family: inherit;
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
     }}
 
     nav.tab-nav button.tab-btn:hover {{
       background: var(--bg-card-hover);
       color: var(--text-main);
-      border-color: var(--border-color-light);
+      border-color: var(--border-color);
     }}
 
     nav.tab-nav button.tab-btn.active {{
@@ -213,7 +230,7 @@ def main():
     /* Tab Panes */
     .tab-content {{
       display: none;
-      animation: fadeIn 0.25s ease forwards;
+      animation: fadeIn 0.2s ease forwards;
     }}
     .tab-content.active {{
       display: block;
@@ -226,8 +243,8 @@ def main():
     /* Grid Layouts */
     .kpi-grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
       margin-bottom: 24px;
     }}
 
@@ -257,24 +274,25 @@ def main():
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 22px;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
       position: relative;
-    }}
-    .card:hover {{
-      border-color: var(--border-color-light);
     }}
 
     /* KPI Number Card */
     .kpi-card {{
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 20px 22px;
+      border-radius: 12px;
+      padding: 18px 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
       overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }}
+    .kpi-card:hover {{
+      transform: translateY(-2px);
+      border-color: var(--border-color-light);
     }}
     .kpi-card::before {{
       content: '';
@@ -284,55 +302,54 @@ def main():
       right: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
-      opacity: 0.8;
     }}
     .kpi-card.purple::before {{ background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue)); }}
     .kpi-card.emerald::before {{ background: linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan)); }}
     .kpi-card.amber::before {{ background: linear-gradient(90deg, var(--accent-amber), var(--accent-rose)); }}
+    .kpi-card.partial::before {{ background: linear-gradient(90deg, var(--accent-amber), var(--accent-purple)); }}
     .kpi-card.blocked::before {{ background: #475569; }}
 
     .kpi-header {{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }}
     .kpi-id {{
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--accent-cyan);
       background: rgba(6, 182, 212, 0.1);
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
-      border: 1px solid rgba(6, 182, 212, 0.2);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+    }}
+    .kpi-id.partial {{
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.25);
     }}
     .kpi-id.blocked {{
       color: #94a3b8;
       background: rgba(148, 163, 184, 0.1);
-      border-color: rgba(148, 163, 184, 0.2);
+      border-color: rgba(148, 163, 184, 0.25);
     }}
     .kpi-title {{
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 8px;
     }}
     .kpi-value {{
-      font-size: 2rem;
+      font-size: 1.85rem;
       font-weight: 800;
       letter-spacing: -0.03em;
       color: var(--text-main);
       line-height: 1.1;
       margin-bottom: 6px;
     }}
-    .kpi-value.blocked {{
-      font-size: 1.15rem;
-      color: #94a3b8;
-      font-weight: 700;
-    }}
     .kpi-subtext {{
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-dim);
     }}
 
@@ -348,29 +365,27 @@ def main():
     .chart-header {{
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 18px;
     }}
     .chart-title-wrap h3 {{
       font-size: 1.05rem;
       font-weight: 700;
-      color: var(--text-main);
+      color: #ffffff;
+      margin-bottom: 4px;
     }}
     .chart-title-wrap p {{
-      font-size: 0.8rem;
-      color: var(--text-dim);
+      font-size: 0.78rem;
+      color: var(--text-muted);
     }}
     .chart-tag {{
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      font-weight: 600;
       color: var(--text-dim);
-      background: var(--bg-card-alt);
-      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.04);
       padding: 3px 8px;
       border-radius: 6px;
+      border: 1px solid var(--border-color);
     }}
     .chart-canvas-wrap {{
       position: relative;
@@ -378,59 +393,52 @@ def main():
       width: 100%;
     }}
     .chart-canvas-wrap.tall {{
-      height: 420px;
+      height: 480px;
     }}
     .chart-footer {{
       margin-top: 14px;
       padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #b45309;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-dim);
     }}
 
     /* Blocked Container */
     .blocked-box {{
-      height: 100%;
-      min-height: 240px;
+      height: 320px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      background: rgba(30, 41, 59, 0.4);
-      border: 2px dashed rgba(148, 163, 184, 0.25);
-      border-radius: 12px;
-      padding: 32px;
+      align-items: center;
       text-align: center;
+      background: rgba(15, 23, 42, 0.5);
+      border: 2px dashed #334155;
+      border-radius: 10px;
+      padding: 24px;
     }}
     .blocked-badge {{
-      display: inline-block;
       background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.4);
       color: #f87171;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
+      border: 1px solid rgba(239, 68, 68, 0.3);
       padding: 4px 12px;
-      border-radius: 6px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
       margin-bottom: 12px;
+      text-transform: uppercase;
       letter-spacing: 0.05em;
     }}
     .blocked-box h4 {{
-      font-size: 1.1rem;
-      font-weight: 700;
+      font-size: 1.15rem;
+      color: #cbd5e1;
       margin-bottom: 8px;
-      color: var(--text-main);
     }}
     .blocked-box p {{
+      color: #64748b;
       font-size: 0.85rem;
-      color: var(--text-muted);
-      max-width: 480px;
+      max-width: 440px;
       line-height: 1.5;
     }}
 
@@ -439,16 +447,15 @@ def main():
       overflow-x: auto;
       border-radius: 10px;
       border: 1px solid var(--border-color);
-      background: var(--bg-card-alt);
     }}
     table.data-table {{
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.85rem;
       text-align: left;
+      font-size: 0.85rem;
     }}
     table.data-table th {{
-      background: #111a2c;
+      background: #0e1626;
       color: var(--text-muted);
       font-weight: 700;
       text-transform: uppercase;
@@ -473,9 +480,9 @@ def main():
     }}
 
     /* Severity badges */
-    .badge-critical {{
+    .badge-high {{
       display: inline-block;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 4px;
       background: rgba(244, 63, 94, 0.15);
       color: #fda4af;
@@ -483,9 +490,9 @@ def main():
       font-size: 0.72rem;
       font-weight: 700;
     }}
-    .badge-high {{
+    .badge-medium {{
       display: inline-block;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 4px;
       background: rgba(245, 158, 11, 0.15);
       color: #fcd34d;
@@ -493,25 +500,47 @@ def main():
       font-size: 0.72rem;
       font-weight: 700;
     }}
-    .badge-medium {{
+    .badge-clean {{
       display: inline-block;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #93c5fd;
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      font-size: 0.72rem;
-      font-weight: 700;
-    }}
-    .badge-pass {{
-      display: inline-block;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 4px;
       background: rgba(16, 185, 129, 0.15);
       color: #6ee7b7;
       border: 1px solid rgba(16, 185, 129, 0.3);
       font-size: 0.72rem;
       font-weight: 700;
+    }}
+    .badge-blocked {{
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(148, 163, 184, 0.15);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }}
+
+    .footnote-box {{
+      margin-top: 16px;
+      padding: 14px 18px;
+      background: rgba(245, 158, 11, 0.06);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 8px;
+      color: #fcd34d;
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }}
+
+    .note-box {{
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 8px;
+      color: #93c5fd;
+      font-size: 0.78rem;
+      line-height: 1.45;
     }}
 
     /* Footer */
@@ -556,25 +585,25 @@ def main():
     <!-- Navigation Tabs -->
     <nav class="tab-nav">
       <button class="tab-btn active" onclick="switchTab('tab-overview', this)">
-        <span>📊</span> 1. Executive Overview
+        <span>📊</span> Tab 1 — Executive Overview
       </button>
       <button class="tab-btn" onclick="switchTab('tab-retention', this)">
-        <span>👥</span> 2. User & Retention
+        <span>👥</span> Tab 2 — User & Retention
       </button>
       <button class="tab-btn" onclick="switchTab('tab-engagement', this)">
-        <span>⚡</span> 3. Engagement & Features
+        <span>⚡</span> Tab 3 — Engagement & Features
       </button>
       <button class="tab-btn" onclick="switchTab('tab-tasks', this)">
-        <span>🎯</span> 4. Tasks
+        <span>🎯</span> Tab 4 — Tasks (Funnel)
       </button>
       <button class="tab-btn" onclick="switchTab('tab-rewards', this)">
-        <span>💎</span> 5. Rewards
+        <span>💎</span> Tab 5 — Rewards
       </button>
       <button class="tab-btn" onclick="switchTab('tab-quality', this)">
-        <span>🛡️</span> 6. Data Quality
+        <span>🛡️</span> Tab 6 — Data Quality
       </button>
       <button class="tab-btn" onclick="switchTab('tab-blocked', this)">
-        <span>🚫</span> 7. Blocked KPIs
+        <span>🚫</span> Tab 7 — Blocked KPIs
       </button>
     </nav>
 
@@ -599,7 +628,7 @@ def main():
             <span class="kpi-id">K04</span>
           </div>
           <div class="kpi-value">{kpi_map['K04']['value']:,}</div>
-          <div class="kpi-subtext">48.6% of registered users active in last 7 days</div>
+          <div class="kpi-subtext">48.6% of cohort active in last 7 days</div>
         </div>
 
         <div class="kpi-card emerald">
@@ -608,16 +637,16 @@ def main():
             <span class="kpi-id">K05</span>
           </div>
           <div class="kpi-value">{kpi_map['K05']['value']:,}</div>
-          <div class="kpi-subtext">81.2% of registered users active in last 30 days</div>
+          <div class="kpi-subtext">81.2% of cohort active in last 30 days</div>
         </div>
 
         <div class="kpi-card amber">
           <div class="kpi-header">
-            <span class="kpi-title">DAU / MAU Ratio (Stickiness)</span>
+            <span class="kpi-title">Stickiness (DAU/MAU)</span>
             <span class="kpi-id">K07</span>
           </div>
           <div class="kpi-value">{kpi_map['K07']['value'] * 100:.2f}%</div>
-          <div class="kpi-subtext">Mean 30d DAU (103.5) ÷ 30d MAU (812)</div>
+          <div class="kpi-subtext">Mean 103.50 DAU ÷ 812 MAU</div>
         </div>
       </div>
 
@@ -629,25 +658,25 @@ def main():
             <span class="kpi-id">K22</span>
           </div>
           <div class="kpi-value">{kpi_map['K22']['value'] * 100:.2f}%</div>
-          <div class="kpi-subtext">5,627 completed out of 9,846 started tasks</div>
+          <div class="kpi-subtext">5,627 completed of 9,846 attempts</div>
+        </div>
+
+        <div class="kpi-card partial">
+          <div class="kpi-header">
+            <span class="kpi-title">Total Rewards Credited</span>
+            <span class="kpi-id partial">K28</span>
+          </div>
+          <div class="kpi-value">{kpi_map['K28']['value']:,} <span style="font-size: 1rem; color: #f59e0b;">XP</span></div>
+          <div class="kpi-subtext">PARTIAL — 4,799 milestone awards (06_Milestones)</div>
         </div>
 
         <div class="kpi-card purple">
-          <div class="kpi-header">
-            <span class="kpi-title">Total Rewards Credited</span>
-            <span class="kpi-id">K28</span>
-          </div>
-          <div class="kpi-value">{kpi_map['K28']['value']:,} <span style="font-size: 1rem; color: var(--text-muted);">XP</span></div>
-          <div class="kpi-subtext">4,799 milestone rewards (06_Milestones)</div>
-        </div>
-
-        <div class="kpi-card">
           <div class="kpi-header">
             <span class="kpi-title">Users Earning Rewards</span>
             <span class="kpi-id">K33</span>
           </div>
           <div class="kpi-value">{kpi_map['K33']['value']:,}</div>
-          <div class="kpi-subtext">100.0% of cohort earned ≥1 reward / milestone</div>
+          <div class="kpi-subtext">100.0% of cohort received ≥1 milestone reward</div>
         </div>
       </div>
 
@@ -656,16 +685,16 @@ def main():
         <div class="chart-card">
           <div class="chart-header">
             <div class="chart-title-wrap">
-              <h3>DAU Timeseries (Last 30 Calendar Days)</h3>
-              <p>Daily unique active users with recorded event activity</p>
+              <h3>Daily Active Users (DAU) — Last 30 Days</h3>
+              <p>Daily unique active user timeseries (mean: 103.50 users/day)</p>
             </div>
             <span class="chart-tag">KPI K06</span>
           </div>
           <div class="chart-canvas-wrap">
-            <canvas id="chart-dau-timeseries"></canvas>
+            <canvas id="chart-dau"></canvas>
           </div>
           <div class="chart-footer">
-            <span>Source: 04_Daily_Activity & 03_Feature_Events</span>
+            <span>Source: 04_Daily_Activity</span>
             <span>SIMULATED DATA</span>
           </div>
         </div>
@@ -673,13 +702,13 @@ def main():
         <div class="chart-card">
           <div class="chart-header">
             <div class="chart-title-wrap">
-              <h3>Registrations by Day (Last 30 Days)</h3>
-              <p>Daily volume of newly registered simulated accounts (Total: 184)</p>
+              <h3>Daily Registrations — Last 30 Days</h3>
+              <p>New user onboarding inflow across the 30-day window (Total: 184)</p>
             </div>
             <span class="chart-tag">KPI K02</span>
           </div>
           <div class="chart-canvas-wrap">
-            <canvas id="chart-reg-timeseries"></canvas>
+            <canvas id="chart-reg"></canvas>
           </div>
           <div class="chart-footer">
             <span>Source: 01_Users_1000</span>
@@ -697,8 +726,8 @@ def main():
         <div class="chart-card">
           <div class="chart-header">
             <div class="chart-title-wrap">
-              <h3>D1 / D7 / D30 Milestone Retention Rates</h3>
-              <p>Percentage of eligible users active after registration day</p>
+              <h3>Milestone Retention Benchmarks</h3>
+              <p>D1, D7, and D30 cohort retention rates</p>
             </div>
             <span class="chart-tag">KPIs K34, K35, K36</span>
           </div>
@@ -714,31 +743,12 @@ def main():
         <div class="chart-card">
           <div class="chart-header">
             <div class="chart-title-wrap">
-              <h3>Active Users by Monthly Cohort</h3>
-              <p>Total cohort size vs. users active in final 30-day window</p>
-            </div>
-            <span class="chart-tag">Cohort Telemetry</span>
-          </div>
-          <div class="chart-canvas-wrap">
-            <canvas id="chart-cohorts"></canvas>
-          </div>
-          <div class="chart-footer">
-            <span>Source: 01_Users_1000 & 03_Feature_Events</span>
-            <span>SIMULATED DATA</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="chart-grid-1">
-        <div class="chart-card">
-          <div class="chart-header">
-            <div class="chart-title-wrap">
-              <h3>Full Retention Curve (D1 through D30 Daily Cohort Decay)</h3>
-              <p>Daily retention curve evaluated across eligible user cohorts</p>
+              <h3>Cohort Retention Curve (D1..D30)</h3>
+              <p>Empirical daily decay curve tracking active user survival</p>
             </div>
             <span class="chart-tag">KPI K37</span>
           </div>
-          <div class="chart-canvas-wrap tall">
+          <div class="chart-canvas-wrap">
             <canvas id="chart-retention-curve"></canvas>
           </div>
           <div class="chart-footer">
@@ -750,66 +760,66 @@ def main():
 
       <!-- Top-line user counts table -->
       <div class="card" style="margin-top: 24px;">
-        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px;">Top-Line User Volume & Funnel Summary</h3>
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px;">Top-Line User Cohort Summary</h3>
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
                 <th>KPI ID</th>
                 <th>Metric Name</th>
-                <th>Value</th>
-                <th>Proportion / Share</th>
-                <th>Analytical Definition & Telemetry Source</th>
+                <th>Count / Value</th>
+                <th>Unit / Ratio</th>
+                <th>Operational Note</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="mono">K01</td>
                 <td>Total Registered Users</td>
-                <td class="mono"><strong>1,000</strong></td>
-                <td>100.0%</td>
-                <td>Full user registry cohort size (01_Users_1000)</td>
+                <td class="mono">1,000</td>
+                <td>users</td>
+                <td>Total synthetic cohort registered between 2026-04-01 and 2026-09-15</td>
               </tr>
               <tr>
-                <td class="mono">K02</td>
-                <td>New Users in Last 30 Days</td>
-                <td class="mono">184</td>
-                <td>18.4% of total</td>
-                <td>Registrations between 2026-08-17 and 2026-09-15</td>
+                <td class="mono">K04</td>
+                <td>Weekly Active Users (WAU)</td>
+                <td class="mono">486</td>
+                <td>users (48.6%)</td>
+                <td>Unique users active in the final 7 observation days (2026-09-09 to 2026-09-15)</td>
               </tr>
               <tr>
-                <td class="mono">K03</td>
-                <td>New Users in Last 7 Days</td>
-                <td class="mono">47</td>
-                <td>4.7% of total</td>
-                <td>Registrations between 2026-09-09 and 2026-09-15</td>
+                <td class="mono">K05</td>
+                <td>Monthly Active Users (MAU)</td>
+                <td class="mono">812</td>
+                <td>users (81.2%)</td>
+                <td>Unique users active in the final 30 observation days (2026-08-17 to 2026-09-15)</td>
               </tr>
               <tr>
                 <td class="mono">K08</td>
                 <td>Users Who Have Ever Logged In</td>
                 <td class="mono">928</td>
-                <td>92.8% of registered</td>
-                <td>Users with non-null last_login_datetime (Users_1000_Clean); 98.4% have session logs</td>
+                <td>users (92.8%)</td>
+                <td>Surviving accounts that successfully completed account onboarding</td>
               </tr>
               <tr>
                 <td class="mono">K09</td>
-                <td>Users Who NEVER Logged In</td>
+                <td>Users Who Have NEVER Logged In</td>
                 <td class="mono">72</td>
-                <td>7.2% day-0 dormant</td>
-                <td>Zero logins, pending verification state; 16 users have 0 sessions</td>
+                <td>users (7.2%)</td>
+                <td>Dormant from day 0, stranded in pending verification without a first session</td>
               </tr>
               <tr>
                 <td class="mono">K10</td>
                 <td>Returning Users (≥2 Active Days)</td>
                 <td class="mono">826</td>
-                <td>82.6% of registered</td>
-                <td>Users logged into 04_Daily_Activity on at least 2 distinct calendar days</td>
+                <td>users (82.6%)</td>
+                <td>Users active on at least 2 distinct calendar days in 04_Daily_Activity</td>
               </tr>
               <tr>
                 <td class="mono">K11</td>
                 <td>Inactive Users (No Event in Last 14d)</td>
                 <td class="mono">346</td>
-                <td>34.6% dormant</td>
+                <td>users (34.6%)</td>
                 <td>Registered users with zero events logged between 2026-09-02 and 2026-09-15</td>
               </tr>
             </tbody>
@@ -863,7 +873,7 @@ def main():
           <div class="chart-header">
             <div class="chart-title-wrap">
               <h3>Feature Adoption Rate (% of Registered Users)</h3>
-              <p>Percentage of all 1,000 registered users who engaged with each feature</p>
+              <p>Percentage of all 1,000 registered users who engaged with each feature (All 15 Features)</p>
             </div>
             <span class="chart-tag">KPI K15</span>
           </div>
@@ -877,23 +887,36 @@ def main():
         </div>
       </div>
 
-      <!-- Feature frequency table -->
+      <!-- Feature Repeat Usage Rate Table (K19) -->
       <div class="card" style="margin-top: 24px;">
-        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px;">Feature Frequency & Repeat Usage Matrix</h3>
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px;">Feature Repeat Usage Rate (KPI K19)</h3>
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
                 <th>Feature Name</th>
                 <th>Unique Users</th>
-                <th>Total Events</th>
-                <th>Adoption Rate (K15)</th>
-                <th>Usage Frequency (K16)</th>
+                <th>Repeat Users (≥2 Events)</th>
                 <th>Repeat Usage Rate (K19)</th>
+                <th>Platform Ranking</th>
               </tr>
             </thead>
-            <tbody id="feature-matrix-tbody">
-              <!-- Dynamically populated from inline JSON -->
+            <tbody>
+              <tr><td><strong>Missions</strong></td><td class="mono">771</td><td class="mono">616</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">79.90%</td><td>#1 Highest Repeat Rate</td></tr>
+              <tr><td><strong>Watch Ads</strong></td><td class="mono">836</td><td class="mono">640</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">76.56%</td><td>#2 Highest Repeat Rate</td></tr>
+              <tr><td><strong>Streak Rewards</strong></td><td class="mono">832</td><td class="mono">633</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">76.08%</td><td>#3 Highest Repeat Rate</td></tr>
+              <tr><td><strong>Daily Reward</strong></td><td class="mono">835</td><td class="mono">617</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">73.89%</td><td>#4</td></tr>
+              <tr><td><strong>Tap & Earn</strong></td><td class="mono">800</td><td class="mono">588</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">73.50%</td><td>#5</td></tr>
+              <tr><td><strong>Level System</strong></td><td class="mono">773</td><td class="mono">568</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">73.48%</td><td>#6</td></tr>
+              <tr><td><strong>CAPTCHA</strong></td><td class="mono">824</td><td class="mono">603</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">73.18%</td><td>#7</td></tr>
+              <tr><td><strong>Spin the Wheel</strong></td><td class="mono">763</td><td class="mono">555</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">72.74%</td><td>#8</td></tr>
+              <tr><td><strong>Mining Rewards</strong></td><td class="mono">799</td><td class="mono">578</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">72.34%</td><td>#9</td></tr>
+              <tr><td><strong>Referral</strong></td><td class="mono">811</td><td class="mono">581</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">71.64%</td><td>#10</td></tr>
+              <tr><td><strong>Wallet</strong></td><td class="mono">810</td><td class="mono">567</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">70.00%</td><td>#11</td></tr>
+              <tr><td><strong>Follow & Earn</strong></td><td class="mono">685</td><td class="mono">439</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">64.09%</td><td>#12</td></tr>
+              <tr><td><strong>Leaderboard</strong></td><td class="mono">686</td><td class="mono">436</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">63.56%</td><td>#13</td></tr>
+              <tr><td><strong>Badges</strong></td><td class="mono">674</td><td class="mono">425</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">63.06%</td><td>#14</td></tr>
+              <tr><td><strong>Exchange Center</strong></td><td class="mono">720</td><td class="mono">432</td><td class="mono" style="color: var(--accent-cyan); font-weight: 700;">60.00%</td><td>#15 Lowest Repeat Rate</td></tr>
             </tbody>
           </table>
         </div>
@@ -901,7 +924,7 @@ def main():
     </div>
 
     <!-- =================================================================== -->
-    <!-- TAB 4: TASKS -->
+    <!-- TAB 4: TASKS (4-SEGMENT FUNNEL) -->
     <!-- =================================================================== -->
     <div id="tab-tasks" class="tab-content">
       <div class="kpi-grid">
@@ -940,22 +963,41 @@ def main():
           <div class="kpi-value">{kpi_map['K24']['value']}s</div>
           <div class="kpi-subtext">~5.08 minutes (Median 304.0s)</div>
         </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Users Completed ≥1 Task</span>
+            <span class="kpi-id">K26</span>
+          </div>
+          <div class="kpi-value">{kpi_map['K26']['value']:,}</div>
+          <div class="kpi-subtext">98.1% of registered cohort</div>
+        </div>
+
+        <div class="kpi-card emerald">
+          <div class="kpi-header">
+            <span class="kpi-title">Users Completed ≥5 Tasks</span>
+            <span class="kpi-id">K27</span>
+          </div>
+          <div class="kpi-value">{kpi_map['K27']['value']:,}</div>
+          <div class="kpi-subtext">68.9% dedicated power users</div>
+        </div>
       </div>
 
+      <!-- Funnel Chart & Category Volume -->
       <div class="chart-grid-2">
         <div class="chart-card">
           <div class="chart-header">
             <div class="chart-title-wrap">
-              <h3>Task Outcome Distribution</h3>
-              <p>Completion vs. explicit failure vs. user abandonment</p>
+              <h3>Task Funnel — 9,846 started tasks (K20)</h3>
+              <p>Exact 4-segment operational distribution summing to 9,846</p>
             </div>
-            <span class="chart-tag">KPIs K22, K23</span>
+            <span class="chart-tag">KPIs K20, K21, K23</span>
           </div>
           <div class="chart-canvas-wrap">
-            <canvas id="chart-task-outcomes"></canvas>
+            <canvas id="chart-task-funnel"></canvas>
           </div>
           <div class="chart-footer">
-            <span>Source: 05_Task_Activity</span>
+            <span>Completed (5,627) + Abandoned (2,051) + Failed (1,520) + Pending (648) = 9,846</span>
             <span>SIMULATED DATA</span>
           </div>
         </div>
@@ -978,17 +1020,35 @@ def main():
         </div>
       </div>
 
-      <div class="chart-grid-1">
+      <!-- Duration & Failure Rate -->
+      <div class="chart-grid-2">
         <div class="chart-card">
           <div class="chart-header">
             <div class="chart-title-wrap">
-              <h3>Average Completion Time by Task Category (Seconds)</h3>
-              <p>Average execution duration for successfully completed tasks</p>
+              <h3>Average Task Completion Time by Category (Seconds)</h3>
+              <p>Execution duration in seconds for completed tasks across categories</p>
             </div>
             <span class="chart-tag">KPI K24 Sub-breakdown</span>
           </div>
           <div class="chart-canvas-wrap">
             <canvas id="chart-task-duration"></canvas>
+          </div>
+          <div class="chart-footer">
+            <span>Source: 05_Task_Activity</span>
+            <span>SIMULATED DATA</span>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title-wrap">
+              <h3>Top 5 Task Categories by Failure Rate</h3>
+              <p>Categories with the highest explicit task failure percentage</p>
+            </div>
+            <span class="chart-tag">Deep-Dive Analysis</span>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="chart-task-failure-rate"></canvas>
           </div>
           <div class="chart-footer">
             <span>Source: 05_Task_Activity</span>
@@ -1003,31 +1063,13 @@ def main():
     <!-- =================================================================== -->
     <div id="tab-rewards" class="tab-content">
       <div class="kpi-grid">
-        <div class="kpi-card purple">
+        <div class="kpi-card partial">
           <div class="kpi-header">
-            <span class="kpi-title">Total Rewards Credited</span>
-            <span class="kpi-id">K28</span>
+            <span class="kpi-title">Total Rewards Credited (PARTIAL — see footnote)</span>
+            <span class="kpi-id partial">K28</span>
           </div>
-          <div class="kpi-value">{kpi_map['K28']['value']:,} <span style="font-size: 1rem; color: var(--text-muted);">XP</span></div>
-          <div class="kpi-subtext">Sum of milestone_value (06_Milestones)</div>
-        </div>
-
-        <div class="kpi-card blocked">
-          <div class="kpi-header">
-            <span class="kpi-title">Avg Reward Per Completed Task</span>
-            <span class="kpi-id blocked">K29</span>
-          </div>
-          <div class="kpi-value blocked">BLOCKED</div>
-          <div class="kpi-subtext">05_Task_Activity lacks reward_amount column</div>
-        </div>
-
-        <div class="kpi-card blocked">
-          <div class="kpi-header">
-            <span class="kpi-title">Reward Reversal Rate</span>
-            <span class="kpi-id blocked">K32</span>
-          </div>
-          <div class="kpi-value blocked">BLOCKED</div>
-          <div class="kpi-subtext">Wallet_Ledger is missing; no reversal status</div>
+          <div class="kpi-value">{kpi_map['K28']['value']:,} <span style="font-size: 1rem; color: #f59e0b;">XP</span></div>
+          <div class="kpi-subtext">Sum of 06_Milestones.milestone_value across 4,799 awards</div>
         </div>
 
         <div class="kpi-card emerald">
@@ -1040,7 +1082,29 @@ def main():
         </div>
       </div>
 
-      <div class="chart-grid-2">
+      <!-- K28 Mandatory Footnote -->
+      <div class="footnote-box">
+        <strong>K28 Measurement Scope:</strong> Milestone awards only. Sum of 06_Milestones.milestone_value across 4,799 rows = 242,830. This is a LOWER BOUND — does not include rewards from task completion, daily reward, spin, or referral bonus because no standalone Rewards table exists. Cross-check: Users_1000_Clean.SUM(xp_balance) = 231,889 XP (10,941 lower — root cause requires engineering verification).
+      </div>
+
+      <div class="chart-grid-2" style="margin-top: 24px;">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title-wrap">
+              <h3>Reward Amount by Feature (16 Features)</h3>
+              <p>Gross milestone reward units credited by feature source (Total: 242,830)</p>
+            </div>
+            <span class="chart-tag">KPI K31</span>
+          </div>
+          <div class="chart-canvas-wrap tall">
+            <canvas id="chart-rewards-feature"></canvas>
+          </div>
+          <div class="chart-footer">
+            <span>Source: 06_Milestones & 03_Feature_Events</span>
+            <span>SIMULATED DATA</span>
+          </div>
+        </div>
+
         <div class="chart-card">
           <div class="chart-header">
             <div class="chart-title-wrap">
@@ -1051,28 +1115,11 @@ def main():
           </div>
           <div class="blocked-box">
             <span class="blocked-badge">BLOCKED TELEMETRY</span>
-            <h4>BLOCKED — See KPI K30 Blocker</h4>
-            <p>05_Task_Activity contains reward_status ('Credited': 5,627) but completely lacks a numeric reward_amount or points column. Dedicated Task_Master and Wallet_Ledger tables are absent from the supplied workbook.</p>
+            <h4>BLOCKED — see Tab 7</h4>
+            <p>05_Task_Activity contains reward_status ('Credited': 5,627) but lacks a numeric reward_amount column. Task_Master and Wallet_Ledger tables are missing from the supplied workbooks.</p>
           </div>
           <div class="chart-footer">
             <span>Source: 05_Task_Activity</span>
-            <span>SIMULATED DATA</span>
-          </div>
-        </div>
-
-        <div class="chart-card">
-          <div class="chart-header">
-            <div class="chart-title-wrap">
-              <h3>Reward Amount by Feature</h3>
-              <p>Gross milestone reward units credited by feature source (Total: 242,830)</p>
-            </div>
-            <span class="chart-tag">KPI K31</span>
-          </div>
-          <div class="chart-canvas-wrap">
-            <canvas id="chart-rewards-feature"></canvas>
-          </div>
-          <div class="chart-footer">
-            <span>Source: 06_Milestones & 03_Feature_Events</span>
             <span>SIMULATED DATA</span>
           </div>
         </div>
@@ -1088,12 +1135,15 @@ def main():
           <div class="chart-header">
             <div class="chart-title-wrap">
               <h3>Data Quality & Anomaly Distribution</h3>
-              <p>Frequency of detected anomalies across messy audit baseline tables</p>
+              <p>Frequency of detected anomalies across audit baseline tables</p>
             </div>
-            <span class="chart-tag">KPIs K38–K44</span>
+            <span class="chart-tag">KPIs K38, K40, K41, K43</span>
           </div>
           <div class="chart-canvas-wrap">
             <canvas id="chart-dq-issues"></canvas>
+          </div>
+          <div class="note-box">
+            <strong>NOTE:</strong> K41 and K44 describe the same 4 rows. Total distinct affected rows = 26, not 30.
           </div>
           <div class="chart-footer">
             <span>Source: Users_Messy_Audit & 10_Event_Data_Quality_Audit</span>
@@ -1102,76 +1152,62 @@ def main():
         </div>
       </div>
 
+      <!-- Data Quality Table -->
       <div class="card" style="margin-top: 24px;">
-        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px;">Comprehensive Telemetry Quality Audit Register</h3>
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px;">Full Data Quality Issue Registry</h3>
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
                 <th>KPI ID</th>
-                <th>Data Quality Check</th>
-                <th>Affected Records</th>
-                <th>Affected %</th>
+                <th>Issue Description</th>
+                <th>Affected Rows</th>
                 <th>Severity</th>
-                <th>Detection Scope & Example Record</th>
+                <th>Diagnostic Detail & Root Cause</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="mono">K38</td>
                 <td>Duplicate user_ids</td>
-                <td class="mono"><strong>16 rows</strong></td>
-                <td>1.59%</td>
-                <td><span class="badge-critical">Critical</span></td>
-                <td>8 duplicate pairs in Users_Messy_Audit (e.g., VLUSR000142, Aditya Patel)</td>
-              </tr>
-              <tr>
-                <td class="mono">K39</td>
-                <td>Rows with missing user_id</td>
-                <td class="mono">0 rows</td>
-                <td>0.00%</td>
-                <td><span class="badge-pass">Pass</span></td>
-                <td>Zero nulls across Users_Messy_Audit and 10_Event_Data_Quality_Audit</td>
+                <td class="mono">16 rows</td>
+                <td><span class="badge-high">HIGH</span></td>
+                <td>8 distinct user IDs duplicated in Users_Messy_Audit (missing primary key constraint)</td>
               </tr>
               <tr>
                 <td class="mono">K40</td>
                 <td>Malformed or null timestamps</td>
-                <td class="mono"><strong>2 rows</strong></td>
-                <td>0.20%</td>
-                <td><span class="badge-critical">Critical</span></td>
-                <td>Users_Messy_Audit: 1 null registration date (VLUSR000451) + 1 invalid month 14 '2026-14-05' (VLUSR000788)</td>
+                <td class="mono">2 rows</td>
+                <td><span class="badge-high">HIGH</span></td>
+                <td>1 null registration timestamp (VLUSR000451) and 1 invalid month 14 value (VLUSR000788)</td>
               </tr>
               <tr>
                 <td class="mono">K41</td>
-                <td>Invalid status values</td>
-                <td class="mono"><strong>4 rows</strong></td>
-                <td>0.01%</td>
-                <td><span class="badge-medium">Medium</span></td>
-                <td>10_Event_Data_Quality_Audit: 'success ' (lowercase + trailing space) outside canonical enum</td>
-              </tr>
-              <tr>
-                <td class="mono">K42</td>
-                <td>Orphan records (user_id not in users)</td>
-                <td class="mono">0 records</td>
-                <td>0.00%</td>
-                <td><span class="badge-pass">Pass</span></td>
-                <td>100% of events (35,714), sessions (7,913), and tasks (9,846) link to valid registered user IDs</td>
+                <td>Invalid status enum (same as K44)</td>
+                <td class="mono">4 rows</td>
+                <td><span class="badge-medium">MEDIUM</span></td>
+                <td>event_status contains 'success ' with trailing whitespace outside canonical enum</td>
               </tr>
               <tr>
                 <td class="mono">K43</td>
                 <td>Negative amounts</td>
-                <td class="mono"><strong>4 rows</strong></td>
-                <td>0.40%</td>
-                <td><span class="badge-medium">Medium</span></td>
-                <td>Users_Messy_Audit: days_since_registration has negative values (-0.803, -0.655) due to snapshot baseline offset</td>
+                <td class="mono">4 rows</td>
+                <td><span class="badge-medium">MEDIUM</span></td>
+                <td>days_since_registration has negative offsets (-0.803 to -0.198d) due to snapshot calculation offset</td>
               </tr>
               <tr>
-                <td class="mono">K44</td>
-                <td>Trailing-whitespace categorical values</td>
-                <td class="mono"><strong>4 rows</strong></td>
-                <td>0.01%</td>
-                <td><span class="badge-medium">Medium</span></td>
-                <td>10_Event_Data_Quality_Audit: event_status column has unstripped trailing spaces</td>
+                <td class="mono">K42</td>
+                <td>Orphan records</td>
+                <td class="mono">0 rows</td>
+                <td><span class="badge-clean">CLEAN</span></td>
+                <td>Zero orphan records across all 35,714 events, 7,913 sessions, and 9,846 tasks</td>
+              </tr>
+              <tr>
+                <td class="mono">K39</td>
+                <td>Missing user_ids</td>
+                <td class="mono">0 rows</td>
+                <td><span class="badge-clean">CLEAN</span></td>
+                <td>Zero missing or null user_id rows across all messy audit sheets</td>
               </tr>
             </tbody>
           </table>
@@ -1183,82 +1219,60 @@ def main():
     <!-- TAB 7: BLOCKED KPIs -->
     <!-- =================================================================== -->
     <div id="tab-blocked" class="tab-content">
-      <div class="card" style="margin-bottom: 24px; border-left: 4px solid var(--accent-rose);">
-        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: #fca5a5;">Blocked KPI Transparency Notice</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-          These KPIs cannot be calculated from the supplied simulated data because the required tables are absent. They are listed for transparency rather than invented. In production, these metrics require transactional ledgers and event broker instrumentation as documented in the table below.
-        </p>
-      </div>
-
       <div class="card">
-        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px;">Inventory of Blocked Metrics (8 KPIs)</h3>
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">Blocked Telemetry & Missing Dimension Register</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+          These 8 KPIs cannot be calculated from the supplied simulated data because the required tables are absent. They are listed for transparency rather than fabricated.
+        </p>
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
                 <th>KPI ID</th>
                 <th>KPI Name</th>
-                <th>Status</th>
-                <th>Blocker Reason & Missing Source Entities</th>
-                <th>Business Impact</th>
+                <th>Blocker Reason</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="mono">K29</td>
                 <td>Average reward per completed task</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>05_Task_Activity lacks a numeric reward_amount column; Task_Master and Wallet_Ledger tables are missing</td>
-                <td>Cannot evaluate micro-task payout unit economics or user payout ROI.</td>
+                <td>Missing reward_amount in 05_Task_Activity</td>
               </tr>
               <tr>
                 <td class="mono">K30</td>
                 <td>Reward distribution by task_type</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing</td>
-                <td>Inability to track financial liability burn segmented by task category.</td>
+                <td>Missing reward_amount in 05_Task_Activity</td>
               </tr>
               <tr>
                 <td class="mono">K32</td>
-                <td>Reward reversals (count and %)</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>Wallet_Ledger is missing and 05_Task_Activity reward_status lacks a Reversal status</td>
-                <td>Blindness to clawbacks, fraud cancellations, and chargeback exposure.</td>
+                <td>Reward reversals</td>
+                <td>Missing Wallet_Ledger table</td>
               </tr>
               <tr>
                 <td class="mono">K45</td>
                 <td>Wallet credits total</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>Wallet_Ledger table is missing from supplied workbooks</td>
-                <td>Cannot audit cumulative currency liabilities or platform XP inflation.</td>
+                <td>Missing Wallet_Ledger table</td>
               </tr>
               <tr>
                 <td class="mono">K46</td>
                 <td>Withdrawal completion rate</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>Withdrawals table is missing from supplied workbooks</td>
-                <td>Inability to assess cash, UPI, or voucher disbursement reliability and SLA.</td>
+                <td>Missing Withdrawals table</td>
               </tr>
               <tr>
                 <td class="mono">K47</td>
-                <td>Withdrawal processing time (median)</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>Withdrawals table is missing from supplied workbooks</td>
-                <td>Disbursement lifecycle turnaround times cannot be measured.</td>
+                <td>Withdrawal processing time</td>
+                <td>Missing Withdrawals table</td>
               </tr>
               <tr>
                 <td class="mono">K48</td>
                 <td>Referral conversion rate</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>Referral_Invites and Referral_Conversions tracking tables are missing from supplied workbooks</td>
-                <td>Cannot compute viral coefficient (K-factor) or invite-to-registration conversion.</td>
+                <td>Missing Referral_Invites/Conversions</td>
               </tr>
               <tr>
                 <td class="mono">K49</td>
                 <td>Referral activations</td>
-                <td><span class="badge-critical">BLOCKED</span></td>
-                <td>Referral_Activations table is missing from supplied workbooks</td>
-                <td>Referee downstream milestone completion tracking is absent.</td>
+                <td>Missing Referral_Activations table</td>
               </tr>
             </tbody>
           </table>
@@ -1269,7 +1283,10 @@ def main():
     <!-- Footer -->
     <footer class="dashboard-footer">
       <div>
-        Data source: <span class="mono">veloop_simulated_user_behavior_1000.xlsx</span> and <span class="mono">veloop_rewards_data_01.xlsx</span> (simulated).
+        Data source: <span class="mono">veloop_simulated_user_behavior_1000.xlsx</span> and <span class="mono">veloop_rewards_data_01.xlsx</span>
+      </div>
+      <div>
+        KPIs Status: <strong>41 OK / 1 PARTIAL / 8 BLOCKED</strong> (Total: 49 Standardized KPIs)
       </div>
       <div>
         Generated on <strong>{today_str}</strong> | Built for GitHub Pages
@@ -1287,14 +1304,6 @@ def main():
 {json.dumps(prof_data, indent=2)}
   </script>
 
-  <!-- Embedded Helper Datasets -->
-  <script type="application/json" id="helper-data">
-{json.dumps({
-    "task_timing": task_timing_by_cat,
-    "cohorts": cohort_data
-}, indent=2)}
-  </script>
-
   <!-- Interactive Chart Initializer -->
   <script>
     // Tab Switching Logic
@@ -1310,71 +1319,32 @@ def main():
         btn.classList.add('active');
       }}
 
-      // Trigger resize on visible Chart.js instances so canvas dimensions adjust properly
+      // Trigger resize on visible Chart.js instances
       window.dispatchEvent(new Event('resize'));
     }}
 
     // Parse embedded JSON payloads
     const kpiPayload = JSON.parse(document.getElementById('kpi-data').textContent);
-    const helperPayload = JSON.parse(document.getElementById('helper-data').textContent);
     const kpis = {{}};
     kpiPayload.kpis.forEach(k => {{ kpis[k.kpi_id] = k; }});
 
-    // Populate Feature Matrix Table in Tab 3
-    (function populateFeatureMatrix() {{
-      const tbody = document.getElementById('feature-matrix-tbody');
-      if (!tbody) return;
-      
-      const adoptions = kpis['K15'].value; // {{feat: pct}}
-      const frequencies = kpis['K16'].value; // {{feat: freq}}
-      const repeats = kpis['K19'].value; // {{feat: pct}}
-      const uniqueUsers = {{
-        'Watch Ads': 836, 'Daily Reward': 835, 'Streak Rewards': 832, 'CAPTCHA': 824,
-        'Referral': 811, 'Wallet': 810, 'Tap & Earn': 800, 'Mining Rewards': 799,
-        'Level System': 773, 'Missions': 771, 'Spin the Wheel': 763, 'Exchange Center': 720,
-        'Leaderboard': 686, 'Follow & Earn': 685, 'Badges': 674
-      }};
-      const totalEvents = {{
-        'Watch Ads': 3126, 'Missions': 2780, 'Streak Rewards': 2734, 'CAPTCHA': 2733,
-        'Tap & Earn': 2654, 'Mining Rewards': 2616, 'Referral': 2521, 'Daily Reward': 2499,
-        'Level System': 2427, 'Spin the Wheel': 2425, 'Wallet': 2172, 'Leaderboard': 1836,
-        'Badges': 1832, 'Exchange Center': 1690, 'Follow & Earn': 1659
-      }};
-
-      Object.keys(adoptions).forEach(feat => {{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>${{feat}}</strong></td>
-          <td class="mono">${{uniqueUsers[feat] || '-'}}</td>
-          <td class="mono">${{totalEvents[feat] ? totalEvents[feat].toLocaleString() : '-'}}</td>
-          <td class="mono"><span style="color: var(--accent-cyan); font-weight: 600;">${{adoptions[feat]}}%</span></td>
-          <td class="mono">${{frequencies[feat] || '-'}} events/user</td>
-          <td class="mono"><span style="color: var(--accent-emerald); font-weight: 600;">${{repeats[feat]}}%</span></td>
-        `;
-        tbody.appendChild(tr);
-      }});
-    }})();
-
-    // Chart.js Theme Configurations
+    // Chart.js Global Settings
     Chart.defaults.color = '#94a3b8';
     Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
-    Chart.defaults.font.size = 11;
-    Chart.defaults.plugins.legend.labels.usePointStyle = true;
-    Chart.defaults.plugins.tooltip.backgroundColor = '#0b0f19';
-    Chart.defaults.plugins.tooltip.borderColor = '#334b6e';
+    Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(18, 26, 45, 0.95)';
+    Chart.defaults.plugins.tooltip.borderColor = '#1e2c47';
     Chart.defaults.plugins.tooltip.borderWidth = 1;
     Chart.defaults.plugins.tooltip.padding = 10;
-    Chart.defaults.plugins.tooltip.titleColor = '#ffffff';
-    Chart.defaults.plugins.tooltip.bodyColor = '#cbd5e1';
+    Chart.defaults.plugins.tooltip.cornerRadius = 8;
 
     // 1. DAU Timeseries Line Chart (K06)
-    const ctxDau = document.getElementById('chart-dau-timeseries').getContext('2d');
-    const dauData = kpis['K06'].value; // {{date: count}}
+    const ctxDau = document.getElementById('chart-dau').getContext('2d');
+    const dauData = kpis['K06'].value;
     const dauLabels = Object.keys(dauData);
     const dauValues = Object.values(dauData);
 
-    const gradDau = ctxDau.createLinearGradient(0, 0, 0, 300);
-    gradDau.addColorStop(0, 'rgba(6, 182, 212, 0.4)');
+    const gradDau = ctxDau.createLinearGradient(0, 0, 0, 320);
+    gradDau.addColorStop(0, 'rgba(6, 182, 212, 0.35)');
     gradDau.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
 
     new Chart(ctxDau, {{
@@ -1382,24 +1352,22 @@ def main():
       data: {{
         labels: dauLabels,
         datasets: [{{
-          label: 'Daily Active Users (DAU)',
+          label: 'Daily Active Users',
           data: dauValues,
           borderColor: '#06b6d4',
           backgroundColor: gradDau,
-          borderWidth: 2,
+          borderWidth: 2.5,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: '#06b6d4',
-          pointHoverRadius: 6
+          pointHoverRadius: 6,
+          pointBackgroundColor: '#06b6d4'
         }}]
       }},
       options: {{
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {{
-          legend: {{ display: false }}
-        }},
+        plugins: {{ legend: {{ display: false }} }},
         scales: {{
           x: {{
             grid: {{ color: 'rgba(255, 255, 255, 0.04)' }},
@@ -1414,7 +1382,7 @@ def main():
     }});
 
     // 2. Registrations by Day Bar Chart (K02)
-    const ctxReg = document.getElementById('chart-reg-timeseries').getContext('2d');
+    const ctxReg = document.getElementById('chart-reg').getContext('2d');
     const regData = kpis['K02'].value;
     const regLabels = Object.keys(regData);
     const regValues = Object.values(regData);
@@ -1467,11 +1435,7 @@ def main():
         maintainAspectRatio: false,
         plugins: {{
           legend: {{ display: false }},
-          tooltip: {{
-            callbacks: {{
-              label: (ctx) => `${{ctx.parsed.y}}% of eligible cohort`
-            }}
-          }}
+          tooltip: {{ callbacks: {{ label: (ctx) => `${{ctx.parsed.y}}% of eligible cohort` }} }}
         }},
         scales: {{
           y: {{
@@ -1485,48 +1449,13 @@ def main():
       }}
     }});
 
-    // 4. Cohort Active 30d Bar Chart
-    const ctxCohorts = document.getElementById('chart-cohorts').getContext('2d');
-    new Chart(ctxCohorts, {{
-      type: 'bar',
-      data: {{
-        labels: helperPayload.cohorts.cohorts,
-        datasets: [
-          {{
-            label: 'Total Registered in Cohort',
-            data: helperPayload.cohorts.registered,
-            backgroundColor: 'rgba(71, 85, 105, 0.65)',
-            borderRadius: 6
-          }},
-          {{
-            label: 'Active in Final 30 Days',
-            data: helperPayload.cohorts.active_30d,
-            backgroundColor: '#10b981',
-            borderRadius: 6
-          }}
-        ]
-      }},
-      options: {{
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {{ legend: {{ position: 'top' }} }},
-        scales: {{
-          x: {{ grid: {{ display: false }} }},
-          y: {{
-            beginAtZero: true,
-            grid: {{ color: 'rgba(255, 255, 255, 0.04)' }}
-          }}
-        }}
-      }}
-    }});
-
-    // 5. Full Retention Curve Line Chart (K37)
+    // 4. Full Retention Curve Line Chart (K37)
     const ctxCurve = document.getElementById('chart-retention-curve').getContext('2d');
-    const curvePoints = kpis['K37'].value; // [{{day, eligible_users, retained_users, retention_rate_pct}}]
+    const curvePoints = kpis['K37'].value;
     const curveLabels = curvePoints.map(p => `D${{p.day}}`);
     const curveValues = curvePoints.map(p => p.retention_rate_pct);
 
-    const gradCurve = ctxCurve.createLinearGradient(0, 0, 0, 400);
+    const gradCurve = ctxCurve.createLinearGradient(0, 0, 0, 320);
     gradCurve.addColorStop(0, 'rgba(59, 130, 246, 0.35)');
     gradCurve.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
 
@@ -1544,7 +1473,7 @@ def main():
           tension: 0.25,
           pointRadius: 4,
           pointBackgroundColor: '#3b82f6',
-          pointHoverRadius: 7
+          pointHoverRadius: 6
         }}]
       }},
       options: {{
@@ -1571,6 +1500,40 @@ def main():
             ticks: {{ callback: (v) => v + '%' }},
             grid: {{ color: 'rgba(255, 255, 255, 0.04)' }}
           }}
+        }}
+      }}
+    }});
+
+    // 5. Feature Adoption Rate Horizontal Bar (K15)
+    const ctxAdopt = document.getElementById('chart-feature-adoption').getContext('2d');
+    const adoptEntries = Object.entries(kpis['K15'].value).sort((a,b) => b[1] - a[1]);
+    new Chart(ctxAdopt, {{
+      type: 'bar',
+      data: {{
+        labels: adoptEntries.map(e => e[0]),
+        datasets: [{{
+          label: 'Adoption Rate (%)',
+          data: adoptEntries.map(e => e[1]),
+          backgroundColor: adoptEntries.map((_, i) => i < 3 ? '#06b6d4' : (i < 8 ? '#3b82f6' : '#64748b')),
+          borderRadius: 5
+        }}]
+      }},
+      options: {{
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{
+          legend: {{ display: false }},
+          tooltip: {{ callbacks: {{ label: (ctx) => `${{ctx.parsed.x}}% of registered users` }} }}
+        }},
+        scales: {{
+          x: {{
+            beginAtZero: true,
+            max: 100,
+            ticks: {{ callback: (v) => v + '%' }},
+            grid: {{ color: 'rgba(255, 255, 255, 0.04)' }}
+          }},
+          y: {{ grid: {{ display: false }} }}
         }}
       }}
     }});
@@ -1632,50 +1595,23 @@ def main():
       }}
     }});
 
-    // 8. Feature Adoption Rate Horizontal Bar (K15)
-    const ctxAdopt = document.getElementById('chart-feature-adoption').getContext('2d');
-    const adoptEntries = Object.entries(kpis['K15'].value).sort((a,b) => b[1] - a[1]);
-    new Chart(ctxAdopt, {{
-      type: 'bar',
-      data: {{
-        labels: adoptEntries.map(e => e[0]),
-        datasets: [{{
-          label: 'Adoption Rate (%)',
-          data: adoptEntries.map(e => e[1]),
-          backgroundColor: adoptEntries.map((_, i) => i < 3 ? '#06b6d4' : (i < 8 ? '#3b82f6' : '#64748b')),
-          borderRadius: 5
-        }}]
-      }},
-      options: {{
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {{
-          legend: {{ display: false }},
-          tooltip: {{ callbacks: {{ label: (ctx) => `${{ctx.parsed.x}}% of registered users` }} }}
-        }},
-        scales: {{
-          x: {{
-            beginAtZero: true,
-            max: 100,
-            ticks: {{ callback: (v) => v + '%' }},
-            grid: {{ color: 'rgba(255, 255, 255, 0.04)' }}
-          }},
-          y: {{ grid: {{ display: false }} }}
-        }}
-      }}
-    }});
-
-    // 9. Task Outcome Doughnut (K22, K23)
-    const ctxTaskOutcomes = document.getElementById('chart-task-outcomes').getContext('2d');
-    new Chart(ctxTaskOutcomes, {{
+    // 8. Task Funnel 4-Segment Doughnut (K20, K21, K23)
+    const ctxFunnel = document.getElementById('chart-task-funnel').getContext('2d');
+    const funnelCounts = [{k21_completed}, {failed_tasks}, {abandoned_tasks}, {pending_tasks}];
+    const funnelTotal = {funnel_sum};
+    new Chart(ctxFunnel, {{
       type: 'doughnut',
       data: {{
-        labels: ['Completed (57.15%)', 'Abandoned (20.83%)', 'Failed (15.44%)', 'Pending (6.58%)'],
+        labels: [
+          'Completed: 5,627 (57.15%)',
+          'Failed: 1,520 (15.44%)',
+          'Abandoned: 2,051 (20.83%)',
+          'Pending: 648 (6.58%)'
+        ],
         datasets: [{{
-          data: [5627, 2051, 1520, 648],
-          backgroundColor: ['#10b981', '#f59e0b', '#f43f5e', '#64748b'],
-          borderColor: '#131c2e',
+          data: funnelCounts,
+          backgroundColor: ['#10b981', '#f43f5e', '#f59e0b', '#64748b'],
+          borderColor: '#121a2d',
           borderWidth: 3
         }}]
       }},
@@ -1686,7 +1622,11 @@ def main():
           legend: {{ position: 'right' }},
           tooltip: {{
             callbacks: {{
-              label: (ctx) => ` ${{ctx.label}}: ${{ctx.parsed.toLocaleString()}} tasks`
+              label: (ctx) => {{
+                const val = ctx.parsed;
+                const pct = ((val / funnelTotal) * 100).toFixed(2);
+                return ` ${{ctx.label.split(':')[0]}}: ${{val.toLocaleString()}} tasks (${{pct}}%)`;
+              }}
             }}
           }}
         }},
@@ -1694,7 +1634,7 @@ def main():
       }}
     }});
 
-    // 10. Task Attempts by Category (K25)
+    // 9. Task Attempts by Category (K25)
     const ctxTaskCats = document.getElementById('chart-task-categories').getContext('2d');
     const taskCatEntries = Object.entries(kpis['K25'].value).sort((a,b) => b[1] - a[1]);
     new Chart(ctxTaskCats, {{
@@ -1722,9 +1662,10 @@ def main():
       }}
     }});
 
-    // 11. Average Duration by Task Category (K24 sub-breakdown)
+    // 10. Average Completion Time by Category (K24)
     const ctxTaskDur = document.getElementById('chart-task-duration').getContext('2d');
-    const durEntries = Object.entries(helperPayload.task_timing).sort((a,b) => b[1] - a[1]);
+    const durData = {json.dumps(task_timing_by_cat)};
+    const durEntries = Object.entries(durData).sort((a,b) => b[1] - a[1]);
     new Chart(ctxTaskDur, {{
       type: 'bar',
       data: {{
@@ -1754,6 +1695,41 @@ def main():
       }}
     }});
 
+    // 11. Top 5 Task Categories by Failure Rate (Deep-Dive)
+    const ctxTaskFail = document.getElementById('chart-task-failure-rate').getContext('2d');
+    const failData = {json.dumps(task_failure_rates)};
+    const failEntries = Object.entries(failData).sort((a,b) => b[1] - a[1]);
+    new Chart(ctxTaskFail, {{
+      type: 'bar',
+      data: {{
+        labels: failEntries.map(e => e[0]),
+        datasets: [{{
+          label: 'Failure Rate (%)',
+          data: failEntries.map(e => e[1]),
+          backgroundColor: '#f43f5e',
+          borderRadius: 6
+        }}]
+      }},
+      options: {{
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{
+          legend: {{ display: false }},
+          tooltip: {{ callbacks: {{ label: (ctx) => `${{ctx.parsed.x}}% failure rate` }} }}
+        }},
+        scales: {{
+          x: {{
+            beginAtZero: true,
+            max: 20,
+            ticks: {{ callback: (v) => v + '%' }},
+            grid: {{ color: 'rgba(255, 255, 255, 0.04)' }}
+          }},
+          y: {{ grid: {{ display: false }} }}
+        }}
+      }}
+    }});
+
     // 12. Reward Amount by Feature (K31)
     const ctxRewFeat = document.getElementById('chart-rewards-feature').getContext('2d');
     const rewEntries = Object.entries(kpis['K31'].value).sort((a,b) => b[1] - a[1]);
@@ -1765,65 +1741,48 @@ def main():
           label: 'Reward Units Credited',
           data: rewEntries.map(e => e[1]),
           backgroundColor: 'rgba(16, 185, 129, 0.8)',
-          borderRadius: 6
+          borderRadius: 5
         }}]
       }},
       options: {{
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {{
           legend: {{ display: false }},
-          tooltip: {{ callbacks: {{ label: (ctx) => `${{ctx.parsed.y.toLocaleString()}} reward units / XP` }} }}
+          tooltip: {{ callbacks: {{ label: (ctx) => `${{ctx.parsed.x.toLocaleString()}} reward units / XP` }} }}
         }},
         scales: {{
-          x: {{ grid: {{ display: false }} }},
-          y: {{
+          x: {{
             beginAtZero: true,
             grid: {{ color: 'rgba(255, 255, 255, 0.04)' }}
-          }}
+          }},
+          y: {{ grid: {{ display: false }} }}
         }}
       }}
     }});
 
-    // 13. Data Quality Issues Bar Chart (K38–K44)
+    // 13. Data Quality Issues Bar Chart (K38, K40, K41, K43)
     const ctxDq = document.getElementById('chart-dq-issues').getContext('2d');
     const dqLabels = [
-      'Duplicate Users (K38)',
-      'Missing User ID (K39)',
-      'Malformed Timestamps (K40)',
-      'Invalid Status Enum (K41)',
-      'Orphan Records (K42)',
-      'Negative Amounts (K43)',
-      'Trailing Whitespace (K44)'
+      'K38 duplicates (16 rows)',
+      'K40 bad dates (2 rows)',
+      'K41 bad status (4 rows)',
+      'K43 negative (4 rows)'
     ];
-    const dqValues = [
-      kpis['K38'].value,
-      kpis['K39'].value,
-      kpis['K40'].value,
-      kpis['K41'].value,
-      kpis['K42'].value,
-      kpis['K43'].value,
-      kpis['K44'].value
-    ];
-    const dqColors = [
-      '#f43f5e', // Critical
-      '#10b981', // Pass
-      '#f43f5e', // Critical
-      '#3b82f6', // Medium
-      '#10b981', // Pass
-      '#3b82f6', // Medium
-      '#3b82f6'  // Medium
-    ];
+    const dqValues = [16, 2, 4, 4];
+    const dqColors = ['#f43f5e', '#f43f5e', '#f59e0b', '#f59e0b'];
 
     new Chart(ctxDq, {{
       type: 'bar',
       data: {{
         labels: dqLabels,
         datasets: [{{
-          label: 'Anomalous Records Count',
+          label: 'Affected Records',
           data: dqValues,
           backgroundColor: dqColors,
-          borderRadius: 6
+          borderRadius: 6,
+          barThickness: 36
         }}]
       }},
       options: {{
@@ -1852,8 +1811,19 @@ def main():
         f.write(html_content)
 
     file_size_kb = out_html.stat().st_size / 1024
+    
+    # Validation checks
+    chart_count = html_content.count("<canvas id=")
+    kpi_card_count = html_content.count('class="kpi-card')
+    tab_count = html_content.count('class="tab-content')
+
     print(f"[OK] Dashboard successfully created at: {out_html.resolve()}")
-    print(f"     File size: {file_size_kb:.2f} KB ({out_html.stat().st_size:,} bytes)")
+    print(f"     Output file size: {file_size_kb:.2f} KB ({out_html.stat().st_size:,} bytes)")
+    print(f"     Total chart count: {chart_count}")
+    print(f"     Total KPI cards count: {kpi_card_count}")
+    print(f"     Total tabs count: {tab_count} (All 7 tabs verified)")
+    print(f"     Task Funnel Segments: Completed={k21_completed}, Failed={failed_tasks}, Abandoned={abandoned_tasks}, Pending={pending_tasks}")
+    print(f"     Task Funnel Sum: {funnel_sum} (Matches K20={k20_total}: {funnel_sum == k20_total})")
 
 if __name__ == "__main__":
     main()

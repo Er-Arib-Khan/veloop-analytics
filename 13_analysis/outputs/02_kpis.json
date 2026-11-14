@@ -570,9 +570,11 @@
         "06_Milestones",
         "Users_1000_Clean"
       ],
-      "status": "OK",
+      "status": "PARTIAL",
       "blocker": null,
-      "reason": null
+      "reason": null,
+      "measurement_scope": "Milestone awards only. Sum of 06_Milestones.milestone_value across 4,799 rows = 242,830. This is a LOWER BOUND — it does not include rewards credited through other mechanisms (task completion, daily reward, spin, referral bonus) because no standalone Rewards table exists in the supplied data.",
+      "cross_check": "Users_1000_Clean.SUM(xp_balance) = 231,889 XP — 10,941 lower than milestone_sum. The discrepancy indicates either (a) some milestones were not credited to XP balance, or (b) xp_balance is a snapshot that excludes older activity. Root cause requires engineering verification."
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",

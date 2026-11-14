@@ -6,122 +6,135 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
-### R1 — Implement Mid-Task Checkpoints and Exit-Intent Prompts to Curtail Task Abandonment
+### R1 — Resolve Third-Party Validation Timeouts and Pre-Filter Inventory to Cut Task Failures
 
-**Finding:** Out of 9,846 tasks started in `05_Task_Activity`, the task completion rate is 57.15% (K22), with explicit task failure at 15.44% (1,520 tasks, K23) and user abandonment at 20.83% (2,051 tasks), while task volume is led by Advertisement attempts at 2,203 rows (K25).
+**Finding:** Across 9,846 started tasks in `05_Task_Activity`, the task completion rate is 57.15% (5,627 tasks, K22), with explicit task failures accounting for 15.44% (1,520 tasks, K23), user abandonment accounting for 20.83% (2,051 tasks), and an aggregate not-completed rate of 42.85% (4,219 tasks), driven predominantly by Validation failed (732 tasks), Task unavailable (722 tasks), and Timeout (66 tasks).
 
-**Recommendation:** Introduce progress-saving checkpoints and exit-intent confirmation dialogs for high-latency tasks (especially Surveys and App Tasks where average duration is ~304 seconds per K24), coupled with automated telemetry capturing exact abandonment drop-off steps (`abandon_step_number`, `time_elapsed_before_exit`).
+**Recommendation:** Implement client-side inventory caching and automated pre-validation checks with third-party task providers to deprecate expired task offers before users attempt them, coupled with asynchronous server-side retry webhooks for validation confirmations.
 
-**Impact:** User abandonment (20.83%) accounts for 1.35 times more lost tasks than system/execution failures (15.44%); rescuing even 25% of abandoned tasks would generate approximately 512 additional completed tasks and improve overall completion rate by over 5 percentage points.
+**Impact:** Directly mitigates the 95.66% of failures caused by partner validation errors (732) and stale inventory (722), rescuing up to 1,454 failed attempts and raising task completion throughput toward 70%.
 
-**Owner:** Product  
+**Owner:** Engineering  
 **Effort:** Medium  
 **Priority:** High  
-**Data Dependency:** Requires extending `05_Task_Activity` telemetry with `task_step_progress` and `client_exit_event_name`. Existing task category and status fields are already present.
+**Data Dependency:** Uses existing `failure_reason` and `task_status` in `05_Task_Activity`; requires real-time health-check API telemetry from third-party task offer providers.
 
 ---
 
-### R2 — Deploy Automated OTP Verification Rescues and Guaranteed Day-1 Login Incentives
+### R2 — Deploy Automated OTP Verification Rescues and Day-1 Login Bonuses to Activate Dormant Users
 
-**Finding:** 72 registered users (7.2% of the 1,000 cohort) never logged in and remained dormant from day 0 in `Users_1000_Clean` (K09), while Day 1 cohort retention stands at only 17.91% with 178 retained users out of 994 eligible users in `04_Daily_Activity` (K34).
+**Finding:** Exactly 72 registered users (7.2% of the 1,000 cohort) never logged in and remained dormant from day 0 with zero recorded sessions in `Users_1000_Clean` (K09), while Day 1 cohort retention drops sharply to 17.91% across 994 eligible users in `04_Daily_Activity` (K34).
 
-**Recommendation:** Implement an automated SMS/WhatsApp verification retry sequence at hour 1 and hour 24 for unverified signups, combined with a Day-1 login claim mechanic that awards an instant 50 XP bonus upon first opening the app within 24 hours of registration.
+**Recommendation:** Deploy automated SMS/WhatsApp verification retry triggers at hour 1 and hour 24 for pending signups, paired with a guaranteed 50 XP instant login bonus credited upon opening the app within 24 hours of registration.
 
-**Impact:** Directly recovers a portion of the 7.2% of users who drop off before their first session, while providing a concrete extrinsic incentive to address the steep 82.09% drop-off between registration and Day 1.
-
-**Owner:** Product & Engineering  
-**Effort:** Medium  
-**Priority:** Critical  
-**Data Dependency:** User phone/email contact information and registration timestamps exist in `01_Users_1000`; integration with production messaging gateways (SMS/WhatsApp) is required.
-
----
-
-### R3 — Re-architect Gamification Badges to Anchor Directly into High-Adoption Daily Habits
-
-**Finding:** In `03_Feature_Events` and `07_Feature_Usage`, feature adoption spans from a high of 83.6% for Watch Ads (836 unique users) to a low of 67.4% for Badges (674 unique users, K15), representing a 16.2 percentage-point engagement gap.
-
-**Recommendation:** Redesign the Badges interface from an isolated profile sub-screen into an active contextual reward layer that surfaces real-time badge progress bars directly upon completing high-adoption actions (e.g. "Ad Watcher Tier 1", "Streak Master Tier 1").
-
-**Impact:** Closes the 16.2 percentage-point gap between passive ad viewing (83.6%) and reputation mechanics (67.4%), transitioning ad-viewing users into self-reinforcing gamified progression loops.
+**Impact:** Directly activates a meaningful portion of the 72 day-0 dormant users who abandon during onboarding and dampens the steep 82.09% drop-off between registration and Day 1.
 
 **Owner:** Product  
 **Effort:** Low  
+**Priority:** Critical  
+**Data Dependency:** Relies on existing registration timestamps and phone/email contacts in `01_Users_1000`; requires production integration with SMS/WhatsApp push notification gateways.
+
+---
+
+### R3 — Contextually Embed the Three Lowest-Adoption Features into Daily Earning Loops
+
+**Finding:** In `03_Feature_Events`, feature adoption diverges from a peak of 83.6% for Watch Ads (836 unique users, K15/K17) down to the platform's three lowest-adopted utilities: Badges at 67.4% (674 users, K15), Follow & Earn at 68.5% (685 users, K15), and Leaderboard at 68.6% (686 users, K15).
+
+**Recommendation:** Surface Badges progress bars, Follow & Earn partner tasks, and Leaderboard rank delta notifications directly onto the post-completion screens of top-adoption features (Watch Ads and Daily Rewards) rather than isolating them in separate navigation tabs.
+
+**Impact:** Elevates engagement across Badges, Follow & Earn, and Leaderboards toward the 80%+ adoption tier observed in passive utilities, turning passive ad viewers into social and competitive participants.
+
+**Owner:** Product  
+**Effort:** Medium  
 **Priority:** Medium  
-**Data Dependency:** Can be implemented immediately using existing event taxonomy in `03_Feature_Events` (`badge_viewed`, `badge_earned`, `ad_completed`).
+**Data Dependency:** Uses existing event streams in `03_Feature_Events` and feature metrics in `07_Feature_Usage`. No missing tables.
 
 ---
 
-### R4 — Establish a 7-Day Progressive Streak Bonus Calendar Targeting the Day 0–1 Retention Cliff
+### R4 — Restructure the First-Week Streak Progression to Arrest the D1-to-D7 Retention Drop
 
-**Finding:** The retention curve in `04_Daily_Activity` drops from 100% at registration to D1 = 17.91% (K34)—a steepest single-day loss of 82.09 percentage points—before declining to D7 = 13.33% (K35) and plateauing at D30 = 8.46% (K36).
+**Finding:** Cohort retention evaluated in `04_Daily_Activity` slides from D1 retention of 17.91% (178 / 994 eligible users, K34) to D7 retention of 13.33% (127 / 953 eligible users, K35) before stabilizing at D30 retention of 8.46% (69 / 816 eligible users, K36), revealing that the steepest multi-day decay interval occurs between Day 1 and Day 7 with a loss of 4.58 percentage points.
 
-**Recommendation:** Restructure the onboarding streak calendar into a front-loaded 7-day progression with an outsized milestone bonus unlocked specifically on Day 3 and Day 7, accompanied by automated push notifications reminding users before their daily streak timer resets.
+**Recommendation:** Introduce a front-loaded 7-day onboarding streak bonus with dedicated milestone multipliers unlocked specifically on Day 3 and Day 5, supported by automated countdown notifications before daily streak expiry.
 
-**Impact:** Directly tackles the critical Day 0 to Day 1 cliff where over 82% of users are lost, lifting the Day 1–7 baseline and flowing into a stronger Day 30 retention plateau.
+**Impact:** Directly bridges the 4.58-point drop between D1 and D7, preventing early cohort attrition and lifting the downstream Day 30 retention baseline above 10%.
 
 **Owner:** Product  
 **Effort:** Low  
 **Priority:** Critical  
-**Data Dependency:** Relies on existing `04_Daily_Activity` (`streak_activity`) and `06_Milestones` (`seventh_active_day`, `third_active_day`). A calendar push notification service is required in production.
+**Data Dependency:** Supported by existing daily logins in `04_Daily_Activity` and milestone awards in `06_Milestones`; requires an automated scheduled push notification service.
 
 ---
 
-### R5 — Establish Financial Liability Ledgers and Cap Hyper-Concentrated Milestone Issuance
+### R5 — Implement Dynamic Daily Earning Caps on Watch Ads to Mitigate Currency Concentration Risk
 
-**Finding:** A cumulative 242,830 milestone reward units were credited across 4,799 milestone awards in `06_Milestones` (K28) with top concentration in Watch Ads (22,500 units) and Streak Rewards (19,010 units), while reward distribution by task_type remains completely BLOCKED (K30) because `05_Task_Activity` lacks a numeric `reward_amount` column and `Wallet_Ledger` is missing.
+**Finding:** Total milestone rewards credited across 4,799 awards in `06_Milestones` equal 242,830 reward units under PARTIAL measurement scope (K28), with volume heavily concentrated in Watch Ads at 22,500 units (9.27% of total issuance, K31) and Streak Rewards at 19,010 units (7.83%).
 
-**Recommendation:** Instrument a dedicated numeric `reward_amount` column on `05_Task_Activity` and build a double-entry append-only `Wallet_Ledger` database schema to track gross credits, currency exchange liabilities, and partner payouts, while applying dynamic daily caps on top issuance channels (Watch Ads and Streaks).
+**Recommendation:** Implement dynamic tiered caps on daily ad reward accruals (e.g. maximum 5 rewarded ads per 24-hour window) and redistribute surplus reward budget into high-friction skill-based tasks.
 
-**Impact:** Eliminates financial blindness regarding unit payout economics per completed task and mitigates virtual currency hyperinflation risks driven by passive ad and streak claims.
+**Impact:** Mitigates virtual currency inflation, decreases financial liability exposure to passive ad farming, and incentivizes users to diversify into higher-retention core task categories.
 
-**Owner:** Data & Engineering  
-**Effort:** High  
-**Priority:** Critical  
-**Data Dependency:** **Missing Table Dependency.** VELOOP currently possesses NO `Wallet_Ledger` or `Task_Master` table with payout amounts. Unblocking requires deploying new database tables and logging pipeline models.
-
----
-
-### R6 — Implement Database Primary Key Constraints and Ingress Schema String Sanitization
-
-**Finding:** Data quality analysis detected 16 duplicate user rows across 8 distinct user IDs in `Users_Messy_Audit` (K38) and 4 event records with invalid trailing-whitespace status values `'success '` in `10_Event_Data_Quality_Audit` (K41, K44), representing the two highest anomaly counts in the audit.
-
-**Recommendation:** Enforce an immutable `PRIMARY KEY (user_id)` constraint in the PostgreSQL warehouse and implement idempotent ingestion (`ON CONFLICT (user_id) DO UPDATE`), while introducing client-side telemetry SDK payload normalization (`trim()` string sanitation and strongly typed TypeScript Enums) before event ingestion.
-
-**Impact:** Completely eliminates identity collision anomalies affecting 1.59% of user profiles and prevents downstream SQL aggregation inaccuracies caused by invisible trailing whitespaces.
-
-**Owner:** Engineering & Data  
+**Owner:** Product  
 **Effort:** Low  
 **Priority:** High  
-**Data Dependency:** Resolvable directly within database schema DDL migrations and existing backend API ingress validators. No external data required.
+**Data Dependency:** Existing data in `06_Milestones` tracks milestone issuance, but full tracking depends on a missing double-entry `Wallet_Ledger` table to capture platform-wide ledger debits and credits.
 
 ---
 
-### R7 — Build the Missing Transactional Core: Wallet Ledger and Withdrawal Payout Pipelines
+### R6 — Enforce Database Unique Constraints and Client-Side Enum Sanitization
 
-**Finding:** Wallet credits total (K45), Withdrawal completion rate (K46), and Withdrawal processing time (K47) are completely BLOCKED because the transactional `Wallet_Ledger` and `Withdrawals` tables are absent from both supplied workbooks.
+**Finding:** Telemetry quality audits in `Users_Messy_Audit` and `10_Event_Data_Quality_Audit` detected 16 duplicate user rows across 8 distinct user IDs (K38) and 4 rows containing the invalid status string `'success '` where trailing whitespace violates canonical enum definitions (K41 and K44 describe the exact same 4 rows, representing a single whitespace defect).
 
-**Recommendation:** Prioritize the architectural design, DDL migration, and payment gateway webhook instrumentation for two core tables:  
-1. `wallet_ledger` (`ledger_id`, `user_id`, `transaction_type`, `amount`, `balance_after`, `source_type`, `source_id`, `created_at`)  
-2. `withdrawals` (`withdrawal_id`, `user_id`, `amount_inr`, `payout_method`, `payout_status`, `requested_at`, `completed_at`, `gateway_reference`, `failure_reason`).
+**Recommendation:** Apply an immutable database `UNIQUE (user_id)` constraint in the warehouse to prevent duplicate profile insertion, and implement strict app-side enum enforcement with automated `trim()` sanitization in the client logging SDK before event emission.
 
-**Impact:** Unblocks 6 critical financial and operational KPIs (K29, K30, K32, K45, K46, K47), enabling real-time visibility into cash burn, payment gateway turnaround SLAs, and chargeback exposure.
+**Impact:** Completely eradicates account identity duplication and eliminates invalid categorical values across downstream analytics pipelines, ensuring 100% data integrity for user-level aggregations.
 
-**Owner:** Engineering & Data  
+**Owner:** Engineering  
+**Effort:** Low  
+**Priority:** High  
+**Data Dependency:** No external data required; relies on backend PostgreSQL/warehouse DDL migrations and client-side logging SDK updates.
+
+---
+
+### R7 — Build the Double-Entry Wallet Ledger Table to Unblock Core Financial Liability Tracking
+
+**Finding:** Wallet credits total (K45) is currently BLOCKED because the transactional `Wallet_Ledger` table is completely absent from the supplied analytics workbooks, preventing any accounting of cumulative currency liabilities, virtual balance inflation, or user balances.
+
+**Recommendation:** Architect and deploy an append-only, double-entry `wallet_ledger` database table with the following mandatory columns: `ledger_id` (UUID PK), `user_id` (FK), `transaction_type` (ENUM: credit, debit, reversal), `amount` (DECIMAL/INT), `currency_type` (VARCHAR: XP, INR), `balance_after` (INT), `source_type` (VARCHAR: task, milestone, daily_reward, referral), `source_id` (VARCHAR), and `created_at` (TIMESTAMP).
+
+**Impact:** Unblocks KPI K45 (Wallet credits total) and provides the underlying transactional ledger necessary to resolve K29, K30, and K32, establishing auditable financial governance over all virtual token issuance and burn.
+
+**Owner:** Engineering  
 **Effort:** High  
 **Priority:** Critical  
-**Data Dependency:** **Completely Missing Data.** These tables do not exist in the current simulated warehouse. Production deployment of banking/UPI webhook loggers and payment gateway ingestion jobs is required.
+**Data Dependency:** **Missing Table Dependency.** `Wallet_Ledger` does not exist in the current telemetry warehouse. Full implementation requires creating the table schema and wiring transactional hooks to all earning and spending endpoints.
 
 ---
 
-### R8 — Launch a VIP Micro-Tasker Tier Capitalizing on the 689-User Power Engagement Core
+### R8 — Launch a Tiered Power User Progression Program Capitalizing on High Task Throughput
 
-**Finding:** While 826 users (82.6%) returned across ≥2 distinct days in `04_Daily_Activity` (K10) and Missions achieved a 79.90% repeat usage rate in `03_Feature_Events` (K19), 689 users (68.9%) completed ≥5 tasks in `05_Task_Activity` (K27), forming a dedicated power user core.
+**Finding:** While 981 users (98.1% of the registered cohort) completed at least one task in `05_Task_Activity` (K26), exactly 689 users (68.9%) completed 5 or more tasks (K27), demonstrating that task volume and ad revenue are concentrated in a dedicated power user core.
 
-**Recommendation:** Create a formal "VIP Tasker" progression status unlocked immediately upon completing 5 tasks, granting access to premium high-reward missions (capitalizing on the 79.90% repeat mission rate per K19) and priority withdrawal queues.
+**Recommendation:** Implement a 3-tiered user progression framework (Bronze: 1–4 tasks, Silver: 5–14 tasks, Gold/VIP: 15+ tasks) that rewards the top 68.9% segment with higher-payout survey invitations, accelerated withdrawal processing, and exclusive daily streak multipliers.
 
-**Impact:** Protects and incentivizes the core 68.9% power segment responsible for the vast majority of task execution and ad monetization, increasing their lifetime value and defense against mid-funnel churn.
+**Impact:** Protects the core revenue-generating segment against mid-funnel churn, increases average completed tasks per active user beyond the current baseline, and builds an organic progression path for newly activated users.
 
 **Owner:** Product  
 **Effort:** Medium  
 **Priority:** High  
-**Data Dependency:** Uses existing completed task counters in `05_Task_Activity` and mission event flags in `03_Feature_Events`.
+**Data Dependency:** Fully supported by existing completed task counts in `05_Task_Activity` (`task_status = 'Completed'`) and user profiles in `01_Users_1000`.
+
+---
+
+## Recommendation Summary Table
+
+| # | Title | Priority | Effort | Owner | KPI Basis |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **R1** | Resolve Third-Party Validation Timeouts and Pre-Filter Inventory to Cut Task Failures | High | Medium | Engineering | K20, K21, K22, K23 |
+| **R2** | Deploy Automated OTP Verification Rescues and Day-1 Login Bonuses to Activate Dormant Users | Critical | Low | Product | K09, K34 |
+| **R3** | Contextually Embed the Three Lowest-Adoption Features into Daily Earning Loops | Medium | Medium | Product | K15, K17 |
+| **R4** | Restructure the First-Week Streak Progression to Arrest the D1-to-D7 Retention Drop | Critical | Low | Product | K34, K35, K36 |
+| **R5** | Implement Dynamic Daily Earning Caps on Watch Ads to Mitigate Currency Concentration Risk | High | Low | Product | K28, K31 |
+| **R6** | Enforce Database Unique Constraints and Client-Side Enum Sanitization | High | Low | Engineering | K38, K41, K44 |
+| **R7** | Build the Double-Entry Wallet Ledger Table to Unblock Core Financial Liability Tracking | Critical | High | Engineering | K45 (also K29, K30, K32) |
+| **R8** | Launch a Tiered Power User Progression Program Capitalizing on High Task Throughput | High | Medium | Product | K26, K27 |
