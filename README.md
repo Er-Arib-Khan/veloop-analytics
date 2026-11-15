@@ -46,3 +46,35 @@
 ---
 
 ## 🗂️ Project at a Glance
+
+veloop-analytics/
+├── README.md                          # master index — start here
+├── .gitignore                         # Python, secrets, OS files
+│
+├── 00_source_data/                    # raw inputs (both workbooks, SIMULATED)
+├── 01_governance/                     # RULES.md, source register, assumption register
+├── 02_product_audit/                  # product mapping, coverage matrix, gap assessment
+├── 03_specs/                          # 4 analytics specs (user, reward, wallet, referral)
+├── 04_events/                         # event tracking plan, naming standard
+├── 05_data_model/                     # data dictionary, ER diagram (DBML + PNG)
+├── 06_kpis/                           # KPI catalogue (49 KPIs, 41 computed)
+├── 07_data_quality/                   # profiling, quality audit, control framework
+├── 08_dashboards/                     # dashboard blueprint + wireframe SVGs
+├── 09_engineering/                    # developer handoff, pipeline proposal
+├── 10_privacy_governance/             # access control + privacy proposal
+├── 11_backlog/                        # prioritized implementation backlog
+├── 12_final/                          # executive summary, consolidated report, QA report
+│
+├── 13_analysis/                       # PRACTICAL ANALYSIS
+│   ├── run_analysis.py                # computes 49 KPIs from the two workbooks
+│   ├── build_dashboard.py             # generates docs/index.html from 02_kpis.json
+│   ├── analysis_findings.md           # 14 findings with real values
+│   ├── business_recommendations.md    # 8 KPI-grounded recommendations R1–R8
+│   └── outputs/
+│       ├── 01_profiling.json          # per-sheet and per-column stats
+│       ├── 02_kpis.json               # 49-KPI register (41 OK, 1 PARTIAL, 8 BLOCKED)
+│       └── 03_kpi_sanity_checks.txt   # manual verification rows
+│
+└── docs/                              # LIVE DASHBOARD
+    ├── index.html                     # self-contained 127 KB dashboard (Chart.js)
+    └── README.md                      # dashboard-specific documentation
