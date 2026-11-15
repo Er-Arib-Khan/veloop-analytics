@@ -1,71 +1,48 @@
-# VELOOP Rewards — Analytics Foundation
+# VELOOP Rewards — Analytics Foundation Blueprint
 
-> **IMPORTANT NOTICE**: VELOOP Rewards is a pre-launch consumer rewards product. All data supplied and utilized within this project is **SIMULATED DATA** created solely for analytical testing, schema design, pipeline architecture, and KPI modeling. It does not represent real production metrics or actual user records.
+> **⚠️ SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All figures in this
+> repository describe the supplied simulated dataset. They are **not** actual
+> VELOOP users, revenue, earnings, withdrawals, retention, conversion rates,
+> or company statistics.
 
----
-
-## Project Overview
-
-The **VELOOP Analytics Foundation** establishes the end-to-end data architecture, instrumentation standards, tracking schemas, KPI frameworks, and operational governance for VELOOP Rewards prior to general market release.
-
-This repository serves as the single source of truth for:
-- Auditing existing product telemetry and simulated data coverage.
-- Defining event tracking specifications across mobile, web, and backend services.
-- Modeling transactional, relational, and analytical data schemas.
-- Codifying business KPIs, measurement formulas, and dashboard blueprints.
-- Establishing enterprise data quality, privacy governance, and engineering handoffs.
+**🔗 Live interactive dashboard:** https://er-arib-khan.github.io/veloop-analytics/
+**📊 Analysis findings:** [`13_analysis/analysis_findings.md`](13_analysis/analysis_findings.md)
+**💡 Business recommendations:** [`13_analysis/business_recommendations.md`](13_analysis/business_recommendations.md)
+**📄 Executive summary:** [`12_final/executive_summary.md`](12_final/executive_summary.md)
 
 ---
 
-## Deliverables Architecture & Directory Guide
+## 📖 The 30-Second Read
 
-Each phase of the analytics foundation is organized into structured deliverable directories:
+| Metric | Value | Meaning |
+|--------|-------|---------|
+| **Registered users** | 1,000 | Base cohort (K01) |
+| **Monthly active users** | 812 (81.2%) | K05 |
+| **Task completion rate** | **57.15%** | 5,627 of 9,846 started (K22) |
+| **Not-completed tasks** | **42.85%** | 4,219 tasks — 15.44% failed, 20.83% abandoned, 6.58% pending |
+| **D1 / D7 / D30 retention** | 17.91% / 13.33% / 8.46% | K34–K36 — steepest drop is D1→D7 |
+| **Duplicate user IDs** | 16 rows / 8 distinct IDs | K38 — data integrity flag |
+| **Virtual currency gap** | **10,941 XP shortfall** | 242,830 milestone units vs 231,889 XP balance (K28 PARTIAL) |
+| **KPIs computed** | 41 of 49 (83.7%) | 1 PARTIAL (K28), 8 BLOCKED (missing tables) |
+| **Live dashboard** | 13 charts, 7 tabs, 127 KB | Working HTML, GitHub Pages deployed |
 
-| Directory | Scope & Key Deliverables |
-| :--- | :--- |
-| [**`00_source_data/`**](file:///home/rib/project/veloop-analytics/00_source_data) | Raw simulated datasets (`VELOOP_Simulated_User_Behavior_1000`, `VELoop_Rewards_Data_01`), status manifests, and ingestion notes. |
-| [**`01_governance/`**](file:///home/rib/project/veloop-analytics/01_governance) | Non-negotiable operating rules ([`RULES.md`](file:///home/rib/project/veloop-analytics/01_governance/RULES.md)), assumption verification registers, and source registers. |
-| [**`02_product_audit/`**](file:///home/rib/project/veloop-analytics/02_product_audit) | Product surface audit, data coverage matrix (`data_coverage_matrix.xlsx`), and analytical gap documentation. |
-| [**`03_specs/`**](file:///home/rib/project/veloop-analytics/03_specs) | Modular analytics specs: User Analytics, Wallet & Withdrawal, Referral Engagement, and Reward Economics. |
-| [**`04_events/`**](file:///home/rib/project/veloop-analytics/04_events) | Event naming standards (`event_naming_standard.md`) and tracking plan (`event_tracking_plan.xlsx`). |
-| [**`05_data_model/`**](file:///home/rib/project/veloop-analytics/05_data_model) | Relational schemas, DBML definitions (`er_diagram.dbml`), rendered ER diagrams (`er_diagram.png`), and data dictionary. |
-| [**`06_kpis/`**](file:///home/rib/project/veloop-analytics/06_kpis) | Core business KPI catalogue (`kpi_catalogue.xlsx`) with formulas, grain, dimensions, and tier thresholds. |
-| [**`07_data_quality/`**](file:///home/rib/project/veloop-analytics/07_data_quality) | Data profiling summaries, quality audit sheets, and automated DQ control frameworks. |
-| [**`08_dashboards/`**](file:///home/rib/project/veloop-analytics/08_dashboards) | Dashboard blueprint matrix and SVG wireframes for Executive, User, Wallet, Referral, and Reward surfaces. |
-| [**`09_engineering/`**](file:///home/rib/project/veloop-analytics/09_engineering) | Analytics developer handoff specification (`developer_analytics_handoff.xlsx`) and data pipeline architecture proposal. |
-| [**`10_privacy_governance/`**](file:///home/rib/project/veloop-analytics/10_privacy_governance) | Consent mechanisms, PII prevention rules, data retention policies, and compliance architecture. |
-| [**`11_backlog/`**](file:///home/rib/project/veloop-analytics/11_backlog) | Phased analytics implementation backlog (`implementation_backlog.xlsx`) with sprint priorities and story points. |
-| [**`12_final/`**](file:///home/rib/project/veloop-analytics/12_final) | Executive summary and final consolidated analytics foundation deliverable report. |
-| [**`13_analysis/`**](file:///home/rib/project/veloop-analytics/13_analysis) | Real dataset analysis, 49-KPI computation engine, findings report, and business recommendations. |
-| [**`docs/`**](file:///home/rib/project/veloop-analytics/docs) | GitHub Pages interactive analytics dashboard with real Chart.js visualizations. |
-| [**`scripts/`**](file:///home/rib/project/veloop-analytics/scripts) | Python automation utilities (`01_profile_data.py`, `02_test_relationships.py`, `03_kpi_feasibility.py`, etc.) for reproducible audits and openpyxl builds. |
+**Three headline findings:**
+1. **Task funnel leaks 42.85%** — dominated by external dependencies (732 validation failures, 722 unavailable tasks), not user error.
+2. **Retention collapses in week 1** — D1→D7 drops 4.58 points. The biggest possible improvement lever is first-week engagement.
+3. **Wallet, Withdrawals, Referrals instrumentation is entirely missing** — 8 KPIs are BLOCKED until the tables exist.
 
 ---
 
-## 12. Live Repository & Interactive Dashboard
+## 🚦 Choose Your Path
 
-- **Live interactive dashboard:** 
-- **Render Deployment**:
-
-  [![Deploy to Render]https://veloop-analytics-dashboard.onrender.com/
-
----
-
-## Operating Principles & Integrity Contract
-
-All work in this repository is strictly bound by [`01_governance/RULES.md`](file:///home/rib/project/veloop-analytics/01_governance/RULES.md):
-1. **Never fabricate production data or statistics.**
-2. **Every simulated dataset contains a dedicated `SIMULATED_DATA_NOTICE` sheet.**
-3. **Every field/fact has an explicit status**: `Confirmed`, `Proposed`, or `To Be Verified`.
-4. **Proposed items are never described as existing.**
-5. **No PII, authentication credentials, payment tokens, or private keys.**
-6. **Strict traceability** to sources, defined datasets, or documented assumptions.
-7. **Documented data gaps** without unverified imputation.
-8. **Automated spreadsheet generation** via Python + `openpyxl`.
-9. **Standardized document types** (`.md` reports, `.dbml` + rendered PNG for data models).
-10. **Data purity**: No unannounced mixing of synthetic extras with supplied simulated data.
+| If you are... | Start here | Then read |
+|---------------|-----------|-----------|
+| **A reviewer or team lead** | [`12_final/executive_summary.md`](12_final/executive_summary.md) (3 pages) | [`13_analysis/analysis_findings.md`](13_analysis/analysis_findings.md) → live dashboard |
+| **A data analyst** | [`13_analysis/run_analysis.py`](13_analysis/run_analysis.py) → [`13_analysis/outputs/02_kpis.json`](13_analysis/outputs/02_kpis.json) | [`07_data_quality/profiling_summary.xlsx`](07_data_quality/) → [`05_data_model/data_dictionary.xlsx`](05_data_model/) |
+| **An engineer** | [`09_engineering/developer_analytics_handoff.xlsx`](09_engineering/) | [`04_events/event_tracking_plan.xlsx`](04_events/) → [`05_data_model/er_diagram.dbml`](05_data_model/) |
+| **A product manager** | [`13_analysis/business_recommendations.md`](13_analysis/business_recommendations.md) | [`06_kpis/kpi_catalogue.xlsx`](06_kpis/) → [`11_backlog/implementation_backlog.xlsx`](11_backlog/) |
+| **Someone who wants the live demo** | https://er-arib-khan.github.io/veloop-analytics/ | — |
 
 ---
 
-## Data Authenticity Statement
-This project and all associated deliverables are constructed using simulated data created for analytical testing and product architecture modeling. No real production data or user PII was accessed, analyzed, or included. All metrics, user counts, and behavioral distributions reflect simulated test environments.
+## 🗂️ Project at a Glance
