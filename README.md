@@ -5,7 +5,7 @@
 > VELOOP users, revenue, earnings, withdrawals, retention, conversion rates,
 > or company statistics.
 
-**🔗 Live interactive dashboard:** https://er-arib-khan.github.io/veloop-analytics/
+**🔗 Live interactive dashboard:** https://veloop-analytics-dashboard.onrender.com/
 **📊 Analysis findings:** [`13_analysis/analysis_findings.md`](13_analysis/analysis_findings.md)
 **💡 Business recommendations:** [`13_analysis/business_recommendations.md`](13_analysis/business_recommendations.md)
 **📄 Executive summary:** [`12_final/executive_summary.md`](12_final/executive_summary.md)
