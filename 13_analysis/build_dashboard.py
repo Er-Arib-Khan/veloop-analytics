@@ -72,7 +72,13 @@ def main():
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VELOOP Rewards — Simulated Data Analytics Dashboard</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="googlebot" content="noindex, nofollow, noarchive">
+  <meta name="description" content="Technical data analytics portfolio demonstrating KPI telemetry on simulated user datasets. Academic demonstration only; zero real accounts, zero financial transactions.">
+  <meta name="application-name" content="VELOOP Analytics Portfolio">
+  <meta name="author" content="Arib Khan">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; form-action 'none';">
+  <title>VELOOP Analytics Portfolio — Simulated Data Telemetry Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -566,15 +572,15 @@ def main():
 
   <!-- Top Authenticity Banner -->
   <div class="banner-warning">
-    ⚠️ SIMULATED DATA — CREATED FOR ANALYTICAL TESTING. Not actual VELOOP statistics.
+    ⚠️ ACADEMIC &amp; ANALYTICAL TESTING PORTFOLIO — SIMULATED DATA ONLY. This is a technical data engineering portfolio demonstrating telemetry verification on synthetic datasets. No user accounts, login portals, financial transactions, or software downloads.
   </div>
 
   <div class="dashboard-container">
     <!-- Header -->
     <header class="dashboard-header">
       <div class="header-left">
-        <h1>VELOOP Rewards — Simulated Data Analytics Dashboard</h1>
-        <p>Interactive verification telemetry computed from 1,000 simulated users across 15 relational sheets</p>
+        <h1>VELOOP Analytics Portfolio — Simulated Data Telemetry Dashboard</h1>
+        <p>Interactive verification telemetry computed from 1,000 synthetic test profiles across 15 relational sheets</p>
       </div>
       <div class="header-badge">
         <span class="pulse-dot"></span>
@@ -1289,7 +1295,7 @@ def main():
         KPIs Status: <strong>41 OK / 1 PARTIAL / 8 BLOCKED</strong> (Total: 49 Standardized KPIs)
       </div>
       <div>
-        Generated on <strong>{today_str}</strong> | Built for GitHub Pages
+        Academic Portfolio Demonstration &bull; Open-source telemetry verification on synthetic test datasets &bull; Built for GitHub Pages
       </div>
     </footer>
   </div>

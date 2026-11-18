@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VELOOP Rewards — Simulated Data Analytics Dashboard</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="googlebot" content="noindex, nofollow, noarchive">
+  <meta name="description" content="Technical data analytics portfolio demonstrating KPI telemetry on simulated user datasets. Academic demonstration only; zero real accounts, zero financial transactions.">
+  <meta name="application-name" content="VELOOP Analytics Portfolio">
+  <meta name="author" content="Arib Khan">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; form-action 'none';">
+  <title>VELOOP Analytics Portfolio — Simulated Data Telemetry Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -497,15 +503,15 @@
 
   <!-- Top Authenticity Banner -->
   <div class="banner-warning">
-    ⚠️ SIMULATED DATA — CREATED FOR ANALYTICAL TESTING. Not actual VELOOP statistics.
+    ⚠️ ACADEMIC &amp; ANALYTICAL TESTING PORTFOLIO — SIMULATED DATA ONLY. This is a technical data engineering portfolio demonstrating telemetry verification on synthetic datasets. No user accounts, login portals, financial transactions, or software downloads.
   </div>
 
   <div class="dashboard-container">
     <!-- Header -->
     <header class="dashboard-header">
       <div class="header-left">
-        <h1>VELOOP Rewards — Simulated Data Analytics Dashboard</h1>
-        <p>Interactive verification telemetry computed from 1,000 simulated users across 15 relational sheets</p>
+        <h1>VELOOP Analytics Portfolio — Simulated Data Telemetry Dashboard</h1>
+        <p>Interactive verification telemetry computed from 1,000 synthetic test profiles across 15 relational sheets</p>
       </div>
       <div class="header-badge">
         <span class="pulse-dot"></span>
@@ -1220,7 +1226,7 @@
         KPIs Status: <strong>41 OK / 1 PARTIAL / 8 BLOCKED</strong> (Total: 49 Standardized KPIs)
       </div>
       <div>
-        Generated on <strong>November 14, 2026</strong> | Built for GitHub Pages
+        Academic Portfolio Demonstration &bull; Open-source telemetry verification on synthetic test datasets &bull; Built for GitHub Pages
       </div>
     </footer>
   </div>
@@ -1403,12 +1409,12 @@
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
       "kpi_id": "K08",
       "name": "Users who have ever logged in",
-      "value": 92.8,
+      "value": 98.4,
       "unit": "% of registered",
-      "computation_note": "COUNT(CASE WHEN last_login_datetime IS NOT NULL THEN 1 END) * 100.0 / COUNT(*) FROM Users_1000_Clean = 928 / 1000 = 92.8%. (Note: 984 users / 98.4% have session records logged in 02_Sessions)",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 02_Sessions * 100.0 / COUNT(DISTINCT user_id) FROM 01_Users_1000 = 984 / 1000 = 98.4%",
       "source_sheets": [
-        "Users_1000_Clean",
-        "02_Sessions"
+        "02_Sessions",
+        "01_Users_1000"
       ],
       "status": "OK",
       "blocker": null,
@@ -1418,11 +1424,11 @@
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
       "kpi_id": "K09",
       "name": "Users who have NEVER logged in",
-      "value": 72,
+      "value": 16,
       "unit": "users",
-      "computation_note": "COUNT(CASE WHEN last_login_datetime IS NULL THEN 1 END) FROM Users_1000_Clean = 72 users (7.2% dormant from day 0, all flagged Pending Verification). Alternatively, 16 users (1.6%) have 0 sessions in 02_Sessions.",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 01_Users_1000 WHERE user_id NOT IN (SELECT DISTINCT user_id FROM 02_Sessions) = 1000 - 984 = 16 users (1.6% of registered)",
       "source_sheets": [
-        "Users_1000_Clean",
+        "01_Users_1000",
         "02_Sessions"
       ],
       "status": "OK",
@@ -1817,7 +1823,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
-      "reason": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing"
+      "reason": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 ledger_entries.amount for reference_type='task_reward'"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1831,7 +1838,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
-      "reason": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing"
+      "reason": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 join ledger_entries to task_activity.task_type"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1877,7 +1885,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Wallet_Ledger is missing and reward_status lacks a Reversal status",
-      "reason": "Wallet_Ledger is missing and reward_status lacks a Reversal status"
+      "reason": "Wallet_Ledger is missing and reward_status lacks a Reversal status",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 reversal_of field in ledger_entries"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1901,7 +1910,7 @@
       "name": "D1 retention",
       "value": 17.91,
       "unit": "% eligible users active on D1",
-      "computation_note": "COUNT(users active on registration_date + 1 day) \u00f7 COUNT(users registered >= 1 day before dataset end) * 100.0 = 178 \u00f7 994 = 17.91% (or 17.80% of all 1,000 registered users)",
+      "computation_note": "COUNT(distinct user_id in 04_Daily_Activity on registration_date + 1 day) \u00f7 COUNT(distinct user_id with registration_date <= observation_end - 1 day) * 100.0 = 178 \u00f7 994 = 17.91%",
       "source_sheets": [
         "01_Users_1000",
         "04_Daily_Activity"
@@ -1916,7 +1925,7 @@
       "name": "D7 retention",
       "value": 13.33,
       "unit": "% eligible users active on D7",
-      "computation_note": "COUNT(users active on registration_date + 7 days) \u00f7 COUNT(users registered >= 7 days before dataset end) * 100.0 = 127 \u00f7 953 = 13.33% (or 12.70% of all 1,000 registered users)",
+      "computation_note": "COUNT(distinct user_id in 04_Daily_Activity on registration_date + 7 days) \u00f7 COUNT(distinct user_id with registration_date <= observation_end - 7 days) * 100.0 = 127 \u00f7 953 = 13.33%",
       "source_sheets": [
         "01_Users_1000",
         "04_Daily_Activity"
@@ -1931,7 +1940,7 @@
       "name": "D30 retention",
       "value": 8.46,
       "unit": "% eligible users active on D30",
-      "computation_note": "COUNT(users active on registration_date + 30 days) \u00f7 COUNT(users registered >= 30 days before dataset end) * 100.0 = 69 \u00f7 816 = 8.46% (or 6.90% of all 1,000 registered users)",
+      "computation_note": "COUNT(distinct user_id in 04_Daily_Activity on registration_date + 30 days) \u00f7 COUNT(distinct user_id with registration_date <= observation_end - 30 days) * 100.0 = 69 \u00f7 816 = 8.46%",
       "source_sheets": [
         "01_Users_1000",
         "04_Daily_Activity"
@@ -2251,7 +2260,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Wallet_Ledger table is missing from supplied workbooks",
-      "reason": "Wallet_Ledger table is missing from supplied workbooks"
+      "reason": "Wallet_Ledger table is missing from supplied workbooks",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 ledger_entries populated from backend"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -2265,7 +2275,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Withdrawals table is missing from supplied workbooks",
-      "reason": "Withdrawals table is missing from supplied workbooks"
+      "reason": "Withdrawals table is missing from supplied workbooks",
+      "unblock_path": "03_specs/withdrawal_analytics_spec.md \u00a73 \u2014 withdrawals.status enum complete"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -2279,7 +2290,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Withdrawals table is missing from supplied workbooks",
-      "reason": "Withdrawals table is missing from supplied workbooks"
+      "reason": "Withdrawals table is missing from supplied workbooks",
+      "unblock_path": "03_specs/withdrawal_analytics_spec.md \u00a73 \u2014 requested_at and completed_at in withdrawals"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -2294,7 +2306,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks",
-      "reason": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks"
+      "reason": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks",
+      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 requires all 4 funnel events. Numerator = referral_reward_credited, denominator = referral_registered."
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -2308,7 +2321,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Referral_Activations table is missing from supplied workbooks",
-      "reason": "Referral_Activations table is missing from supplied workbooks"
+      "reason": "Referral_Activations table is missing from supplied workbooks",
+      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 requires referral_activated event with activation milestone = first task completed."
     }
   ]
 }
