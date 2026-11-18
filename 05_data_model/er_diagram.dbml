@@ -195,6 +195,21 @@ Table Task_Master {
 // ----------------------------------------------------
 // 9. Rewards & Redemption Catalog (Proposed)
 // ----------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────
+// NOTE: This table is a CATALOG of redeemable SKUs (vouchers,
+// merchandise), NOT the reward transaction log.
+//
+// Financial reward postings are recorded in `ledger_entries` with
+// reference_type='task_reward' (see 03_specs/wallet_ledger_spec.md).
+//
+// The word "rewards" appears in both contexts but describes different
+// concepts:
+//   - Rewards (this table)     = what users can spend currency on
+//   - ledger_entries           = when rewards are earned or spent
+//
+// Do not source K28 ("Total reward amount credited") from this table.
+// K28 is computed from ledger_entries.
+// ─────────────────────────────────────────────────────────────────────
 Table Rewards {
   reward_sku varchar(50) [pk, note: "/* proposed */ Unique reward catalog SKU (e.g. RWD_AMZN_050)"]
   reward_name varchar(150) [not null, note: "/* proposed */ Display title of redemption item"]

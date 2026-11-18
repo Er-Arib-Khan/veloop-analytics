@@ -2,6 +2,12 @@
 
 > **CRITICAL GOVERNANCE NOTICE**: All schemas, entity relationships, cardinalities, and relational mappings documented in this specification reflect **SIMULATED DATA** created for analytical testing and product architecture modeling. No real production database schemas, user PII, or financial records were evaluated.
 
+> **⚠️ SUPERSEDED — DO NOT USE AS AUTHORITATIVE SOURCE.**
+> This document references the deprecated single-entry
+> `Wallet_Transactions` table. It is superseded by the double-entry
+> `ledger_entries` design in `03_specs/wallet_ledger_spec.md`.
+> Migration procedure: see `wallet_ledger_spec.md` §5.
+
 ---
 
 ## 1. Scope & Objective

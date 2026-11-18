@@ -280,6 +280,9 @@ def build_kpi_catalogue():
             "Total count and aggregate point valuation of rewards successfully credited to user accounts.",
             "SELECT COUNT(*) AS total_reward_events, SUM(reward_amount) AS total_xp_issued FROM Reward_Events WHERE status = 'Credited';",
             "reward_amount, reward_status, task_id",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "05_Task_Activity (WB1) / Wallet_Transactions (er_diagram.dbml)",
             "Daily / Monthly",
             "Finance, Operations",
@@ -293,13 +296,22 @@ def build_kpi_catalogue():
             "Reward Reversal Rate",
             "Reward",
             "Percentage of previously credited reward points retroactively clawed back due to fraud or chargebacks.",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "SELECT 100.0 * SUM(CASE WHEN transaction_type = 'REVERSAL' THEN amount END) / SUM(CASE WHEN transaction_type = 'CREDIT' THEN amount END) AS reward_reversal_rate FROM Wallet_Transactions;",
             "transaction_type, amount, status",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Wallet_Transactions (er_diagram.dbml)",
             "Weekly / Monthly",
             "Trust & Safety, Finance",
             "Evaluates fraud containment effectiveness, advertiser chargeback leakage, and partner reconciliation adjustments.",
             "Target is <1.0%; higher rates signal affiliate fraud, click-farms, or advertiser callback invalidations.",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Blocked. No reversal, clawback, or penalty telemetry exists in supplied simulated workbooks. Requires missing Wallet_Transactions double-entry ledger table.",
             "Blocked"
         ),
@@ -329,11 +341,17 @@ def build_kpi_catalogue():
             "Total aggregate sum of unredeemed XP points held in user wallets across the platform.",
             "SELECT SUM(xp_balance) AS total_circulating_xp FROM Users_1000_Clean;",
             "xp_balance",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Users_1000_Clean (WB2) / Wallet_Transactions (er_diagram.dbml)",
             "Daily / Weekly",
             "Finance, Treasury, Executive",
             "Represents total nominal balance sheet liability owed to users redeemable for cash or vouchers.",
             "Growth must be backed by platform advertising cash reserves; runaway growth without redemptions signals inflation.",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "In simulated data, only a static snapshot xp_balance is available; time-series historical reconstruction is blocked due to missing Wallet_Transactions ledger.",
             "To Be Verified"
         ),
@@ -342,13 +360,22 @@ def build_kpi_catalogue():
             "Point Velocity (Accrual vs Burn Ratio)",
             "Wallet",
             "Ratio of total virtual points earned (issued) to total points redeemed (burned) within a period.",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "SELECT SUM(CASE WHEN transaction_type = 'CREDIT' THEN amount END) / NULLIF(SUM(CASE WHEN transaction_type = 'DEBIT' THEN amount END), 0) AS point_velocity_ratio FROM Wallet_Transactions;",
             "amount, transaction_type, transaction_datetime",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Wallet_Transactions (er_diagram.dbml)",
             "Weekly / Monthly",
             "Finance, Economy Designer",
             "Monitors virtual economy balance; prevents hyper-inflation or deflation in virtual currency.",
             "Healthy ratio is typically 1.2 to 1.5 in growth phases; >3.0 signals lack of compelling cash-out options.",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Blocked. Complete absence of transactional Wallet_Transactions double-entry ledger table in supplied data.",
             "Blocked"
         ),

@@ -127,6 +127,9 @@ def run_kpi_feasibility():
             'KPI Name': 'Reward Reversal Rate',
             'Definition': 'The proportion of credited rewards clawed back or reversed due to fraud detection, chargebacks, or task invalidation.',
             'Proposed Formula (Pseudo-SQL)': "SELECT 100.0 * COUNT(CASE WHEN transaction_type = 'Reversal' THEN 1 END) / COUNT(CASE WHEN transaction_type = 'Credit' THEN 1 END) FROM wallet_transactions",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             'Required Tables & Fields': 'Wallet_Ledger / Wallet_Transactions (transaction_type, reversal_reason, status)',
             'Available in Data?': 'NO',
             'Simulated Result': 'N/A — blocked',

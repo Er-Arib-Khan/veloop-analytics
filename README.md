@@ -186,7 +186,7 @@ Click any section to expand. Each file has the same structure: **what it contain
 **What:** 212 fields across all entities. Every field: entity, name, type, definition, example, required, allowed values, validation, source, sensitivity (Public/Internal/Restricted), analytical use, status (Confirmed/Proposed/To Be Verified).
 
 ### `er_diagram.dbml` and `er_diagram.png`
-**What:** DBML source + rendered ER diagram. 11 entities: Users, Sessions, Feature_Events, Daily_Activity, Task_Activity, Milestones, Feature_Usage, Rewards, Wallet_Transactions, Withdrawals, Referrals.
+**What:** DBML source + rendered ER diagram. 12 entities: Users, Sessions, Feature_Events, Daily_Activity, Task_Activity, Milestones, Feature_Usage, Task_Master, Rewards, Wallet_Transactions, Withdrawals, Referrals.
 **Why:** Proves the analytics model is coherent — a reviewer can see how `user_id` joins across all tables.
 
 ### `relationship_documentation.md`

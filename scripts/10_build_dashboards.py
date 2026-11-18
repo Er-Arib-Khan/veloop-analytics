@@ -170,6 +170,9 @@ def build_blueprint_spreadsheet():
         (
             "Rewards", "VIS-RWD-03", "KPI Card", "KPI-RWD-05",
             "100.0 * SUM(reversal_amount) / SUM(credit_amount)",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Wallet_Transactions (er_diagram.dbml)", "Feature", "None", "Trailing 30 Days", "Weekly",
             "What percentage of credited points are clawed back due to fraud/chargebacks?",
             "Contain sybil bot farming and advertiser billing disputes (Blocked - Gap GAP-001/GAP-007).", "Blocked"
@@ -207,6 +210,9 @@ def build_blueprint_spreadsheet():
         (
             "Wallet", "VIS-WAL-03", "KPI Card", "KPI-WAL-02",
             "SUM(Credits) / NULLIF(SUM(Debits), 0)",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Wallet_Transactions (er_diagram.dbml)", "Unit", "None", "Trailing 30 Days", "Monthly",
             "What is the ratio of points earned (issued) to points redeemed (burned)?",
             "Maintain virtual currency stability and prevent points hyper-inflation (Blocked - Gap GAP-001).", "Blocked"
@@ -221,6 +227,9 @@ def build_blueprint_spreadsheet():
         (
             "Wallet", "VIS-WAL-05", "Stacked Area", "KPI-WAL-01",
             "Running SUM(credits - debits) OVER (ORDER BY date)",
+            # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+            # See 03_specs/wallet_ledger_spec.md §5 for migration.
+            # Retained for historical reference only. Do not add new reads/writes.
             "Wallet_Transactions (er_diagram.dbml)", "Feature", "Date", "Trailing 90 Days", "Daily",
             "How has the cumulative virtual currency liability evolved over time?",
             "Forecast working capital requirements (Blocked by missing ledger table - Gap GAP-001).", "Blocked"
@@ -707,6 +716,9 @@ def build_all_wireframes():
             ("Projected Point Liability Accrual (Blocked)", "Simulated ledger credit/debit accumulation over time", "Stacked Area")
         ],
         [("Date Range", "Current Snapshot"), ("Account Status", "Active / Pending"), ("Balance Tier", "All Tiers")],
+        # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+        # See 03_specs/wallet_ledger_spec.md §5 for migration.
+        # Retained for historical reference only. Do not add new reads/writes.
         "Users_1000_Clean, 04_Daily_Activity, Wallet_Transactions (Proposed)",
         blocked_callout="DATA MISSING — see Gap GAP-001: Double-entry wallet transaction ledger table is absent; running balance timeseries blocked."
     )

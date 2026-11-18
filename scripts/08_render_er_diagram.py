@@ -230,6 +230,9 @@ def render_er_diagram():
                 ("sessions_per_user", "float", "#334155"),
             ]
         },
+        # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+        # See 03_specs/wallet_ledger_spec.md §5 for migration.
+        # Retained for historical reference only. Do not add new reads/writes.
         "Wallet_Transactions": {
             "x": 23, "y": 2, "w": 18, "h": 23,
             "status": "Proposed", "header_bg": "#581C87",
@@ -366,6 +369,9 @@ def render_er_diagram():
         ("Users", "Milestones", (20.0, 60.0), (64.0, 46.0), "#2563EB", "1:N"),
         # Sessions -> Milestones (1:N)
         ("Sessions", "Milestones", (40.0, 66.0), (64.0, 42.0), "#0284C7", "1:N"),
+        # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+        # See 03_specs/wallet_ledger_spec.md §5 for migration.
+        # Retained for historical reference only. Do not add new reads/writes.
         # Users -> Wallet_Transactions (1:N)
         ("Users", "Wallet_Transactions", (10.0, 48.0), (23.0, 18.0), "#7C3AED", "1:N"),
         # Users -> Withdrawals (1:N)

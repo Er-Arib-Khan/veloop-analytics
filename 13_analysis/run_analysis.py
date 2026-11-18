@@ -1255,6 +1255,9 @@ def main():
         "name": "Wallet credits total",
         "value": None,
         "unit": "currency / XP",
+        # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+        # See 03_specs/wallet_ledger_spec.md §5 for migration.
+        # Retained for historical reference only. Do not add new reads/writes.
         "computation_note": "BLOCKED: Wallet_Ledger / Wallet_Transactions table is completely missing from supplied datasets. No transaction credit ledger or running currency balance exists.",
         "source_sheets": ["Wallet_Ledger"],
         "status": "BLOCKED",

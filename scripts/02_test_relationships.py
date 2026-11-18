@@ -412,7 +412,8 @@ def append_missing_tables_to_gaps():
     gaps_file = '02_product_audit/analytics_gaps.md'
     print(f"Updating {gaps_file}...")
 
-    missing_tables_content = """# VELOOP Rewards — Analytics Gaps & Structural Audit
+    missing_tables_content = (
+        """# VELOOP Rewards — Analytics Gaps & Structural Audit
 
 > **CRITICAL NOTICE**: All findings, schemas, and metrics documented in this audit reflect **SIMULATED DATA** created for analytical testing and product architecture modeling. No real production telemetry or user PII was evaluated.
 
@@ -428,7 +429,11 @@ A comprehensive referential integrity audit performed via `scripts/02_test_relat
 
 | Missing Table | Domain / Scope | Current Proxy in Dataset | Impact | Priority | Architectural Requirement & Proposed Schema |
 | :--- | :--- | :--- | :--- | :---: | :--- |
-| **`Wallet_Ledger` / `Wallet_Transactions`** | Currency, XP credits/debits, balance snapshots | Binary flag `wallet_activity` in `04_Daily_Activity`, static `xp_balance` in `Users_1000_Clean` | **Critical** | **Critical** | Cannot reconstruct running balance over time, reconcile XP issuance vs breakage, audit double-crediting, or detect point economy inflation. Requires a dedicated append-only ledger (`transaction_id`, `user_id`, `transaction_datetime`, `transaction_type`, `amount`, `balance_after`, `reference_event_id`). |
+"""
+        # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
+        # See 03_specs/wallet_ledger_spec.md §5 for migration.
+        # Retained for historical reference only. Do not add new reads/writes.
+        """| **`Wallet_Ledger` / `Wallet_Transactions`** | Currency, XP credits/debits, balance snapshots | Binary flag `wallet_activity` in `04_Daily_Activity`, static `xp_balance` in `Users_1000_Clean` | **Critical** | **Critical** | Cannot reconstruct running balance over time, reconcile XP issuance vs breakage, audit double-crediting, or detect point economy inflation. Requires a dedicated append-only ledger (`transaction_id`, `user_id`, `transaction_datetime`, `transaction_type`, `amount`, `balance_after`, `reference_event_id`). |
 | **`Withdrawals` / `Disbursements`** | Cash payouts, UPI transfers, gift voucher redemptions | None. No withdrawal tables, status flows, or failure logs exist. | **Critical** | **Critical** | Inability to track liquidity demand, payout cycle times, payment gateway failure rates, fraud rings, or unit economic margins. Requires an immutable withdrawal requests table (`withdrawal_id`, `user_id`, `requested_datetime`, `amount_inr`, `xp_deducted`, `payout_method`, `payout_status`, `gateway_reference`, `completed_at`). |
 | **`Referrals` / `Referral_Conversions`** | Multi-touch invite tracking, viral loop attribution, referee conversion | Static `referral_code` on Users, high-level `referral_source_detail` string | **Critical** | **Critical** | Cannot calculate K-factor (viral coefficient), evaluate invite-to-install drop-offs, track invite link shares, or prevent self-referral fraud. Requires a dual tracking model: `referral_invites` (`invite_id`, `referrer_user_id`, `channel`, `sent_at`) and `referral_conversions` (`conversion_id`, `referrer_user_id`, `referee_user_id`, `converted_at`, `reward_status`). |
 | **`Rewards_Catalog` / `Redemptions`** | Reward item inventory, point redemption orders, partner merchant vouchers | Count `reward_activity_count` in `04_Daily_Activity`, flag `reward_related_flag` in Events | **Critical** | **Critical** | Cannot measure reward popularity, brand catalog affinity, inventory stockouts, or user price elasticity. Requires a dimension table `rewards_catalog` (`reward_id`, `reward_name`, `cost_xp`, `category`, `stock`) and a fact table `reward_redemptions` (`redemption_id`, `user_id`, `reward_id`, `redeemed_at`, `delivery_status`). |
@@ -447,6 +452,7 @@ A comprehensive referential integrity audit performed via `scripts/02_test_relat
 ## Data Authenticity Statement
 This analytics gap audit was prepared using simulated data created for analytical testing and product architecture modeling. No real production data or user PII was accessed, analyzed, or included. All metrics, user counts, and behavioral distributions reflect simulated test environments.
 """
+    )
 
     with open(gaps_file, 'w', encoding='utf-8') as f:
         f.write(missing_tables_content)
