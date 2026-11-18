@@ -1,0 +1,1112 @@
+[
+  {
+    "kpi_id": "K01",
+    "reported": 1000,
+    "recomputed": 1000,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_u1['user_id'].nunique() = 1000"
+  },
+  {
+    "kpi_id": "K02",
+    "reported": {
+      "2026-08-17": 3,
+      "2026-08-18": 2,
+      "2026-08-19": 12,
+      "2026-08-20": 3,
+      "2026-08-21": 2,
+      "2026-08-22": 3,
+      "2026-08-23": 4,
+      "2026-08-24": 8,
+      "2026-08-25": 6,
+      "2026-08-26": 5,
+      "2026-08-27": 7,
+      "2026-08-28": 9,
+      "2026-08-29": 8,
+      "2026-08-30": 5,
+      "2026-08-31": 1,
+      "2026-09-01": 10,
+      "2026-09-02": 8,
+      "2026-09-03": 2,
+      "2026-09-04": 6,
+      "2026-09-05": 6,
+      "2026-09-06": 7,
+      "2026-09-07": 12,
+      "2026-09-08": 8,
+      "2026-09-09": 6,
+      "2026-09-10": 4,
+      "2026-09-11": 11,
+      "2026-09-12": 6,
+      "2026-09-13": 11,
+      "2026-09-14": 3,
+      "2026-09-15": 6
+    },
+    "recomputed": {
+      "2026-08-17": 3,
+      "2026-08-18": 2,
+      "2026-08-19": 12,
+      "2026-08-20": 3,
+      "2026-08-21": 2,
+      "2026-08-22": 3,
+      "2026-08-23": 4,
+      "2026-08-24": 8,
+      "2026-08-25": 6,
+      "2026-08-26": 5,
+      "2026-08-27": 7,
+      "2026-08-28": 9,
+      "2026-08-29": 8,
+      "2026-08-30": 5,
+      "2026-08-31": 1,
+      "2026-09-01": 10,
+      "2026-09-02": 8,
+      "2026-09-03": 2,
+      "2026-09-04": 6,
+      "2026-09-05": 6,
+      "2026-09-06": 7,
+      "2026-09-07": 12,
+      "2026-09-08": 8,
+      "2026-09-09": 6,
+      "2026-09-10": 4,
+      "2026-09-11": 11,
+      "2026-09-12": 6,
+      "2026-09-13": 11,
+      "2026-09-14": 3,
+      "2026-09-15": 6
+    },
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "u1_last_30.groupby('reg_date')['user_id'].count() over 30d (sum=184)"
+  },
+  {
+    "kpi_id": "K03",
+    "reported": 47,
+    "recomputed": 47,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(df_u1[reg_date in last_7d]) = 47"
+  },
+  {
+    "kpi_id": "K04",
+    "reported": 486,
+    "recomputed": 486,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_events[ev_date in last_7d]['user_id'].nunique() = 486"
+  },
+  {
+    "kpi_id": "K05",
+    "reported": 812,
+    "recomputed": 812,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_events[ev_date in last_30d]['user_id'].nunique() = 812"
+  },
+  {
+    "kpi_id": "K06",
+    "reported": {
+      "2026-08-17": 72,
+      "2026-08-18": 71,
+      "2026-08-19": 83,
+      "2026-08-20": 67,
+      "2026-08-21": 70,
+      "2026-08-22": 75,
+      "2026-08-23": 85,
+      "2026-08-24": 74,
+      "2026-08-25": 94,
+      "2026-08-26": 82,
+      "2026-08-27": 98,
+      "2026-08-28": 84,
+      "2026-08-29": 100,
+      "2026-08-30": 91,
+      "2026-08-31": 95,
+      "2026-09-01": 98,
+      "2026-09-02": 100,
+      "2026-09-03": 105,
+      "2026-09-04": 123,
+      "2026-09-05": 104,
+      "2026-09-06": 113,
+      "2026-09-07": 138,
+      "2026-09-08": 130,
+      "2026-09-09": 129,
+      "2026-09-10": 134,
+      "2026-09-11": 130,
+      "2026-09-12": 157,
+      "2026-09-13": 164,
+      "2026-09-14": 156,
+      "2026-09-15": 83
+    },
+    "recomputed": {
+      "2026-08-17": 72,
+      "2026-08-18": 71,
+      "2026-08-19": 83,
+      "2026-08-20": 67,
+      "2026-08-21": 70,
+      "2026-08-22": 75,
+      "2026-08-23": 85,
+      "2026-08-24": 74,
+      "2026-08-25": 94,
+      "2026-08-26": 82,
+      "2026-08-27": 98,
+      "2026-08-28": 84,
+      "2026-08-29": 100,
+      "2026-08-30": 91,
+      "2026-08-31": 95,
+      "2026-09-01": 98,
+      "2026-09-02": 100,
+      "2026-09-03": 105,
+      "2026-09-04": 123,
+      "2026-09-05": 104,
+      "2026-09-06": 113,
+      "2026-09-07": 138,
+      "2026-09-08": 130,
+      "2026-09-09": 129,
+      "2026-09-10": 134,
+      "2026-09-11": 130,
+      "2026-09-12": 157,
+      "2026-09-13": 164,
+      "2026-09-14": 156,
+      "2026-09-15": 83
+    },
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_daily[active_flag=='Yes'].groupby('act_date')['user_id'].nunique() (30d mean=103.50)"
+  },
+  {
+    "kpi_id": "K07",
+    "reported": 0.1275,
+    "recomputed": 0.1275,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "mean(30d_DAU) / 30d_MAU = 103.50 / 812 = 0.1275"
+  },
+  {
+    "kpi_id": "K08",
+    "reported": 98.4,
+    "recomputed": 98.4,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "COUNT(DISTINCT user_id in 02_Sessions) / 1000 * 100.0 = 984 / 1000 * 100.0 = 98.4"
+  },
+  {
+    "kpi_id": "K09",
+    "reported": 16,
+    "recomputed": 16,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "1,000 registered users - 984 session users = 16"
+  },
+  {
+    "kpi_id": "K10",
+    "reported": 826,
+    "recomputed": 826,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "(df_daily[active_flag=='Yes'].groupby('user_id')['act_date'].nunique() >= 2).sum() = 826"
+  },
+  {
+    "kpi_id": "K11",
+    "reported": 346,
+    "recomputed": 346,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(set(01_Users_1000) - set(events_last_14d)) = 1000 - 654 = 346"
+  },
+  {
+    "kpi_id": "K12",
+    "reported": 7913,
+    "recomputed": 7913,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(df_sess) = 7913"
+  },
+  {
+    "kpi_id": "K13",
+    "reported": 7.913,
+    "recomputed": 7.913,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "7913 sessions / 1000 users = 7.913"
+  },
+  {
+    "kpi_id": "K14",
+    "reported": 51.81,
+    "recomputed": 51.81,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "df_sess['session_duration_seconds'].mean() = 51.81"
+  },
+  {
+    "kpi_id": "K15",
+    "reported": {
+      "Watch Ads": 83.6,
+      "Daily Reward": 83.5,
+      "Streak Rewards": 83.2,
+      "CAPTCHA": 82.4,
+      "Referral": 81.1,
+      "Wallet": 81.0,
+      "Tap & Earn": 80.0,
+      "Mining Rewards": 79.9,
+      "Level System": 77.3,
+      "Missions": 77.1,
+      "Spin the Wheel": 76.3,
+      "Exchange Center": 72.0,
+      "Leaderboard": 68.6,
+      "Follow & Earn": 68.5,
+      "Badges": 67.4
+    },
+    "recomputed": {
+      "Badges": 67.4,
+      "CAPTCHA": 82.4,
+      "Daily Reward": 83.5,
+      "Exchange Center": 72.0,
+      "Follow & Earn": 68.5,
+      "Leaderboard": 68.6,
+      "Level System": 77.3,
+      "Mining Rewards": 79.9,
+      "Missions": 77.1,
+      "Referral": 81.1,
+      "Spin the Wheel": 76.3,
+      "Streak Rewards": 83.2,
+      "Tap & Earn": 80.0,
+      "Wallet": 81.0,
+      "Watch Ads": 83.6
+    },
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_events.groupby('feature_name')['user_id'].nunique() / 1000 * 100.0 across 15 features"
+  },
+  {
+    "kpi_id": "K16",
+    "reported": {
+      "Badges": 2.72,
+      "CAPTCHA": 3.32,
+      "Daily Reward": 2.99,
+      "Exchange Center": 2.35,
+      "Follow & Earn": 2.42,
+      "Leaderboard": 2.68,
+      "Level System": 3.14,
+      "Mining Rewards": 3.27,
+      "Missions": 3.61,
+      "Referral": 3.11,
+      "Spin the Wheel": 3.18,
+      "Streak Rewards": 3.29,
+      "Tap & Earn": 3.32,
+      "Wallet": 2.68,
+      "Watch Ads": 3.74
+    },
+    "recomputed": {
+      "Badges": 2.72,
+      "CAPTCHA": 3.32,
+      "Daily Reward": 2.99,
+      "Exchange Center": 2.35,
+      "Follow & Earn": 2.42,
+      "Leaderboard": 2.68,
+      "Level System": 3.14,
+      "Mining Rewards": 3.27,
+      "Missions": 3.61,
+      "Referral": 3.11,
+      "Spin the Wheel": 3.18,
+      "Streak Rewards": 3.29,
+      "Tap & Earn": 3.32,
+      "Wallet": 2.68,
+      "Watch Ads": 3.74
+    },
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "events / unique_users per feature in 03_Feature_Events across 15 features"
+  },
+  {
+    "kpi_id": "K17",
+    "reported": [
+      {
+        "feature_name": "Watch Ads",
+        "unique_users": 836
+      },
+      {
+        "feature_name": "Daily Reward",
+        "unique_users": 835
+      },
+      {
+        "feature_name": "Streak Rewards",
+        "unique_users": 832
+      },
+      {
+        "feature_name": "CAPTCHA",
+        "unique_users": 824
+      },
+      {
+        "feature_name": "Referral",
+        "unique_users": 811
+      }
+    ],
+    "recomputed": [
+      {
+        "feature_name": "Watch Ads",
+        "unique_users": 836
+      },
+      {
+        "feature_name": "Daily Reward",
+        "unique_users": 835
+      },
+      {
+        "feature_name": "Streak Rewards",
+        "unique_users": 832
+      },
+      {
+        "feature_name": "CAPTCHA",
+        "unique_users": 824
+      },
+      {
+        "feature_name": "Referral",
+        "unique_users": 811
+      }
+    ],
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "top 5 features: Watch Ads: 836, Daily Reward: 835, Streak Rewards: 832, CAPTCHA: 824, Referral: 811"
+  },
+  {
+    "kpi_id": "K18",
+    "reported": [
+      {
+        "feature_name": "Watch Ads",
+        "total_events": 3126
+      },
+      {
+        "feature_name": "Missions",
+        "total_events": 2780
+      },
+      {
+        "feature_name": "Streak Rewards",
+        "total_events": 2734
+      },
+      {
+        "feature_name": "CAPTCHA",
+        "total_events": 2733
+      },
+      {
+        "feature_name": "Tap & Earn",
+        "total_events": 2654
+      }
+    ],
+    "recomputed": [
+      {
+        "feature_name": "Watch Ads",
+        "total_events": 3126
+      },
+      {
+        "feature_name": "Missions",
+        "total_events": 2780
+      },
+      {
+        "feature_name": "Streak Rewards",
+        "total_events": 2734
+      },
+      {
+        "feature_name": "CAPTCHA",
+        "total_events": 2733
+      },
+      {
+        "feature_name": "Tap & Earn",
+        "total_events": 2654
+      }
+    ],
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "top 5 features: Watch Ads: 3126, Missions: 2780, Streak Rewards: 2734, CAPTCHA: 2733, Tap & Earn: 2654"
+  },
+  {
+    "kpi_id": "K19",
+    "reported": {
+      "Badges": 63.06,
+      "CAPTCHA": 73.18,
+      "Daily Reward": 73.89,
+      "Exchange Center": 60.0,
+      "Follow & Earn": 64.09,
+      "Leaderboard": 63.56,
+      "Level System": 73.48,
+      "Mining Rewards": 72.34,
+      "Missions": 79.9,
+      "Referral": 71.64,
+      "Spin the Wheel": 72.74,
+      "Streak Rewards": 76.08,
+      "Tap & Earn": 73.5,
+      "Wallet": 70.0,
+      "Watch Ads": 76.56
+    },
+    "recomputed": {
+      "Badges": 63.06,
+      "CAPTCHA": 73.18,
+      "Daily Reward": 73.89,
+      "Exchange Center": 60.0,
+      "Follow & Earn": 64.09,
+      "Leaderboard": 63.56,
+      "Level System": 73.48,
+      "Mining Rewards": 72.34,
+      "Missions": 79.9,
+      "Referral": 71.64,
+      "Spin the Wheel": 72.74,
+      "Streak Rewards": 76.08,
+      "Tap & Earn": 73.5,
+      "Wallet": 70.0,
+      "Watch Ads": 76.56
+    },
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "repeat_users(>=2 events) / unique_users per feature across 15 features"
+  },
+  {
+    "kpi_id": "K20",
+    "reported": 9846,
+    "recomputed": 9846,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(df_task) = 9846"
+  },
+  {
+    "kpi_id": "K21",
+    "reported": 5627,
+    "recomputed": 5627,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(df_task[task_status=='Completed']) = 5627"
+  },
+  {
+    "kpi_id": "K22",
+    "reported": 0.5715,
+    "recomputed": 0.5715,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "len(df[status=='Completed']) / len(df) = 5627 / 9846 = 0.5715"
+  },
+  {
+    "kpi_id": "K23",
+    "reported": 0.1544,
+    "recomputed": 0.1544,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "len(df[status=='Failed']) / len(df) = 1520 / 9846 = 0.1544"
+  },
+  {
+    "kpi_id": "K24",
+    "reported": 304.5,
+    "recomputed": 304.5,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "comp_dur.mean() = 304.5"
+  },
+  {
+    "kpi_id": "K25",
+    "reported": {
+      "Advertisement": 2203,
+      "App Task": 1327,
+      "Survey": 1259,
+      "CAPTCHA": 1143,
+      "Social Activity": 1020,
+      "Game": 1008,
+      "Mission": 985,
+      "Promotional Task": 901
+    },
+    "recomputed": {
+      "Advertisement": 2203,
+      "App Task": 1327,
+      "Survey": 1259,
+      "CAPTCHA": 1143,
+      "Social Activity": 1020,
+      "Game": 1008,
+      "Mission": 985,
+      "Promotional Task": 901
+    },
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_task['task_category'].value_counts() across 8 categories"
+  },
+  {
+    "kpi_id": "K26",
+    "reported": 981,
+    "recomputed": 981,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_task[status=='Completed']['user_id'].nunique() = 981"
+  },
+  {
+    "kpi_id": "K27",
+    "reported": 689,
+    "recomputed": 689,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "(comp_tasks.groupby('user_id')['activity_id'].count() >= 5).sum() = 689"
+  },
+  {
+    "kpi_id": "K28",
+    "reported": 242830,
+    "recomputed": 242830,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_miles['milestone_value'].sum() in 06_Milestones = 242830"
+  },
+  {
+    "kpi_id": "K29",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "05_Task_Activity cols: ['activity_id', 'user_id', 'task_id', 'task_category', 'task_viewed_at', 'task_started_at', 'task_completed_at', 'task_status', 'failure_reason', 'reward_status', 'device', 'session_id']; missing: reward_amount & Task_Master table"
+  },
+  {
+    "kpi_id": "K30",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "05_Task_Activity lacks numeric reward_amount; Task_Master missing"
+  },
+  {
+    "kpi_id": "K31",
+    "reported": {
+      "Watch Ads": 22521,
+      "Streak Rewards": 19012,
+      "Missions": 18115,
+      "Tap & Earn": 18099,
+      "CAPTCHA": 17746,
+      "Referral": 17657,
+      "Spin the Wheel": 17565,
+      "Daily Reward": 16396,
+      "Level System": 16086,
+      "Mining Rewards": 15421,
+      "Leaderboard": 14738,
+      "Wallet": 14652,
+      "Exchange Center": 11366,
+      "Badges": 10909,
+      "Follow & Earn": 10515,
+      "Onboarding": 2032
+    },
+    "recomputed": {
+      "Watch Ads": 22521,
+      "Streak Rewards": 19012,
+      "Missions": 18115,
+      "Tap & Earn": 18099,
+      "CAPTCHA": 17746,
+      "Referral": 17657,
+      "Spin the Wheel": 17565,
+      "Daily Reward": 16396,
+      "Level System": 16086,
+      "Mining Rewards": 15421,
+      "Leaderboard": 14738,
+      "Wallet": 14652,
+      "Exchange Center": 11366,
+      "Badges": 10909,
+      "Follow & Earn": 10515,
+      "Onboarding": 2032
+    },
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_miles.groupby(mapped_feature)['milestone_value'].sum() across 16 features"
+  },
+  {
+    "kpi_id": "K32",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "Wallet_Ledger missing; 05_Task_Activity statuses: ['Failed', 'Abandoned', 'Completed', 'Pending'] (no Reversal)"
+  },
+  {
+    "kpi_id": "K33",
+    "reported": 1000,
+    "recomputed": 1000,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_miles['user_id'].nunique() = 1000"
+  },
+  {
+    "kpi_id": "K34",
+    "reported": 17.91,
+    "recomputed": 17.91,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "178 retained / 994 eligible = 17.91%"
+  },
+  {
+    "kpi_id": "K35",
+    "reported": 13.33,
+    "recomputed": 13.33,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "127 retained / 953 eligible = 13.33%"
+  },
+  {
+    "kpi_id": "K36",
+    "reported": 8.46,
+    "recomputed": 8.46,
+    "delta": 0.0,
+    "verdict": "PASS",
+    "evidence": "69 retained / 816 eligible = 8.46%"
+  },
+  {
+    "kpi_id": "K37",
+    "reported": [
+      {
+        "day": 1,
+        "eligible_users": 994,
+        "retained_users": 178,
+        "retention_rate_pct": 17.91
+      },
+      {
+        "day": 2,
+        "eligible_users": 991,
+        "retained_users": 169,
+        "retention_rate_pct": 17.05
+      },
+      {
+        "day": 3,
+        "eligible_users": 980,
+        "retained_users": 150,
+        "retention_rate_pct": 15.31
+      },
+      {
+        "day": 4,
+        "eligible_users": 974,
+        "retained_users": 136,
+        "retention_rate_pct": 13.96
+      },
+      {
+        "day": 5,
+        "eligible_users": 963,
+        "retained_users": 136,
+        "retention_rate_pct": 14.12
+      },
+      {
+        "day": 6,
+        "eligible_users": 959,
+        "retained_users": 127,
+        "retention_rate_pct": 13.24
+      },
+      {
+        "day": 7,
+        "eligible_users": 953,
+        "retained_users": 127,
+        "retention_rate_pct": 13.33
+      },
+      {
+        "day": 8,
+        "eligible_users": 945,
+        "retained_users": 107,
+        "retention_rate_pct": 11.32
+      },
+      {
+        "day": 9,
+        "eligible_users": 933,
+        "retained_users": 118,
+        "retention_rate_pct": 12.65
+      },
+      {
+        "day": 10,
+        "eligible_users": 926,
+        "retained_users": 103,
+        "retention_rate_pct": 11.12
+      },
+      {
+        "day": 11,
+        "eligible_users": 920,
+        "retained_users": 117,
+        "retention_rate_pct": 12.72
+      },
+      {
+        "day": 12,
+        "eligible_users": 914,
+        "retained_users": 100,
+        "retention_rate_pct": 10.94
+      },
+      {
+        "day": 13,
+        "eligible_users": 912,
+        "retained_users": 110,
+        "retention_rate_pct": 12.06
+      },
+      {
+        "day": 14,
+        "eligible_users": 904,
+        "retained_users": 109,
+        "retention_rate_pct": 12.06
+      },
+      {
+        "day": 15,
+        "eligible_users": 894,
+        "retained_users": 87,
+        "retention_rate_pct": 9.73
+      },
+      {
+        "day": 16,
+        "eligible_users": 893,
+        "retained_users": 94,
+        "retention_rate_pct": 10.53
+      },
+      {
+        "day": 17,
+        "eligible_users": 888,
+        "retained_users": 87,
+        "retention_rate_pct": 9.8
+      },
+      {
+        "day": 18,
+        "eligible_users": 880,
+        "retained_users": 74,
+        "retention_rate_pct": 8.41
+      },
+      {
+        "day": 19,
+        "eligible_users": 871,
+        "retained_users": 90,
+        "retention_rate_pct": 10.33
+      },
+      {
+        "day": 20,
+        "eligible_users": 864,
+        "retained_users": 85,
+        "retention_rate_pct": 9.84
+      },
+      {
+        "day": 21,
+        "eligible_users": 859,
+        "retained_users": 93,
+        "retention_rate_pct": 10.83
+      },
+      {
+        "day": 22,
+        "eligible_users": 853,
+        "retained_users": 80,
+        "retention_rate_pct": 9.38
+      },
+      {
+        "day": 23,
+        "eligible_users": 845,
+        "retained_users": 83,
+        "retention_rate_pct": 9.82
+      },
+      {
+        "day": 24,
+        "eligible_users": 841,
+        "retained_users": 69,
+        "retention_rate_pct": 8.2
+      },
+      {
+        "day": 25,
+        "eligible_users": 838,
+        "retained_users": 80,
+        "retention_rate_pct": 9.55
+      },
+      {
+        "day": 26,
+        "eligible_users": 836,
+        "retained_users": 78,
+        "retention_rate_pct": 9.33
+      },
+      {
+        "day": 27,
+        "eligible_users": 833,
+        "retained_users": 76,
+        "retention_rate_pct": 9.12
+      },
+      {
+        "day": 28,
+        "eligible_users": 821,
+        "retained_users": 83,
+        "retention_rate_pct": 10.11
+      },
+      {
+        "day": 29,
+        "eligible_users": 819,
+        "retained_users": 61,
+        "retention_rate_pct": 7.45
+      },
+      {
+        "day": 30,
+        "eligible_users": 816,
+        "retained_users": 69,
+        "retention_rate_pct": 8.46
+      }
+    ],
+    "recomputed": [
+      {
+        "day": 1,
+        "eligible_users": 994,
+        "retained_users": 178,
+        "retention_rate_pct": 17.91
+      },
+      {
+        "day": 2,
+        "eligible_users": 991,
+        "retained_users": 169,
+        "retention_rate_pct": 17.05
+      },
+      {
+        "day": 3,
+        "eligible_users": 980,
+        "retained_users": 150,
+        "retention_rate_pct": 15.31
+      },
+      {
+        "day": 4,
+        "eligible_users": 974,
+        "retained_users": 136,
+        "retention_rate_pct": 13.96
+      },
+      {
+        "day": 5,
+        "eligible_users": 963,
+        "retained_users": 136,
+        "retention_rate_pct": 14.12
+      },
+      {
+        "day": 6,
+        "eligible_users": 959,
+        "retained_users": 127,
+        "retention_rate_pct": 13.24
+      },
+      {
+        "day": 7,
+        "eligible_users": 953,
+        "retained_users": 127,
+        "retention_rate_pct": 13.33
+      },
+      {
+        "day": 8,
+        "eligible_users": 945,
+        "retained_users": 107,
+        "retention_rate_pct": 11.32
+      },
+      {
+        "day": 9,
+        "eligible_users": 933,
+        "retained_users": 118,
+        "retention_rate_pct": 12.65
+      },
+      {
+        "day": 10,
+        "eligible_users": 926,
+        "retained_users": 103,
+        "retention_rate_pct": 11.12
+      },
+      {
+        "day": 11,
+        "eligible_users": 920,
+        "retained_users": 117,
+        "retention_rate_pct": 12.72
+      },
+      {
+        "day": 12,
+        "eligible_users": 914,
+        "retained_users": 100,
+        "retention_rate_pct": 10.94
+      },
+      {
+        "day": 13,
+        "eligible_users": 912,
+        "retained_users": 110,
+        "retention_rate_pct": 12.06
+      },
+      {
+        "day": 14,
+        "eligible_users": 904,
+        "retained_users": 109,
+        "retention_rate_pct": 12.06
+      },
+      {
+        "day": 15,
+        "eligible_users": 894,
+        "retained_users": 87,
+        "retention_rate_pct": 9.73
+      },
+      {
+        "day": 16,
+        "eligible_users": 893,
+        "retained_users": 94,
+        "retention_rate_pct": 10.53
+      },
+      {
+        "day": 17,
+        "eligible_users": 888,
+        "retained_users": 87,
+        "retention_rate_pct": 9.8
+      },
+      {
+        "day": 18,
+        "eligible_users": 880,
+        "retained_users": 74,
+        "retention_rate_pct": 8.41
+      },
+      {
+        "day": 19,
+        "eligible_users": 871,
+        "retained_users": 90,
+        "retention_rate_pct": 10.33
+      },
+      {
+        "day": 20,
+        "eligible_users": 864,
+        "retained_users": 85,
+        "retention_rate_pct": 9.84
+      },
+      {
+        "day": 21,
+        "eligible_users": 859,
+        "retained_users": 93,
+        "retention_rate_pct": 10.83
+      },
+      {
+        "day": 22,
+        "eligible_users": 853,
+        "retained_users": 80,
+        "retention_rate_pct": 9.38
+      },
+      {
+        "day": 23,
+        "eligible_users": 845,
+        "retained_users": 83,
+        "retention_rate_pct": 9.82
+      },
+      {
+        "day": 24,
+        "eligible_users": 841,
+        "retained_users": 69,
+        "retention_rate_pct": 8.2
+      },
+      {
+        "day": 25,
+        "eligible_users": 838,
+        "retained_users": 80,
+        "retention_rate_pct": 9.55
+      },
+      {
+        "day": 26,
+        "eligible_users": 836,
+        "retained_users": 78,
+        "retention_rate_pct": 9.33
+      },
+      {
+        "day": 27,
+        "eligible_users": 833,
+        "retained_users": 76,
+        "retention_rate_pct": 9.12
+      },
+      {
+        "day": 28,
+        "eligible_users": 821,
+        "retained_users": 83,
+        "retention_rate_pct": 10.11
+      },
+      {
+        "day": 29,
+        "eligible_users": 819,
+        "retained_users": 61,
+        "retention_rate_pct": 7.45
+      },
+      {
+        "day": 30,
+        "eligible_users": 816,
+        "retained_users": 69,
+        "retention_rate_pct": 8.46
+      }
+    ],
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "D1..D30 retention curve matches 30 cohort evaluations"
+  },
+  {
+    "kpi_id": "K38",
+    "reported": 16,
+    "recomputed": 16,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(df_messy[df_messy.duplicated('user_id', keep=False)]) = 16 rows (8 unique IDs duplicated)"
+  },
+  {
+    "kpi_id": "K39",
+    "reported": 0,
+    "recomputed": 0,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "df_messy['user_id'].isna().sum() = 0"
+  },
+  {
+    "kpi_id": "K40",
+    "reported": 2,
+    "recomputed": 2,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "1 null timestamp + 1 month-14 error in Users_Messy_Audit = 2"
+  },
+  {
+    "kpi_id": "K41",
+    "reported": 4,
+    "recomputed": 4,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(df_dq_audit[event_status=='success ']) = 4"
+  },
+  {
+    "kpi_id": "K42",
+    "reported": 0,
+    "recomputed": 0,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "Orphan records across all activity tables = 0"
+  },
+  {
+    "kpi_id": "K43",
+    "reported": 4,
+    "recomputed": 4,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "(df_clean['days_since_registration'] < 0).sum() = 4"
+  },
+  {
+    "kpi_id": "K44",
+    "reported": 4,
+    "recomputed": 4,
+    "delta": 0,
+    "verdict": "PASS",
+    "evidence": "len(df_dq_audit[event_status.str.endswith(' ')]) = 4"
+  },
+  {
+    "kpi_id": "K45",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "Wallet_Ledger table missing from supplied workbooks"
+  },
+  {
+    "kpi_id": "K46",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "Withdrawals table missing from supplied workbooks"
+  },
+  {
+    "kpi_id": "K47",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "Withdrawals table missing from supplied workbooks"
+  },
+  {
+    "kpi_id": "K48",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "Referral_Invites and Referral_Conversions tracking tables missing from workbooks"
+  },
+  {
+    "kpi_id": "K49",
+    "reported": null,
+    "recomputed": null,
+    "delta": 0,
+    "verdict": "BLOCKED-CONFIRMED",
+    "evidence": "Referral_Activations tracking table missing from workbooks"
+  }
+]

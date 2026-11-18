@@ -174,12 +174,12 @@
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
       "kpi_id": "K08",
       "name": "Users who have ever logged in",
-      "value": 92.8,
+      "value": 98.4,
       "unit": "% of registered",
-      "computation_note": "COUNT(CASE WHEN last_login_datetime IS NOT NULL THEN 1 END) * 100.0 / COUNT(*) FROM Users_1000_Clean = 928 / 1000 = 92.8%. (Note: 984 users / 98.4% have session records logged in 02_Sessions)",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 02_Sessions * 100.0 / COUNT(DISTINCT user_id) FROM 01_Users_1000 = 984 / 1000 = 98.4%",
       "source_sheets": [
-        "Users_1000_Clean",
-        "02_Sessions"
+        "02_Sessions",
+        "01_Users_1000"
       ],
       "status": "OK",
       "blocker": null,
@@ -189,11 +189,11 @@
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
       "kpi_id": "K09",
       "name": "Users who have NEVER logged in",
-      "value": 72,
+      "value": 16,
       "unit": "users",
-      "computation_note": "COUNT(CASE WHEN last_login_datetime IS NULL THEN 1 END) FROM Users_1000_Clean = 72 users (7.2% dormant from day 0, all flagged Pending Verification). Alternatively, 16 users (1.6%) have 0 sessions in 02_Sessions.",
+      "computation_note": "COUNT(DISTINCT user_id) FROM 01_Users_1000 WHERE user_id NOT IN (SELECT DISTINCT user_id FROM 02_Sessions) = 1000 - 984 = 16 users (1.6% of registered)",
       "source_sheets": [
-        "Users_1000_Clean",
+        "01_Users_1000",
         "02_Sessions"
       ],
       "status": "OK",
@@ -672,7 +672,7 @@
       "name": "D1 retention",
       "value": 17.91,
       "unit": "% eligible users active on D1",
-      "computation_note": "COUNT(users active on registration_date + 1 day) \u00f7 COUNT(users registered >= 1 day before dataset end) * 100.0 = 178 \u00f7 994 = 17.91% (or 17.80% of all 1,000 registered users)",
+      "computation_note": "COUNT(distinct user_id in 04_Daily_Activity on registration_date + 1 day) \u00f7 COUNT(distinct user_id with registration_date <= observation_end - 1 day) * 100.0 = 178 \u00f7 994 = 17.91%",
       "source_sheets": [
         "01_Users_1000",
         "04_Daily_Activity"
@@ -687,7 +687,7 @@
       "name": "D7 retention",
       "value": 13.33,
       "unit": "% eligible users active on D7",
-      "computation_note": "COUNT(users active on registration_date + 7 days) \u00f7 COUNT(users registered >= 7 days before dataset end) * 100.0 = 127 \u00f7 953 = 13.33% (or 12.70% of all 1,000 registered users)",
+      "computation_note": "COUNT(distinct user_id in 04_Daily_Activity on registration_date + 7 days) \u00f7 COUNT(distinct user_id with registration_date <= observation_end - 7 days) * 100.0 = 127 \u00f7 953 = 13.33%",
       "source_sheets": [
         "01_Users_1000",
         "04_Daily_Activity"
@@ -702,7 +702,7 @@
       "name": "D30 retention",
       "value": 8.46,
       "unit": "% eligible users active on D30",
-      "computation_note": "COUNT(users active on registration_date + 30 days) \u00f7 COUNT(users registered >= 30 days before dataset end) * 100.0 = 69 \u00f7 816 = 8.46% (or 6.90% of all 1,000 registered users)",
+      "computation_note": "COUNT(distinct user_id in 04_Daily_Activity on registration_date + 30 days) \u00f7 COUNT(distinct user_id with registration_date <= observation_end - 30 days) * 100.0 = 69 \u00f7 816 = 8.46%",
       "source_sheets": [
         "01_Users_1000",
         "04_Daily_Activity"

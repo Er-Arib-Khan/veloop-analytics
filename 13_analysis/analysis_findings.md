@@ -43,8 +43,8 @@ All values are transcribed directly from `13_analysis/outputs/02_kpis.json`.
 | **K05** | Users active in last 30 days (MAU) | 812 | users | `03_Feature_Events`, `04_Daily_Activity` | OK |
 | **K06** | DAU for the last 30 calendar days | 30 calendar days timeseries (min 67, max 164, mean 103.50 users/day) | timeseries (daily active users) | `04_Daily_Activity`, `03_Feature_Events` | OK |
 | **K07** | DAU/MAU ratio | 0.1275 (12.75%) | ratio | `04_Daily_Activity`, `03_Feature_Events` | OK |
-| **K08** | Users who have ever logged in | 92.8 (928 users; 984 users / 98.4% recorded in sessions) | % of registered | `Users_1000_Clean`, `02_Sessions` | OK |
-| **K09** | Users who have NEVER logged in | 72 (7.2% day-0 dormant; 16 users / 1.6% have zero sessions) | users | `Users_1000_Clean`, `02_Sessions` | OK |
+| **K08** | Users who have ever logged in | 98.4 | % of registered | `02_Sessions`, `01_Users_1000` | OK |
+| **K09** | Users who have NEVER logged in | 16 | users | `01_Users_1000`, `02_Sessions` | OK |
 | **K10** | Returning users (active on ≥2 distinct days) | 826 (82.6%; 819 users / 81.9% in Users_1000_Clean) | users | `04_Daily_Activity`, `Users_1000_Clean` | OK |
 | **K11** | Inactive users (registered but no event in last 14 days) | 346 (34.6%) | users | `01_Users_1000`, `03_Feature_Events` | OK |
 | **K12** | Total sessions | 7913 | sessions | `02_Sessions` | OK |
@@ -94,9 +94,9 @@ All values are transcribed directly from `13_analysis/outputs/02_kpis.json`.
 
 ## 3. Findings — What the Data Actually Shows
 
-1. **Finding 1 — User Base & Verification Bottleneck (K01, K08, K09):**  
-   Out of 1,000 total registered users in `01_Users_1000` (K01), exactly 928 users (92.8%) logged in at least once (K08), while 72 users (7.2%) never logged in and remained dormant from day 0 in `Users_1000_Clean` (K09).  
-   *Implication:* The initial verification step represents an onboarding leak where 7.2% of registered accounts drop off before recording their first session.
+1. **Finding 1 — User Base & Initial Session Conversion (K01, K08, K09):**  
+   Out of 1,000 total registered users in `01_Users_1000` (K01), exactly 984 users (98.4%) recorded at least one session in `02_Sessions` (K08), while 16 users (1.6%) never logged in or initiated a session (K09).  
+   *Implication:* Initial session conversion is high at 98.4%, with day-0 onboarding drop-off limited to 1.6% (16 users). The previously cited 72-user dormancy figure was a cross-workbook artifact from `Users_1000_Clean` where unverified accounts had null login timestamps despite generating 560 completed sessions in `02_Sessions`.
 
 2. **Finding 2 — Active User Engagement & DAU/MAU Stickiness (K04, K05, K06, K07):**  
    In `03_Feature_Events` and `04_Daily_Activity`, the active user base spans 812 MAU (K05) and 486 WAU (K04), with a 30-day mean DAU of 103.50 users (K06), producing a DAU/MAU stickiness ratio of 0.1275 or 12.75% (K07).  
@@ -143,7 +143,7 @@ All values are transcribed directly from `13_analysis/outputs/02_kpis.json`.
     *Implication:* The simulated cohort represents an actively expanding user base with an inflow velocity of 6.13 new users per day.
 
 13. **Finding 13 — Retention Decay Profile (K34, K35, K36, K37):**  
-    Standard cohort retention in `04_Daily_Activity` drops from D1 = 17.91% (178 retained / 994 eligible users, K34) to D7 = 13.33% (127 retained / 953 eligible users, K35), before stabilizing at D30 = 8.46% (69 retained / 816 eligible users, K36).  
+    Standard cohort retention in `04_Daily_Activity` drops from D1 = 17.91% (178 of 994 eligible users, K34) to D7 = 13.33% (127 of 953 eligible users, K35), before stabilizing at D30 = 8.46% (69 of 816 eligible users, K36).  
     *Implication:* The steepest retention loss occurs immediately between registration and Day 1 (an 82.09% drop), after which attrition slows to a steady baseline of ~8.5% at 30 days.
 
 14. **Finding 14 — Telemetry Quality & Schema Integrity Audit (K38, K40, K41, K42, K43, K44):**  

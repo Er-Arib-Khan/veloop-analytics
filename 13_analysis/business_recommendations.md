@@ -17,17 +17,18 @@ This document translates the verified analytical findings from `13_analysis/outp
 **Owner:** Engineering  
 **Effort:** Medium  
 **Priority:** High  
-**Data Dependency:** Uses existing `failure_reason` and `task_status` in `05_Task_Activity`; requires real-time health-check API telemetry from third-party task offer providers.
+**Data Dependency:** Uses existing `failure_reason` and `task_status` in `05_Task_Activity`; requires real-time health-check API telemetry from third-party task offer providers.  
+**Governance Blocker (A010):** Assumption **A010** (Risk: High) logs that the supplied data does not distinguish whether the 732 "Validation failed" tasks (48.16% of failures) originate from VELOOP's internal rule engine, external partner postback callbacks, or client SDK payload formatting. Verifying this root cause determines remediation architecture and precision before finalizing the engineering implementation.
 
 ---
 
 ### R2 — Deploy Automated OTP Verification Rescues and Day-1 Login Bonuses to Activate Dormant Users
 
-**Finding:** Exactly 72 registered users (7.2% of the 1,000 cohort) never logged in and remained dormant from day 0 with zero recorded sessions in `Users_1000_Clean` (K09), while Day 1 cohort retention drops sharply to 17.91% across 994 eligible users in `04_Daily_Activity` (K34).
+**Finding:** Out of 1,000 registered users, 984 (98.4%) recorded sessions in `02_Sessions` (K08) while exactly 16 users (1.6%) never initiated a session and remained dormant from day 0 (K09, confirmed in assumption **A009**; the previously cited 72-user dormancy was a synthetic artifact of `Users_1000_Clean`), while Day 1 cohort retention drops sharply to 17.91% across 994 eligible users in `04_Daily_Activity` (K34).
 
 **Recommendation:** Deploy automated SMS/WhatsApp verification retry triggers at hour 1 and hour 24 for pending signups, paired with a guaranteed 50 XP instant login bonus credited upon opening the app within 24 hours of registration.
 
-**Impact:** Directly activates a meaningful portion of the 72 day-0 dormant users who abandon during onboarding and dampens the steep 82.09% drop-off between registration and Day 1.
+**Impact:** Directly targets onboarding activation to convert the 16 day-0 dormant users and dampens the steep 82.09% drop-off between registration and Day 1.
 
 **Owner:** Product  
 **Effort:** Low  
