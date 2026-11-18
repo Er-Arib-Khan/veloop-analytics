@@ -223,26 +223,33 @@ Table Rewards {
 }
 
 // ----------------------------------------------------
-// 10. Double-Entry Wallet Ledger (Proposed)
+// 10. Double-Entry Wallet Ledger (Proposed — not yet implemented)
+// Wallet_Transactions removed in v3 — superseded by ledger_entries.
+// See 03_specs/wallet_ledger_spec.md §5 for migration.
 // ----------------------------------------------------
-Table Wallet_Transactions {
-  transaction_id varchar(64) [pk, note: "/* proposed */ Immutable double-entry ledger entry primary key (TXN_UUIDv4)"]
+Table ledger_entries {
+  entry_id varchar(64) [pk, note: "/* proposed */ Unique ledger entry primary key (ENT_XXXXXX)"]
+  transaction_id varchar(64) [not null, note: "/* proposed */ Groups balancing debit/credit legs (TXN_UUIDv4)"]
   user_id varchar(16) [not null, note: "Confirmed: Foreign key to Users"]
-  transaction_datetime timestamp [not null, note: "/* proposed */ Exact server timestamp of ledger commit"]
-  transaction_type varchar(30) [not null, note: "/* proposed */ Entry type: CREDIT, DEBIT, HOLD, RELEASE, REVERSAL, CORRECTION"]
-  amount float [not null, note: "/* proposed */ Quantitative transaction magnitude"]
-  unit varchar(20) [default: 'XP', note: "/* proposed */ Currency denomination: XP, INR"]
-  status varchar(30) [not null, note: "/* proposed */ Settlement status: POSTED, PENDING_CLEARANCE, REVERSED, FAILED"]
-  source_feature varchar(50) [not null, note: "/* proposed */ Upstream product feature driving transaction"]
-  reference_id varchar(64) [not null, note: "/* proposed */ Origin foreign key: task_id, activity_id, withdrawal_id"]
-  reversal_link varchar(64) [note: "/* proposed */ Pointer to original transaction_id if reversing"]
-  balance_after float [not null, note: "/* proposed */ Running snapshot balance post-transaction"]
+  account_type varchar(30) [not null, note: "/* proposed */ Account: user_wallet, reward_pool, system_clearing, withdrawal_clearing"]
+  direction varchar(10) [not null, note: "/* proposed */ Accounting direction: debit, credit"]
+  amount decimal(18,4) [not null, note: "/* proposed */ Quantitative magnitude (> 0.0000; Restricted sensitivity)"]
+  currency_unit varchar(10) [default: 'XP', not null, note: "/* proposed */ Currency denomination: VE, XP, GEM, TOKEN"]
+  balance_after decimal(18,4) [note: "/* proposed */ Running user wallet balance (Restricted sensitivity)"]
+  created_at timestamp [not null, note: "/* proposed */ ISO 8601 server commit timestamp with timezone"]
+  reference_type varchar(30) [not null, note: "/* proposed */ Origin event type: task_reward, daily_reward, spin, referral, withdrawal, reversal, adjustment"]
+  reference_id varchar(64) [not null, note: "/* proposed */ Upstream foreign key linking origin event"]
+  reversal_of varchar(64) [note: "/* proposed */ Foreign key linking to reversed ledger_entries.entry_id"]
+  status varchar(20) [default: 'posted', not null, note: "/* proposed */ Posting status: posted, reversed"]
+  correlation_id varchar(64) [note: "/* proposed */ End-to-end distributed trace / multi-leg correlation ID"]
 
-  Note: "/* proposed */ Immutable double-entry ledger governing all XP credits, debits, holds, and reversals."
+  Note: "/* proposed */ Double-entry append-only ledger enforcing balance conservation and reversal traceability."
 }
 
 // ----------------------------------------------------
-// 11. Fiat Cash Disbursements (Proposed)
+// 11. Fiat Cash Disbursements (Proposed — not yet implemented)
+// Augmented in v3 with lifecycle timestamps, reason categories, and ledger linkage.
+// See 03_specs/withdrawal_analytics_spec.md §1.
 // ----------------------------------------------------
 Table Withdrawals {
   withdrawal_id varchar(64) [pk, note: "/* proposed */ Unique payout disbursement identifier (WDL_UUIDv4)"]
@@ -260,6 +267,14 @@ Table Withdrawals {
   payout_account_hash varchar(64) [not null, note: "/* proposed */ Anonymized SHA-256 hash of beneficiary VPA/Account"]
   processed_at timestamp [note: "/* proposed */ Timestamp dispatched to gateway"]
   completed_at timestamp [note: "/* proposed */ Final bank settlement timestamp"]
+  processing_at timestamp [note: "/* proposed */ Exact timestamp when payout moved to Processing"]
+  rejected_at timestamp [note: "/* proposed */ Exact timestamp when payout was marked Rejected"]
+  reversed_at timestamp [note: "/* proposed */ Exact timestamp when bank reversed completed transfer"]
+  reason_category varchar(30) [note: "/* proposed */ Root-cause category: insufficient_balance, kyc_failed, payment_failure, user_cancelled, fraud_review, other"]
+  ledger_transaction_id varchar(64) [not null, note: "/* proposed */ Foreign key referencing ledger_entries.transaction_id"]
+  processing_owner varchar(100) [note: "/* proposed */ System worker ID or analyst handle"]
+  correlation_id varchar(64) [note: "/* proposed */ End-to-end distributed tracing ID"]
+  method_details_hash varchar(64) [note: "/* proposed */ Salted SHA-256 hash of beneficiary payout details"]
 
   Note: "/* proposed */ Asynchronous cash disbursement transactions across fiat banking rails."
 }
@@ -296,8 +311,9 @@ Ref: Feature_Events.user_id > Users.user_id [delete: cascade]
 Ref: Daily_Activity.user_id > Users.user_id [delete: cascade]
 Ref: Task_Activity.user_id > Users.user_id [delete: cascade]
 Ref: Milestones.user_id > Users.user_id [delete: cascade]
-Ref: Wallet_Transactions.user_id > Users.user_id [delete: restrict]
+Ref: ledger_entries.user_id > Users.user_id [delete: restrict]
 Ref: Withdrawals.user_id > Users.user_id [delete: restrict]
+Ref: Withdrawals.ledger_transaction_id > ledger_entries.transaction_id [delete: restrict]
 
 // Session Foreign Keys (1:N Relationships)
 Ref: Feature_Events.session_id > Sessions.session_id [delete: cascade]

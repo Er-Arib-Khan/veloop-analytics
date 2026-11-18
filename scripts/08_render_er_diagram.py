@@ -233,29 +233,33 @@ def render_er_diagram():
         # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
         # See 03_specs/wallet_ledger_spec.md §5 for migration.
         # Retained for historical reference only. Do not add new reads/writes.
-        "Wallet_Transactions": {
-            "x": 23, "y": 2, "w": 18, "h": 23,
+        "ledger_entries": {
+            "x": 23, "y": 2, "w": 18, "h": 24,
             "status": "Proposed", "header_bg": "#581C87",
             "fields": [
-                ("[PK] transaction_id", "varchar(64) /*p*/", "#B45309"),
+                ("[PK] entry_id", "varchar(64) /*p*/", "#B45309"),
+                ("transaction_id", "varchar(64) /*p*/", "#6B21A8"),
                 ("[FK] user_id", "varchar(16)", "#0284C7"),
-                ("transaction_datetime", "timestamp /*p*/", "#6B21A8"),
-                ("transaction_type", "varchar(30) /*p*/", "#6B21A8"),
-                ("amount", "float /*p*/", "#6B21A8"),
-                ("unit", "varchar(20) /*p*/", "#6B21A8"),
-                ("status", "varchar(30) /*p*/", "#6B21A8"),
-                ("source_feature", "varchar(50) /*p*/", "#6B21A8"),
+                ("account_type", "varchar(30) /*p*/", "#6B21A8"),
+                ("direction", "varchar(10) /*p*/", "#6B21A8"),
+                ("amount", "decimal(18,4) /*p*/", "#6B21A8"),
+                ("currency_unit", "varchar(10) /*p*/", "#6B21A8"),
+                ("balance_after", "decimal(18,4) /*p*/", "#6B21A8"),
+                ("created_at", "timestamp /*p*/", "#6B21A8"),
+                ("reference_type", "varchar(30) /*p*/", "#6B21A8"),
                 ("reference_id", "varchar(64) /*p*/", "#6B21A8"),
-                ("reversal_link", "varchar(64) /*p*/", "#6B21A8"),
-                ("balance_after", "float /*p*/", "#6B21A8"),
+                ("[FK] reversal_of", "varchar(64) /*p*/", "#0284C7"),
+                ("status", "varchar(20) /*p*/", "#6B21A8"),
+                ("correlation_id", "varchar(64) /*p*/", "#6B21A8"),
             ]
         },
         "Withdrawals": {
-            "x": 44, "y": 2, "w": 20, "h": 23,
+            "x": 44, "y": 2, "w": 20, "h": 24,
             "status": "Proposed", "header_bg": "#581C87",
             "fields": [
                 ("[PK] withdrawal_id", "varchar(64) /*p*/", "#B45309"),
                 ("[FK] user_id", "varchar(16)", "#0284C7"),
+                ("[FK] ledger_transaction_id", "varchar(64) /*p*/", "#0284C7"),
                 ("requested_datetime", "timestamp /*p*/", "#6B21A8"),
                 ("amount_inr", "float /*p*/", "#6B21A8"),
                 ("xp_deducted", "integer /*p*/", "#6B21A8"),
@@ -263,9 +267,13 @@ def render_er_diagram():
                 ("payout_status", "varchar(30) /*p*/", "#6B21A8"),
                 ("gateway_name", "varchar(50) /*p*/", "#6B21A8"),
                 ("gateway_reference", "varchar(100) /*p*/", "#6B21A8"),
-                ("failure_category", "varchar(50) /*p*/", "#6B21A8"),
-                ("payout_account_hash", "varchar(64) /*p*/", "#6B21A8"),
+                ("reason_category", "varchar(30) /*p*/", "#6B21A8"),
+                ("processing_at", "timestamp /*p*/", "#6B21A8"),
                 ("completed_at", "timestamp /*p*/", "#6B21A8"),
+                ("rejected_at", "timestamp /*p*/", "#6B21A8"),
+                ("reversed_at", "timestamp /*p*/", "#6B21A8"),
+                ("risk_score", "float /*p*/", "#6B21A8"),
+                ("method_details_hash", "varchar(64) /*p*/", "#6B21A8"),
             ]
         },
         "Rewards": {
@@ -372,10 +380,12 @@ def render_er_diagram():
         # DEPRECATED TABLE — Wallet_Transactions is superseded by ledger_entries.
         # See 03_specs/wallet_ledger_spec.md §5 for migration.
         # Retained for historical reference only. Do not add new reads/writes.
-        # Users -> Wallet_Transactions (1:N)
-        ("Users", "Wallet_Transactions", (10.0, 48.0), (23.0, 18.0), "#7C3AED", "1:N"),
+        # Users -> ledger_entries (1:N)
+        ("Users", "ledger_entries", (10.0, 48.0), (23.0, 18.0), "#7C3AED", "1:N"),
         # Users -> Withdrawals (1:N)
         ("Users", "Withdrawals", (12.0, 48.0), (44.0, 18.0), "#7C3AED", "1:N"),
+        # Withdrawals -> ledger_entries (N:1 via ledger_transaction_id)
+        ("Withdrawals", "ledger_entries", (44.0, 14.0), (41.0, 14.0), "#0284C7", "N:1"),
     ]
 
     for src, dst, (x1, y1), (x2, y2), color, lbl in relationships:

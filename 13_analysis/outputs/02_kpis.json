@@ -573,8 +573,8 @@
       "status": "PARTIAL",
       "blocker": null,
       "reason": null,
-      "measurement_scope": "Milestone awards only. Sum of 06_Milestones.milestone_value across 4,799 rows = 242,830. This is a LOWER BOUND — it does not include rewards credited through other mechanisms (task completion, daily reward, spin, referral bonus) because no standalone Rewards table exists in the supplied data.",
-      "cross_check": "Users_1000_Clean.SUM(xp_balance) = 231,889 XP — 10,941 lower than milestone_sum. The discrepancy indicates either (a) some milestones were not credited to XP balance, or (b) xp_balance is a snapshot that excludes older activity. Root cause requires engineering verification."
+      "measurement_scope": "Milestone awards only. Sum of 06_Milestones.milestone_value across 4,799 rows = 242,830. This is a LOWER BOUND \u2014 it does not include rewards credited through other mechanisms (task completion, daily reward, spin, referral bonus) because no standalone Rewards table exists in the supplied data.",
+      "cross_check": "Users_1000_Clean.SUM(xp_balance) = 231,889 XP \u2014 10,941 lower than milestone_sum. The discrepancy indicates either (a) some milestones were not credited to XP balance, or (b) xp_balance is a snapshot that excludes older activity. Root cause requires engineering verification."
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -588,7 +588,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
-      "reason": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing"
+      "reason": "05_Task_Activity lacks a numeric reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 ledger_entries.amount for reference_type='task_reward'"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -602,7 +603,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
-      "reason": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing"
+      "reason": "05_Task_Activity lacks reward_amount column, and Task_Master / Wallet_Ledger tables are missing",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 join ledger_entries to task_activity.task_type"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -648,7 +650,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Wallet_Ledger is missing and reward_status lacks a Reversal status",
-      "reason": "Wallet_Ledger is missing and reward_status lacks a Reversal status"
+      "reason": "Wallet_Ledger is missing and reward_status lacks a Reversal status",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 reversal_of field in ledger_entries"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1022,7 +1025,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Wallet_Ledger table is missing from supplied workbooks",
-      "reason": "Wallet_Ledger table is missing from supplied workbooks"
+      "reason": "Wallet_Ledger table is missing from supplied workbooks",
+      "unblock_path": "03_specs/wallet_ledger_spec.md \u00a74 \u2014 ledger_entries populated from backend"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1036,7 +1040,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Withdrawals table is missing from supplied workbooks",
-      "reason": "Withdrawals table is missing from supplied workbooks"
+      "reason": "Withdrawals table is missing from supplied workbooks",
+      "unblock_path": "03_specs/withdrawal_analytics_spec.md \u00a73 \u2014 withdrawals.status enum complete"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1050,7 +1055,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Withdrawals table is missing from supplied workbooks",
-      "reason": "Withdrawals table is missing from supplied workbooks"
+      "reason": "Withdrawals table is missing from supplied workbooks",
+      "unblock_path": "03_specs/withdrawal_analytics_spec.md \u00a73 \u2014 requested_at and completed_at in withdrawals"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1065,7 +1071,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks",
-      "reason": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks"
+      "reason": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks",
+      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 4 referral funnel events (Prompt 4 output, not yet created)"
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1079,7 +1086,8 @@
       ],
       "status": "BLOCKED",
       "blocker": "Referral_Activations table is missing from supplied workbooks",
-      "reason": "Referral_Activations table is missing from supplied workbooks"
+      "reason": "Referral_Activations table is missing from supplied workbooks",
+      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 referral_activated event (Prompt 4 output, not yet created)"
     }
   ]
 }
