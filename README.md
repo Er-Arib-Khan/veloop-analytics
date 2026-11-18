@@ -27,7 +27,7 @@
 | **Live dashboard** | 13 charts, 7 tabs, 127 KB | Working HTML, GitHub Pages deployed |
 
 **Three headline findings:**
-1. **Task funnel leaks 42.85%** — dominated by external dependencies (732 validation failures, 722 unavailable tasks), not user error.
+1. **Task funnel leaks 42.85%** — concentrated in Validation failed (732 tasks) and Task unavailable (722 tasks); root causes require engineering verification across internal vs. third-party systems (A010).
 2. **Retention collapses in week 1** — D1→D7 drops 4.58 points. The biggest possible improvement lever is first-week engagement.
 3. **Wallet, Withdrawals, Referrals instrumentation is entirely missing** — 8 KPIs are BLOCKED until the tables exist.
 

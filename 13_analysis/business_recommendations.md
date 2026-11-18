@@ -12,7 +12,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 **Recommendation:** Implement client-side inventory caching and automated pre-validation checks with third-party task providers to deprecate expired task offers before users attempt them, coupled with asynchronous server-side retry webhooks for validation confirmations.
 
-**Impact:** Directly mitigates the 95.66% of failures caused by partner validation errors (732) and stale inventory (722), rescuing up to 1,454 failed attempts and raising task completion throughput toward 70%.
+**Impact:** Directly mitigates the 95.66% of failures concentrated in validation errors (732) and unavailable tasks (722) (subject to A010 engineering verification of internal vs. partner origin), rescuing up to 1,454 failed attempts and raising task completion throughput toward 70%.
 
 **Owner:** Engineering  
 **Effort:** Medium  
