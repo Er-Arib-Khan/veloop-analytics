@@ -1,10 +1,11 @@
 # VELOOP Rewards — Analytics Foundation: Executive Summary
 
 > **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All figures in this
-> document describe the supplied simulated dataset. They are NOT actual
-> VELOOP user, revenue, retention, conversion, or performance statistics.
+> document describe the supplied simulated dataset. Not actual VELOOP statistics.
+> They are NOT actual VELOOP user, revenue, retention, conversion, or performance statistics.
 
 **Live interactive dashboard:** https://er-arib-khan.github.io/veloop-analytics/
+**Data provenance & authenticity:** [docs/data_provenance.md](../docs/data_provenance.md)
 **Full analysis:** [13_analysis/analysis_findings.md](../13_analysis/analysis_findings.md)
 **Recommendations:** [13_analysis/business_recommendations.md](../13_analysis/business_recommendations.md)
 **KPI register (49 KPIs):** [13_analysis/outputs/02_kpis.json](../13_analysis/outputs/02_kpis.json)
@@ -90,4 +91,4 @@ These 8 KPIs are blocked because the required transactional tables do not exist 
 
 ## 6. Data Authenticity Statement
 
-All figures in this document describe the supplied simulated dataset. They are NOT actual VELOOP user counts, revenue, earnings, withdrawals, retention rates, conversion rates, or company statistics. Any figure that could not be computed from the supplied data is marked BLOCKED with the missing dependency named in Section 2. No production statistics are claimed or implied.
+All figures in this document describe the supplied simulated dataset. Not actual VELOOP statistics. They are NOT actual VELOOP user counts, revenue, earnings, withdrawals, retention rates, conversion rates, or company statistics. Any figure that could not be computed from the supplied data is marked BLOCKED with the missing dependency named in Section 2. No production statistics are claimed or implied. See [docs/data_provenance.md](../docs/data_provenance.md) for the full provenance statement.

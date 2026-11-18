@@ -1,4 +1,4 @@
-> **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All figures below describe the supplied simulated dataset. They are NOT actual VELOOP user, revenue, retention, or performance statistics.
+> **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All figures below describe the supplied simulated dataset. Not actual VELOOP statistics. They are NOT actual VELOOP user, revenue, retention, or performance statistics.
 
 # VELOOP Product Analytics Findings Report
 
@@ -94,58 +94,72 @@ All values are transcribed directly from `13_analysis/outputs/02_kpis.json`.
 
 ## 3. Findings — What the Data Actually Shows
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 1. **Finding 1 — User Base & Initial Session Conversion (K01, K08, K09):**  
    Out of 1,000 total registered users in `01_Users_1000` (K01), exactly 984 users (98.4%) recorded at least one session in `02_Sessions` (K08), while 16 users (1.6%) never logged in or initiated a session (K09).  
    *Implication:* Initial session conversion is high at 98.4%, with day-0 onboarding drop-off limited to 1.6% (16 users). The previously cited 72-user dormancy figure was a cross-workbook artifact from `Users_1000_Clean` where unverified accounts had null login timestamps despite generating 560 completed sessions in `02_Sessions`.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 2. **Finding 2 — Active User Engagement & DAU/MAU Stickiness (K04, K05, K06, K07):**  
    In `03_Feature_Events` and `04_Daily_Activity`, the active user base spans 812 MAU (K05) and 486 WAU (K04), with a 30-day mean DAU of 103.50 users (K06), producing a DAU/MAU stickiness ratio of 0.1275 or 12.75% (K07).  
    *Implication:* While monthly active reach is wide (81.2% of registered accounts), daily app engagement remains concentrated among approximately one-eighth of the monthly cohort.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 3. **Finding 3 — High Repeat Engagement vs. Mid-Funnel Dormancy (K10, K11):**  
    826 users (82.6%) returned across ≥2 distinct active days in `04_Daily_Activity` (K10), yet 346 registered users (34.6%) recorded zero events in the final 14 calendar days of observation in `03_Feature_Events` (K11).  
    *Implication:* Users who survive the initial onboarding hurdle exhibit multi-day repeat usage, but roughly one-third of the user base eventually enters an unengaged state within a two-week window.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 4. **Finding 4 — Session Volume & Short Micro-Session Duration (K12, K13, K14):**  
    The application accumulated 7,913 total sessions in `02_Sessions` (K12), averaging 7.913 sessions per registered user (K13), with an average session duration of 51.81 seconds (median 42.0s) (K14).  
    *Implication:* User interaction is structured around brief micro-visits under one minute rather than sustained dwell sessions.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 5. **Finding 5 — Feature Adoption Ceiling Across Utilities (K15, K17):**  
    In `03_Feature_Events` and `07_Feature_Usage`, Watch Ads achieved the highest unique user adoption at 83.6% (836 users, K15/K17), followed by Daily Reward (83.5%, 835 users) and Streak Rewards (83.2%, 832 users), whereas Badges had the lowest adoption at 67.4% (674 users).  
    *Implication:* Passive and low-friction earning mechanics (watching ads, claiming daily streaks) engage over 83% of the user base, whereas gamified reputation mechanics (badges) experience a 16.2 percentage-point lower adoption rate.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 6. **Finding 6 — Event Volume Concentration in Ads and Missions (K16, K18):**  
    Total event volume in `03_Feature_Events` reached 35,704 events (averaging 35.70 events per registered user), with Watch Ads generating the most interactions at 3,126 events (3.74 events/user, K16/K18), followed by Missions at 2,780 events (3.61 events/user) and Streak Rewards at 2,734 events (3.29 events/user).  
    *Implication:* Behavioral volume is heavily concentrated in direct incentivized monetization loops rather than exploratory features.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 7. **Finding 7 — Missions Drive the Strongest Repeat Interaction (K19):**  
    Missions achieved the highest repeat usage rate in `03_Feature_Events` with 79.90% of its participants executing ≥2 events (K19), followed by Watch Ads (76.56%) and Streak Rewards (76.08%), while Exchange Center had the lowest repeat rate at 60.00%.  
    *Implication:* Structured progressive objectives (missions) create stronger recurrent habituation than one-off catalog exploration (exchange center).
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 8. **Finding 8 — Task Completion Rate and Non-Completion Attribution (K20, K21, K22, K23):**  
    Out of 9,846 tasks started in `05_Task_Activity` (K20), 5,627 reached an explicit completed status for a completion rate of 57.15% (K22), with explicit task failures accounting for 15.44% (1,520 tasks, K23), user abandonment accounting for 20.83% (2,051 tasks), and 648 tasks (6.58%) still pending at the end of the observation window — yielding an aggregate not-completed rate of 42.85% (4,219 of 9,846 started tasks).  
    *Implication:* More than one out of every three attempted tasks fails to finish, with user drop-off (abandonment) causing 1.35 times more lost completions than system or execution errors.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 9. **Finding 9 — Homogeneous Completion Rates Across Task Types (K25):**  
    Task activity in `05_Task_Activity` is led by Advertisement attempts (2,203 rows; 22.38% of all attempts, K25), App Tasks (1,327), and Surveys (1,259), yet completion rates remain remarkably flat across all 8 categories (ranging from 56.08% for Social Activity to 58.16% for Promotional Task).  
    *Implication:* Task non-completion is driven by systemic platform UX frictions or uniform user attention limits rather than specific category-level difficulty spikes.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 10. **Finding 10 — High Execution Latency & Power User Concentration (K24, K26, K27):**  
     Completed tasks in `05_Task_Activity` required an average completion time of 304.50 seconds (~5.08 minutes, median 304.0s) (K24), with 981 unique users completing ≥1 task (K26) and 689 users (68.9%) completing ≥5 tasks (K27).  
     *Implication:* The core task engine relies on a dedicated group of 689 power users willing to spend 5 minutes per micro-task.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 11. **Finding 11 — Milestone Reward Disbursement Distribution (K28, K31, K33):**  
     A cumulative 242,830 milestone reward units were credited across 4,799 milestone awards in `06_Milestones` (K28), with 1,000 out of 1,000 registered users receiving ≥1 milestone reward (K33), led by Watch Ads awards (22,500 units; 9.27% of volume, K31) and Streak Rewards (19,010 units; 7.83%).  
     *Implication:* Milestone incentive disbursements are fully distributed across all users, with monetization features serving as the primary currency issuance source.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 12. **Finding 12 — Ongoing Acquisition Inflow Velocity (K02, K03):**  
     During the final 30 calendar days of observation in `01_Users_1000`, 184 new users registered (K02), including 47 users within the final 7 days (K03), representing 18.4% of total lifetime registrations.  
     *Implication:* The simulated cohort represents an actively expanding user base with an inflow velocity of 6.13 new users per day.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 13. **Finding 13 — Retention Decay Profile (K34, K35, K36, K37):**  
     Standard cohort retention in `04_Daily_Activity` drops from D1 = 17.91% (178 of 994 eligible users, K34) to D7 = 13.33% (127 of 953 eligible users, K35), before stabilizing at D30 = 8.46% (69 of 816 eligible users, K36).  
     *Implication:* The steepest retention loss occurs immediately between registration and Day 1 (an 82.09% drop), after which attrition slows to a steady baseline of ~8.5% at 30 days.
 
+**[SIMULATED — NOT A VELOOP STATISTIC]**
 14. **Finding 14 — Telemetry Quality & Schema Integrity Audit (K38, K40, K41, K42, K43, K44):**  
     Audit analysis of `Users_Messy_Audit` and `10_Event_Data_Quality_Audit` detected 16 duplicate user rows (8 distinct user IDs, K38), 2 invalid registration timestamps (1 null, 1 month-14 error, K40), 4 negative days-since-registration values (K43), and 4 rows containing 'success ' — the trailing whitespace is the root cause of the invalid status enum match (K41 and K44 describe the same 4 rows, not 8 distinct records), while confirming zero orphan records across all activity tables (K42) and zero missing user IDs (K39).  
     *Implication:* Data pipeline anomalies are isolated to pre-ingestion client payload formatting and unconstrained synthetic generation retries, while relational foreign-key integrity remains intact.

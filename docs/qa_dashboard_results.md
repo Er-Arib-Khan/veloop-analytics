@@ -3,7 +3,7 @@
 > **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.**
 
 **Summary:** 14 PASS · 0 FAIL · 9 MANUAL · 0 SKIP  
-**Execution Timestamp:** 2026-11-18 15:58:21 UTC  
+**Execution Timestamp:** 2026-11-18 16:14:16 UTC  
 **Test Harness:** `docs/qa_dashboard_runner.py`  
 **Canonical Live URL:** [https://er-arib-khan.github.io/veloop-analytics/](https://er-arib-khan.github.io/veloop-analytics/) (`HTTP 200`)  
 **Local File Tested:** [`docs/index.html`](file:///home/rib/project/veloop-analytics/docs/index.html)  
@@ -27,7 +27,7 @@
 | **B4** | Units are correct (%, count, seconds, XP) | Standardized explicit units for rates (%), counts (users/tasks), duration (s), and currency (XP) | K01 (users), K22/K07 (%), K24 (304.5s), K28 (242,830 XP) verified in DOM | **PASS** | Cards display: '1,000' (users), '57.15%', '304.5s', '242,830 XP'. Fully consistent across all tabs. |
 | **B5** | K28 shows 'PARTIAL' label with footnote visible | Card displays 'PARTIAL' badge and footnote explains 10,941 XP gap vs Users_1000_Clean | K28 card carries 'PARTIAL' badge; footnote-box details milestone scope and 10,941 XP gap | **PASS** | K28 badge renders 'PARTIAL — see footnote'. Footnote specifies: 'Milestone awards only... Users_1000_Clean.SUM(xp_balance) = 231,889 XP (10,941 lower)'. |
 | **B6** | K30 shows 'BLOCKED' diagnostic card | K30 visual card renders 'BLOCKED' badge with diagnostic root cause and unblock path | K30 visual card renders .blocked-box with 'BLOCKED TELEMETRY' badge and root cause explanation | **PASS** | Reward Amount by Task Type (KPI K30) displays 'BLOCKED TELEMETRY' explaining missing reward_amount in 05_Task_Activity. |
-| **C1** | 'SIMULATED DATA' banner visible on every tab | At least 7 occurrences of 'SIMULATED DATA' (top persistent banner plus chart tags across tabs) | Found 66 occurrences of 'SIMULATED DATA' throughout HTML | **PASS** | Top banner: 'SIMULATED DATA — CREATED FOR ANALYTICAL TESTING' plus 65 chart footers and badge labels (66 total). |
+| **C1** | 'SIMULATED DATA' banner visible on every tab | At least 7 occurrences of 'SIMULATED DATA' (top persistent banner plus chart tags across tabs) | Found 74 occurrences of 'SIMULATED DATA' throughout HTML | **PASS** | Top banner: 'SIMULATED DATA — CREATED FOR ANALYTICAL TESTING' plus 73 chart footers and badge labels (74 total). |
 | **C2** | Footer shows source file names | Footer references both primary simulated workbooks | Both source workbooks explicitly named in page footer | **PASS** | Footer explicitly cites: 'Sources: veloop_simulated_user_behavior_1000.xlsx & veloop_rewards_data_01.xlsx'. |
 | **C3** | Blocked KPIs tab lists exactly 8 KPIs (K29, K30, K32, K45, K46, K47, K48, K49) | Tab 7 lists exactly the 8 blocked KPIs with dependency descriptions and unblock paths | Found 8/8 blocked KPIs in tab-blocked: K29, K30, K32, K45, K46, K47, K48, K49 | **PASS** | All 8 blocked KPIs enumerated with specific blockers: K29, K30, K32, K45, K46, K47, K48, K49. |
 | **C4** | No chart shows a value not in 02_kpis.json | All chart series sourced directly from embedded 02_kpis.json payload | JavaScript parses <script id='kpi-data'>; all 13 charts initialize directly from kpis[...] objects | **PASS** | Chart configs directly consume embedded 02_kpis.json payload, guaranteeing zero hardcoded data deviations. |

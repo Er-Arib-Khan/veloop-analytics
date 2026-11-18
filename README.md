@@ -1,30 +1,33 @@
 # VELOOP Rewards — Analytics Foundation Blueprint
 
 > **⚠️ SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All figures in this
-> repository describe the supplied simulated dataset. They are **not** actual
-> VELOOP users, revenue, earnings, withdrawals, retention, conversion rates,
-> or company statistics.
+> repository describe the supplied simulated dataset. Not actual VELOOP statistics.
+> They are **not** actual VELOOP users, revenue, earnings, withdrawals, retention,
+> conversion rates, or company statistics.
 
 **🔗 Live interactive dashboard:** https://veloop-analytics-dashboard.onrender.com/
 **📊 Analysis findings:** [`13_analysis/analysis_findings.md`](13_analysis/analysis_findings.md)
 **💡 Business recommendations:** [`13_analysis/business_recommendations.md`](13_analysis/business_recommendations.md)
 **📄 Executive summary:** [`12_final/executive_summary.md`](12_final/executive_summary.md)
+**🛡️ Data provenance:** [`docs/data_provenance.md`](docs/data_provenance.md)
 
 ---
 
 ## 📖 The 30-Second Read
 
-| Metric | Value | Meaning |
-|--------|-------|---------|
-| **Registered users** | 1,000 | Base cohort (K01) |
-| **Monthly active users** | 812 (81.2%) | K05 |
-| **Task completion rate** | **57.15%** | 5,627 of 9,846 started (K22) |
-| **Not-completed tasks** | **42.85%** | 4,219 tasks — 15.44% failed, 20.83% abandoned, 6.58% pending |
-| **D1 / D7 / D30 retention** | 17.91% / 13.33% / 8.46% | K34–K36 — steepest drop is D1→D7 |
-| **Duplicate user IDs** | 16 rows / 8 distinct IDs | K38 — data integrity flag |
-| **Virtual currency gap** | **10,941 XP shortfall** | 242,830 milestone units vs 231,889 XP balance (K28 PARTIAL) |
-| **KPIs computed** | 41 of 49 (83.7%) | 1 PARTIAL (K28), 8 BLOCKED (missing tables) |
-| **Live dashboard** | 13 charts, 7 tabs, 127 KB | Working HTML, GitHub Pages deployed |
+| Metric | Value | Meaning | Provenance |
+|--------|-------|---------|------------|
+| **Registered users** | 1,000 | Base cohort (K01) | Simulated |
+| **Monthly active users** | 812 (81.2%) | K05 | Simulated |
+| **Task completion rate** | **57.15%** | 5,627 of 9,846 started (K22) | Simulated |
+| **Not-completed tasks** | **42.85%** | 4,219 tasks — 15.44% failed, 20.83% abandoned, 6.58% pending | Simulated |
+| **D1 / D7 / D30 retention** | 17.91% / 13.33% / 8.46% | K34–K36 — steepest drop is D1→D7 | Simulated |
+| **Duplicate user IDs** | 16 rows / 8 distinct IDs | K38 — data integrity flag | Simulated |
+| **Virtual currency gap** | **10,941 XP shortfall** | 242,830 milestone units vs 231,889 XP balance (K28 PARTIAL) | Simulated |
+| **KPIs computed** | 41 of 49 (83.7%) | 1 PARTIAL (K28), 8 BLOCKED (missing tables) | Simulated |
+| **Live dashboard** | 13 charts, 7 tabs, 127 KB | Working HTML, GitHub Pages deployed | Simulated |
+
+**All values in this table are from the simulated dataset. None are VELOOP production metrics. See [docs/data_provenance.md](docs/data_provenance.md) for the full provenance statement.**
 
 **Three headline findings:**
 1. **Task funnel leaks 42.85%** — concentrated in Validation failed (732 tasks) and Task unavailable (722 tasks); root causes require engineering verification across internal vs. third-party systems (A010).
@@ -42,6 +45,7 @@
 | **An engineer** | [`09_engineering/developer_analytics_handoff.xlsx`](09_engineering/) | [`04_events/event_tracking_plan.xlsx`](04_events/) → [`05_data_model/er_diagram.dbml`](05_data_model/) |
 | **A product manager** | [`13_analysis/business_recommendations.md`](13_analysis/business_recommendations.md) | [`06_kpis/kpi_catalogue.xlsx`](06_kpis/) → [`11_backlog/implementation_backlog.xlsx`](11_backlog/) |
 | **Someone who wants the live demo** | https://er-arib-khan.github.io/veloop-analytics/ | — |
+| **A reviewer verifying data provenance** | [docs/data_provenance.md](docs/data_provenance.md) | Then the assumption register |
 
 ---
 
@@ -186,7 +190,7 @@ Click any section to expand. Each file has the same structure: **what it contain
 **What:** 212 fields across all entities. Every field: entity, name, type, definition, example, required, allowed values, validation, source, sensitivity (Public/Internal/Restricted), analytical use, status (Confirmed/Proposed/To Be Verified).
 
 ### `er_diagram.dbml` and `er_diagram.png`
-**What:** DBML source + rendered ER diagram. 12 entities: Users, Sessions, Feature_Events, Daily_Activity, Task_Activity, Milestones, Feature_Usage, Task_Master, Rewards, Wallet_Transactions, Withdrawals, Referrals.
+**What:** DBML source + rendered ER diagram. 12 entities: Users, Sessions, Feature_Events, Daily_Activity, Task_Activity, Milestones, Feature_Usage, Task_Master, Rewards, ledger_entries, Withdrawals, Referrals.
 **Why:** Proves the analytics model is coherent — a reviewer can see how `user_id` joins across all tables.
 
 ### `relationship_documentation.md`
@@ -437,3 +441,31 @@ python 13_analysis/build_dashboard.py
 
 # 5. Open the dashboard locally
 xdg-open docs/index.html 2>/dev/null || open docs/index.html 2>/dev/null
+```
+
+---
+
+## 🎯 Feedback Closure Map
+
+The initial submission received 7 improvement points from the team
+lead. Each is now closed with verifiable evidence:
+
+| # | Feedback point | Evidence in repo |
+|---|----------------|------------------|
+| 1 | Reconcile login/session figures | `13_analysis/outputs/04_login_reconciliation.md` — 5 definitions, 4-quadrant partition, K08=984, K09=16 |
+| 2 | Complete wallet ledger + withdrawal analytics | `03_specs/wallet_ledger_spec.md`, `03_specs/withdrawal_analytics_spec.md` — double-entry schema, 6 KPI queries |
+| 3 | Referral tracking with separate events | `04_events/referral_event_plan.xlsx` — 4-stage funnel (link_created → registered → activated → reward_credited) |
+| 4 | Validate all 49 KPI calculations | `13_analysis/outputs/05_kpi_validation_report.md` — 41 PASS · 0 FAIL · 8 BLOCKED-CONFIRMED via independent second implementation |
+| 5 | Terminology + third-party assumptions | `07_data_quality/terminology_glossary.md` — canonical terms applied, unsupported causal claims neutralized across 4 files |
+| 6 | Test dashboard tabs, charts, responsiveness | `docs/qa_dashboard_results.md` — 14 PASS · 0 FAIL · 9 manual (browser rendered) |
+| 7 | Distinguish simulated from production | `docs/data_provenance.md` — per-finding labels (14), per-recommendation labels (8), persistent dashboard banners |
+
+All 7 points are closed. The data authenticity boundary is enforced
+at the document level (banners), the finding level (per-finding labels),
+and the repository level (data_provenance.md).
+
+---
+
+## Data Authenticity Statement
+
+All figures in this document describe the supplied simulated dataset. Not actual VELOOP statistics. None are actual VELOOP production metrics. Any figure that could not be computed from the supplied data is marked BLOCKED with the missing dependency named. No production statistics are claimed or implied. See [docs/data_provenance.md](docs/data_provenance.md) for the full provenance statement.

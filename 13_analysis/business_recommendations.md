@@ -1,4 +1,4 @@
-> **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All recommendations below are derived strictly from empirical findings on the supplied simulated dataset.
+> **SIMULATED DATA — CREATED FOR ANALYTICAL TESTING.** All recommendations below are derived strictly from empirical findings on the supplied simulated dataset. Not actual VELOOP statistics.
 
 # VELOOP Analytics — Strategic Business & Technical Recommendations
 
@@ -6,6 +6,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R1 — Resolve Third-Party Validation Timeouts and Pre-Filter Inventory to Cut Task Failures
 
 **Finding:** Across 9,846 started tasks in `05_Task_Activity`, the task completion rate is 57.15% (5,627 tasks, K22), with explicit task failures accounting for 15.44% (1,520 tasks, K23), user abandonment accounting for 20.83% (2,051 tasks), and an aggregate not-completed rate of 42.85% (4,219 tasks), driven predominantly by Validation failed (732 tasks), Task unavailable (722 tasks), and Timeout (66 tasks).
@@ -22,6 +23,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R2 — Deploy Automated OTP Verification Rescues and Day-1 Login Bonuses to Activate Dormant Users
 
 **Finding:** Out of 1,000 registered users, 984 (98.4%) recorded sessions in `02_Sessions` (K08) while exactly 16 users (1.6%) never initiated a session and remained dormant from day 0 (K09, confirmed in assumption **A009**; the previously cited 72-user dormancy was a synthetic artifact of `Users_1000_Clean`), while Day 1 cohort retention drops sharply to 17.91% across 994 eligible users in `04_Daily_Activity` (K34).
@@ -37,6 +39,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R3 — Contextually Embed the Three Lowest-Adoption Features into Daily Earning Loops
 
 **Finding:** In `03_Feature_Events`, feature adoption diverges from a peak of 83.6% for Watch Ads (836 unique users, K15/K17) down to the platform's three lowest-adopted utilities: Badges at 67.4% (674 users, K15), Follow & Earn at 68.5% (685 users, K15), and Leaderboard at 68.6% (686 users, K15).
@@ -52,6 +55,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R4 — Restructure the First-Week Streak Progression to Arrest the D1-to-D7 Retention Drop
 
 **Finding:** Cohort retention evaluated in `04_Daily_Activity` slides from D1 retention of 17.91% (178 / 994 eligible users, K34) to D7 retention of 13.33% (127 / 953 eligible users, K35) before stabilizing at D30 retention of 8.46% (69 / 816 eligible users, K36), revealing that the steepest multi-day decay interval occurs between Day 1 and Day 7 with a loss of 4.58 percentage points.
@@ -67,6 +71,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R5 — Implement Dynamic Daily Earning Caps on Watch Ads to Mitigate Currency Concentration Risk
 
 **Finding:** Total milestone rewards credited across 4,799 awards in `06_Milestones` equal 242,830 reward units under PARTIAL measurement scope (K28), with volume heavily concentrated in Watch Ads at 22,500 units (9.27% of total issuance, K31) and Streak Rewards at 19,010 units (7.83%).
@@ -82,6 +87,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R6 — Enforce Database Unique Constraints and Client-Side Enum Sanitization
 
 **Finding:** Telemetry quality audits in `Users_Messy_Audit` and `10_Event_Data_Quality_Audit` detected 16 duplicate user rows across 8 distinct user IDs (K38) and 4 rows containing the invalid status string `'success '` where trailing whitespace violates canonical enum definitions (K41 and K44 describe the exact same 4 rows, representing a single whitespace defect).
@@ -97,6 +103,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R7 — Build the Double-Entry Wallet Ledger Table to Unblock Core Financial Liability Tracking
 
 **Finding:** Wallet credits total (K45) is currently BLOCKED because the transactional `Wallet_Ledger` table is completely absent from the supplied analytics workbooks, preventing any accounting of cumulative currency liabilities, virtual balance inflation, or user balances.
@@ -112,6 +119,7 @@ This document translates the verified analytical findings from `13_analysis/outp
 
 ---
 
+**[BASED ON SIMULATED DATA — validate against production before acting]**
 ### R8 — Launch a Tiered Power User Progression Program Capitalizing on High Task Throughput
 
 **Finding:** While 981 users (98.1% of the registered cohort) completed at least one task in `05_Task_Activity` (K26), exactly 689 users (68.9%) completed 5 or more tasks (K27), demonstrating that task volume and ad revenue are concentrated in a dedicated power user core.
