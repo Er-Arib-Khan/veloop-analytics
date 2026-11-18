@@ -1072,7 +1072,7 @@
       "status": "BLOCKED",
       "blocker": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks",
       "reason": "Referral_Invites and Referral_Conversions tables are missing from supplied workbooks",
-      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 4 referral funnel events (Prompt 4 output, not yet created)"
+      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 requires all 4 funnel events. Numerator = referral_reward_credited, denominator = referral_registered."
     },
     {
       "data_label": "SIMULATED DATA \u2014 CREATED FOR ANALYTICAL TESTING",
@@ -1087,7 +1087,7 @@
       "status": "BLOCKED",
       "blocker": "Referral_Activations table is missing from supplied workbooks",
       "reason": "Referral_Activations table is missing from supplied workbooks",
-      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 referral_activated event (Prompt 4 output, not yet created)"
+      "unblock_path": "04_events/referral_event_plan.xlsx \u2014 requires referral_activated event with activation milestone = first task completed."
     }
   ]
 }
