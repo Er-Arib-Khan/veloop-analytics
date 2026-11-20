@@ -407,7 +407,7 @@ The "Before / After" table is the strongest move: it shows the reviewer in one g
 head -20 README.md
 
 # Confirm it renders (visible in any markdown viewer)
-grep -c "<details>" README.md    # should be 13 (one per folder)
+grep -c "^<details>" README.md    # should be 15 (one per folder)
 grep -c "er-arib-khan.github.io" README.md    # should be ≥ 4
 
 # Commit and push
