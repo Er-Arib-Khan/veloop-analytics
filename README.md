@@ -340,6 +340,26 @@ This folder is why the submission moved from "documentation only" to "actual ana
 - R1 (High) — Pre-filter task inventory — targets 42.85% not-completed
 - R6 (High) — Enforce UNIQUE constraints — eliminates duplicate IDs
 
+### `outputs/04_login_reconciliation.md`
+**What:** Forensic reconciliation of the 928 vs 984 login discrepancy.
+5 possible login definitions enumerated and measured. Root cause
+identified as a cross-pipeline synthetic generation artifact (72
+"Pending Verification" users have sessions but null login timestamps;
+16 other users have timestamps but zero sessions). Canonical K08 = 984
+users from session telemetry; K09 = 16 users.
+**Read this if:** you want proof that the login numbers reconcile.
+**Key numbers:** K08 = 984 users (98.4%), K09 = 16 users (1.6%).
+
+### `outputs/05_kpi_validation_report.md`
+**What:** Independent second implementation of all 49 KPIs with a
+three-way diff table (reported vs recomputed vs verdict). Result:
+41 PASS · 0 FAIL · 8 BLOCKED-CONFIRMED · 0 STRUCTURAL SUSPECT. Four
+hand-checkable anchors (K01, K08, K22, K38) included for manual
+verification.
+**Read this if:** you want evidence that every number is reproducible
+from the raw source data.
+**Key numbers:** 41/49 KPIs pass independent recomputation; 0 failures.
+
 ### `outputs/01_profiling.json`
 **What:** Raw profiling data. For every sheet: row count, column list, per-column stats.
 **Why:** Machine-readable. A script can query "how many rows in Task_Activity?" without opening the source file.
@@ -484,6 +504,42 @@ lead. Each is now closed with verifiable evidence:
 All 7 points are closed. The data authenticity boundary is enforced
 at the document level (banners), the finding level (per-finding labels),
 and the repository level (data_provenance.md).
+
+---
+
+## 📋 Complete Deliverable Index
+
+| # | Deliverable | File | Folder | Status |
+|---|-------------|------|--------|--------|
+| 01 | Executive Summary | executive_summary.md | 12_final/ | ✅ |
+| 02 | Product Data Audit | product_data_audit.md | 02_product_audit/ | ✅ |
+| 03 | Data Coverage Matrix | data_coverage_matrix.xlsx | 02_product_audit/ | ✅ |
+| 04 | User Analytics Specification | user_analytics_spec.md | 03_specs/ | ✅ |
+| 05 | Reward Analytics Specification | reward_analytics_spec.md | 03_specs/ | ✅ |
+| 06 | Wallet/Withdrawal Specification | wallet_withdrawal_analytics_spec.md | 03_specs/ | ✅ |
+| 07 | Wallet Ledger Schema | wallet_ledger_spec.md | 03_specs/ | ✅ |
+| 08 | Withdrawal Analytics Schema | withdrawal_analytics_spec.md | 03_specs/ | ✅ |
+| 09 | Referral Analytics | referral_engagement_analytics.md | 03_specs/ | ✅ |
+| 10 | Event Tracking Plan | event_tracking_plan.xlsx | 04_events/ | ✅ |
+| 11 | Referral Event Plan | referral_event_plan.xlsx | 04_events/ | ✅ |
+| 12 | Data Dictionary | data_dictionary.xlsx | 05_data_model/ | ✅ |
+| 13 | ER Diagram | er_diagram.dbml | 05_data_model/ | ✅ |
+| 14 | Relationship Documentation | relationship_documentation.md | 05_data_model/ | ✅ |
+| 15 | KPI Catalogue (49 KPIs) | kpi_catalogue.xlsx | 06_kpis/ | ✅ |
+| 16 | Data Profiling | profiling_summary.xlsx | 07_data_quality/ | ✅ |
+| 17 | Data Quality Audit | data_quality_audit.xlsx | 07_data_quality/ | ✅ |
+| 18 | Terminology Glossary | terminology_glossary.md | 07_data_quality/ | ✅ |
+| 19 | Dashboard Blueprint | dashboard_blueprint.xlsx | 08_dashboards/ | ✅ |
+| 20 | Developer Handoff | developer_analytics_handoff.xlsx | 09_engineering/ | ✅ |
+| 21 | Privacy & Governance | privacy_governance_proposal.md | 10_privacy_governance/ | ✅ |
+| 22 | Login Reconciliation Report | 04_login_reconciliation.md | 13_analysis/outputs/ | ✅ |
+| 23 | KPI Validation Report | 05_kpi_validation_report.md | 13_analysis/outputs/ | ✅ |
+| 24 | Analysis Findings | analysis_findings.md | 13_analysis/ | ✅ |
+| 25 | Business Recommendations | business_recommendations.md | 13_analysis/ | ✅ |
+| 26 | Live Dashboard | index.html | docs/ | ✅ |
+| 27 | Data Provenance | data_provenance.md | docs/ | ✅ |
+| 28 | Dashboard QA | qa_dashboard_results.md | docs/ | ✅ |
+| 29 | QA Screenshots | 375px.png, 768px.png, 1440px.png | docs/qa_screenshots/ | ✅ |
 
 ---
 
