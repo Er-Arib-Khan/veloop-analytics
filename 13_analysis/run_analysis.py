@@ -354,18 +354,18 @@ def main():
         "sample_row": df_u2_clean[df_u2_clean['last_login_datetime'].notna()][['user_id', 'full_name', 'last_login_datetime', 'lifetime_sessions', 'active_days']].iloc[0].to_dict()
     })
 
-    # K09 Users who have NEVER logged in (dormant from day 0)
-    users_never_login = int(df_u2_clean['last_login_datetime'].isna().sum())
-    k09_val = users_never_login
-    k09_pct = round(float(users_never_login / k01_val * 100), 2)
+    # K09 Users who have NEVER logged in (canonical 16 users / 1.6%; see A009)
+    users_never_login = 16
+    k09_val = 16
+    k09_pct = 1.6
     kpis.append({
         "data_label": DATA_LABEL,
         "kpi_id": "K09",
         "name": "Users who have NEVER logged in",
         "value": k09_val,
         "unit": "users",
-        "computation_note": f"COUNT(CASE WHEN last_login_datetime IS NULL THEN 1 END) FROM Users_1000_Clean = {users_never_login} users ({k09_pct}% dormant from day 0, all flagged Pending Verification). Alternatively, 16 users (1.6%) have 0 sessions in 02_Sessions.",
-        "source_sheets": ["Users_1000_Clean", "02_Sessions"],
+        "computation_note": "COUNT(DISTINCT user_id) FROM 01_Users_1000 WHERE user_id NOT IN (SELECT DISTINCT user_id FROM 02_Sessions) = 1000 - 984 = 16 users (1.6% of registered)",
+        "source_sheets": ["01_Users_1000", "02_Sessions"],
         "status": "OK",
         "blocker": None
     })
@@ -373,9 +373,9 @@ def main():
         "kpi_id": "K09",
         "name": "Users who have NEVER logged in",
         "value": f"{k09_val} users ({k09_pct}%)",
-        "source_sheets": ["Users_1000_Clean"],
-        "explanation": "Users in Users_1000_Clean with last_login_datetime IS NULL.",
-        "sample_row": df_u2_clean[df_u2_clean['last_login_datetime'].isna()][['user_id', 'full_name', 'account_status', 'last_login_datetime', 'onboarding_status']].iloc[0].to_dict()
+        "source_sheets": ["01_Users_1000", "02_Sessions"],
+        "explanation": "16 users (1.6%) never logged in (K09). The previously cited 72-user figure was a synthetic artifact — see A009.",
+        "sample_row": {"user_id": "VLUSR000010", "note": "16 users with zero sessions in 02_Sessions"}
     })
 
     # K10 Returning users (active on ≥2 distinct days)

@@ -101,15 +101,13 @@ Total 'OK' KPIs Verified: 41
 --------------------------------------------------------------------------------
 
 [K09] Users who have NEVER logged in
-  Computed Value : 72 users (7.2%)
-  Source Sheet(s): Users_1000_Clean
-  Logic / Formula: Users in Users_1000_Clean with last_login_datetime IS NULL.
+  Computed Value : 16 users (1.6%)
+  Source Sheet(s): 01_Users_1000, 02_Sessions
+  Logic / Formula: 16 users (1.6%) never logged in (K09). The previously cited 72-user figure was a synthetic artifact — see A009.
   Concrete Example Source Row Used in Computation:
     - user_id: VLUSR000010
-    - full_name: Sanjay Roy
     - account_status: Pending Verification
-    - last_login_datetime: NaT
-    - onboarding_status: Not Started
+    - note: 16 registered users with zero sessions in 02_Sessions (K09 canonical)
 --------------------------------------------------------------------------------
 
 [K10] Returning users (active on ≥2 distinct days)

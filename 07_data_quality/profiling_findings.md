@@ -72,7 +72,7 @@ The `10_Event_Data_Quality_Audit` sheet contains 35,714 event records (10 more r
 
 ### Sheet: `Users_1000_Clean` (`veloop_rewards_data_01.xlsx`)
 
-The `Users_1000_Clean` sheet in the Task 01 rewards workbook contains 1,000 clean user records across an expanded set of 27 attributes. The primary key `user_id` has 1,000 unique values with 0 duplicates and 0 blanks. The sheet contains 953 missing cells (3.53% overall), occurring exclusively in `referral_source_detail` (881 nulls for non-referral acquisitions) and `last_login_datetime` (72 nulls for dormant users who never logged in post-registration). Anomalies include a negative minimum for `days_since_registration` (-0.8 days, 8 users registering after the benchmark date) and `last_login_datetime` values extending to 2026-09-17 10:08:00.
+The `Users_1000_Clean` sheet in the Task 01 rewards workbook contains 1,000 clean user records across an expanded set of 27 attributes. The primary key `user_id` has 1,000 unique values with 0 duplicates and 0 blanks. The sheet contains 953 missing cells (3.53% overall), occurring exclusively in `referral_source_detail` (881 nulls for non-referral acquisitions) and `last_login_datetime` (72 nulls; synthetic generation artifact A009 where unverified accounts had null timestamps despite generating sessions; canonical non-login dormancy is 16 users / 1.6% per K09). Anomalies include a negative minimum for `days_since_registration` (-0.8 days, 8 users registering after the benchmark date) and `last_login_datetime` values extending to 2026-09-17 10:08:00.
 
 ### Sheet: `Users_Messy_Audit` (`veloop_rewards_data_01.xlsx`)
 
@@ -111,7 +111,7 @@ A strict cross-sheet audit revealed several controlled anomalies, data corruptio
   - `exit_feature`: 466 nulls (5.89%) where sessions terminated abruptly without logging an exit feature.
 - **`Users_1000_Clean` (953 null cells, 3.53%)**:
   - `referral_source_detail`: 881 nulls (88.10%) because only 119 users were acquired via referral in this workbook.
-  - `last_login_datetime`: 72 nulls (7.20%) corresponding to registered users who never logged in after signup.
+  - `last_login_datetime`: 72 nulls (7.20%) in `Users_1000_Clean` flagged as Pending Verification (synthetic generation artifact — see A009; canonical non-login figure is 16 users / 1.6% per K09).
 - **`06_Milestones` (40 null cells, 0.14%)**:
   - `session_id`: 40 nulls (0.83%) where milestones were credited outside of an active user session.
 

@@ -810,9 +810,9 @@ def main():
               <tr>
                 <td class="mono">K09</td>
                 <td>Users Who Have NEVER Logged In</td>
-                <td class="mono">72</td>
-                <td>users (7.2%)</td>
-                <td>Dormant from day 0, stranded in pending verification without a first session</td>
+                <td class="mono">16</td>
+                <td>users (1.6%)</td>
+                <td>16 users (1.6%) never logged in (K09). The previously cited 72-user figure was a synthetic artifact — see A009.</td>
               </tr>
               <tr>
                 <td class="mono">K10</td>

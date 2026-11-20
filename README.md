@@ -335,7 +335,7 @@ This folder is why the submission moved from "documentation only" to "actual ana
 **What:** 8 recommendations R1–R8, each with Finding / Recommendation / Impact / Owner / Effort / Priority / Data Dependency. Plus a summary table for management.
 **Headlines:**
 - R7 (Critical) — Build Wallet_Ledger — unblocks 4 KPIs
-- R2 (Critical) — OTP + D1 bonus — targets 7.2% dormant users
+- R2 (Critical) — OTP + D1 bonus — targets 1.6% dormant users
 - R4 (Critical) — Restructure first-week streaks — targets D1→D7 drop
 - R1 (High) — Pre-filter task inventory — targets 42.85% not-completed
 - R6 (High) — Enforce UNIQUE constraints — eliminates duplicate IDs
