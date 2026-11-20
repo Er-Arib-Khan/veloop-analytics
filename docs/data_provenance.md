@@ -26,7 +26,7 @@ product. Not actual VELOOP statistics.
 - Analytics design review (how KPIs should be defined)
 - Schema review (ledger_entries, withdrawals, referrals)
 - KPI definition review (formulas, sources, limitations)
-- Dashboard UX review (layout, tab structure, chart types)
+- Dashboard UX review at https://er-arib-khan.github.io/veloop-analytics/ (layout, tab structure, chart types)
 - Instrumentation requirements (event tracking plan)
 - Data quality framework review (terminology, controls)
 
