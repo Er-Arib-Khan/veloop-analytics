@@ -414,8 +414,29 @@ grep -c "er-arib-khan.github.io" README.md    # should be ≥ 4
 git add README.md
 git commit -m "Rewrite README as interactive file-by-file project index"
 git push
+```
 
-The changes touched **only** the analysis layer (`13_analysis/`) and the dashboard (`docs/`). The specifications, event plan, data dictionary, ER diagram, and backlog in folders `01_` through `11_` are unchanged from the original submission — they were the *design*. The new work is the *delivery*.
+### What Changed After the 78/100 Review
+
+| Folder | Status | What Changed |
+|--------|--------|--------------|
+| 00_source_data/ | UNCHANGED | Simulated workbooks remain as supplied |
+| 01_governance/ | **MODIFIED** | Assumptions A009–A017 logged (login reconciliation, schema deviations, orphaned To-Be-Verified items) |
+| 02_product_audit/ | UNCHANGED | Gap assessment remains authoritative |
+| 03_specs/ | **NEW FILES** | `wallet_ledger_spec.md` (double-entry ledger), `withdrawal_analytics_spec.md` (lifecycle + 6 KPIs) |
+| 04_events/ | **MODIFIED** | `referral_event_plan.xlsx` added (4-stage funnel); `event_tracking_plan.xlsx` events renamed per A014 |
+| 05_data_model/ | **MODIFIED** | `ledger_entries` replaces `Wallet_Transactions`; +22 proposed fields in data dictionary |
+| 06_kpis/ | UNCHANGED | 49 KPIs remain as designed |
+| 07_data_quality/ | **NEW FILE** | `terminology_glossary.md` added; 21 audit rows reclassified |
+| 08_dashboards/ | UNCHANGED | Wireframes remain for design rationale |
+| 09_engineering/ | UNCHANGED | Developer handoff remains valid |
+| 10_privacy_governance/ | UNCHANGED | Access model remains valid |
+| 11_backlog/ | UNCHANGED | 24 requirements remain prioritized |
+| 12_final/ | **MODIFIED** | Executive summary leads with findings; provenance labels added |
+| 13_analysis/ | **NEW FOLDER** | `run_analysis.py`, `validate_kpis.py`, `analysis_findings.md`, `business_recommendations.md`, `outputs/04_login_reconciliation.md`, `outputs/05_kpi_validation_report.md` |
+| docs/ | **NEW FOLDER** | `index.html` (live dashboard), `data_provenance.md`, `qa_dashboard_results.md`, `qa_dashboard_checklist.md` |
+
+**Summary:** 7 folders unchanged (00, 02, 06, 08, 09, 10, 11). 4 folders modified (01, 04, 05, 12). 2 folders with new files added to existing directories (03_specs, 07_data_quality). 2 entirely new folders (13_analysis, docs). Total: 15 folders, matching the file tree.
 
 ---
 
